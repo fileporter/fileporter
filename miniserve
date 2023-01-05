@@ -1,0 +1,4 @@
+#!/usr/bin/bash
+
+.venv/bin/python3 -B -O ./src/miniserve "$@"
+#.venv/bin/uvicorn --host 0.0.0.0 miniserve:app -- "$@"
