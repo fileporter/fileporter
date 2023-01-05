@@ -1,4 +1,4 @@
-# miniserve
+# <img width=auto height="30" src="https://raw.githubusercontent.com/PlayerG9/miniserve/master/README.assets/repo-icon.png" alt="" /> miniserve
 serve a directory in your local network for view over the browser
 
 ## installation
