@@ -13,6 +13,7 @@ import argparse
 class NameSpace:
     host: str
     port: int
+    auth: str
     worker: int
     root: str
     dotall: bool
@@ -33,6 +34,9 @@ parser.add_argument('--local', action="store_const", const="127.0.0.1", dest="ho
 #                     help="serve in the local network")
 parser.add_argument('-p', '--port', type=int,
                     help="port to serve on", default=8000)
+print("FUck you")
+parser.add_argument('--auth', nargs='?', const=..., default=None,
+                    help="requires user-login")
 parser.add_argument('-w', '--worker', type=int,
                     help="number of workers to use", default=os.cpu_count())
 parser.add_argument('--dotall', action="store_true",

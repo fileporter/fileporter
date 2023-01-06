@@ -8,6 +8,7 @@ import fastapi.staticfiles
 import fastapi.middleware.cors
 import fastapi.middleware.gzip
 from config import args, __version__
+import auth
 from api import api as api_router
 from preview import preview as preview_router
 
@@ -16,6 +17,7 @@ app = fastapi.FastAPI(
     title="miniserve",
     version=__version__,
     docs_url=None,
+    dependencies=[auth.auth_dependency] if args.auth else None,
     # redoc_url=None,
 )
 app.add_middleware(
