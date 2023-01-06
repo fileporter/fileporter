@@ -24,11 +24,10 @@ if args.auth is Ellipsis:
 
     @fastapi.Depends
     def auth_dependency(credentials: fastapi.security.HTTPBasicCredentials = fastapi.Depends(security)):
-        print(credentials)
         username = credentials.username
         password = credentials.password
         try:
-            enc_pwd = spwd.getspnam(username)
+            enc_pwd = spwd.getspnam(username.lower())
         except KeyError:
             raise fastapi.HTTPException(fastapi.status.HTTP_401_UNAUTHORIZED)
         if not hmac.compare_digest(crypt.crypt(password, enc_pwd), enc_pwd):
@@ -36,9 +35,7 @@ if args.auth is Ellipsis:
 else:
     @fastapi.Depends
     def auth_dependency(credentials: fastapi.security.HTTPBasicCredentials = fastapi.Depends(security)):
-        print(credentials)
         username = credentials.username
-        print(username, getpass.getuser())
         if username.casefold() != getpass.getuser().casefold():
             raise fastapi.HTTPException(fastapi.status.HTTP_401_UNAUTHORIZED)
         password = credentials.password
