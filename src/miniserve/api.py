@@ -4,6 +4,7 @@ r"""
 
 """
 import os
+import mimetypes
 import typing as t
 import fastapi
 from pydantic import BaseModel
@@ -16,6 +17,7 @@ class BasicMetaModel(BaseModel):
     type: t.Literal["file", "directory"]
     basename: str
     path: str
+    mime: t.Optional[str]
 
 
 class ResponseModel(BasicMetaModel):
@@ -38,6 +40,7 @@ def meta(fp: str) -> dict:
             type="file",
             basename=os.path.basename(fp),
             path=fp,
+            mime=mimetypes.guess_type(fp)[0],
         )
     elif os.path.isdir(fp):
         return dict(
