@@ -3,6 +3,7 @@
 r"""
 
 """
+import socket
 import getpass
 import hmac
 import fastapi.security
@@ -41,3 +42,12 @@ else:
         password = credentials.password
         if not hmac.compare_digest(password, args.auth):
             raise fastapi.HTTPException(fastapi.status.HTTP_401_UNAUTHORIZED)
+
+
+def get_origins():
+    ips = ["localhost", "0.0.0.0", socket.gethostbyname(socket.gethostname())]
+    for ip in ips:
+        yield f"http://{ip}"
+        yield f"https://{ip}"
+        yield f"http://{ip}:{args.port}"
+        yield f"https://{ip}:{args.port}"

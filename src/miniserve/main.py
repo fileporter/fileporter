@@ -25,7 +25,7 @@ app.add_middleware(
 )
 app.add_middleware(
     fastapi.middleware.cors.CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=list(auth.get_origins()),
     allow_credentials=True,
     allow_methods=["GET"],
     allow_headers=["*"],
