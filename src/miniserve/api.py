@@ -9,7 +9,7 @@ import fastapi
 from pydantic import BaseModel
 from config import args
 
-api = fastapi.APIRouter(prefix="/.miniserve-api")
+api = fastapi.APIRouter(prefix="/api")
 
 
 class BasicMetaModel(BaseModel):
@@ -24,7 +24,7 @@ class ResponseModel(BasicMetaModel):
 
 @api.get("/{fp:path}", response_model=ResponseModel)
 async def get_meta(fp: str):
-    fp = os.path.join(args.root, fp)
+    fp = os.path.join(args.root, fp.removeprefix("/"))
     print(fp)
     response = meta(fp)
     if os.path.isdir(fp):
