@@ -31,7 +31,7 @@ export default function IconView() {
         path: data.path + "/..",
     });
 
-    return <div className="grid gap-2 px-2 py-1" style={{gridTemplateColumns: "repeat(auto-fit, minmax(150px, 1fr))"}}>
+    return <div className="grid gap-2 px-2 py-1 justify-evenly" style={{gridTemplateColumns: "repeat(auto-fit, minmax(100px, 200px))"}}>
         {items.sort(sortItems).map(item => <RenderItem key={item.basename} {...item} />)}
     </div>
 }
