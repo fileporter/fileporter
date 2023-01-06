@@ -4,12 +4,12 @@ r"""
 
 """
 import os
-import fastapi
 import fastapi.staticfiles
 import fastapi.middleware.cors
 import fastapi.middleware.gzip
 from config import args, __version__
 from api import api as api_router
+from preview import preview as preview_router
 
 print(args)
 
@@ -31,6 +31,13 @@ app.add_middleware(
     allow_headers=["*"],
 )
 app.include_router(api_router)
+app.include_router(preview_router)
+app.mount(
+    "/files",
+    fastapi.staticfiles.StaticFiles(
+        directory=args.root,
+    )
+)
 app.mount(
     "/",
     fastapi.staticfiles.StaticFiles(
@@ -38,14 +45,6 @@ app.mount(
         html=True,
     )
 )
-
-
-@app.get("/{fp:path}", include_in_schema=False)
-async def root(fp: str):
-    fp = os.path.join(args.root, fp)
-    if not os.path.isfile(fp):
-        raise fastapi.HTTPException(fastapi.status.HTTP_404_NOT_FOUND)
-    return fastapi.responses.FileResponse(fp)
 
 
 if __name__ == '__main__':
