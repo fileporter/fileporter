@@ -4,10 +4,10 @@ import { apiQuery, apiUrl, sortItems } from "../../common";
 import { ApiResponse, DirectoryRootTypeResponse, FileOrDirectory } from "../../types";
 import Loading from "../Loading";
 import Page404NotFound from "../Page404NotFound";
-import FileIcon from "./images/file-earmark.svg";
-import FolderIcon from "./images/folder.svg";
-import FolderOpenIcon from "./images/folder-open.svg";
+import FolderIcon from "./images/folder.png";
+import FolderOpenIcon from "./images/folder-open.png";
 import ApiFileLink from "../ApiFileLink";
+import FileIcon from "../FileIcon";
 
 
 export default function IconView() {
@@ -48,10 +48,7 @@ function RenderItem(item: FileOrDirectory) {
         </Link>
     } else {
         return <ApiFileLink to={item.path} className="flex flex-col gap-1 group">
-            <img className="object-cover w-full h-auto mx-auto rounded-lg aspect-square" src={apiUrl(`/preview/${item.path}`)} onError={({ currentTarget }) => {
-                currentTarget.onerror = null;
-                currentTarget.src = FileIcon;
-            }} alt="" loading="lazy" />
+            <FileIcon className="object-cover w-full h-auto mx-auto rounded-lg aspect-square" imgSrc={apiUrl(`/preview/${item.path}`)} mime={item.mime} /> 
             <span className="w-full text-center break-words group-hover:underline">
                 {item.basename}
             </span>

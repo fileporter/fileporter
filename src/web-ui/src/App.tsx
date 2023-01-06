@@ -1,9 +1,10 @@
+import { useState } from "react";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { HashRouter, Routes, Route } from "react-router-dom";
 import { HttpError } from "./common";
 import ControlHeader from "./components/ControlHeader";
 import IconView from "./components/views/icon";
-// import ListView from "./components/views/list";
+import ListView from "./components/views/list";
 
 
 const queryClient = new QueryClient({
@@ -32,9 +33,14 @@ export default function Provider() {
 
 
 function App() {
+    const [isIconView, setIconView] = useState(true);
+
     return <div>
-        <ControlHeader />
-        <IconView />
-        {/* <ListView /> */}
+        <ControlHeader isIconView={isIconView} setIconView={setIconView} />
+        {isIconView ?
+            <IconView />
+            :
+            <ListView />
+        }
     </div>
 }
