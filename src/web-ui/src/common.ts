@@ -1,10 +1,11 @@
+import httpStatusIndex from "./httpStatusIndex";
 import { FileOrDirectory } from "./types";
 
 export class HttpError extends Error {
     status: number;
 
     constructor(status: number) {
-        super(`${status}`);
+        super(`${status} ${httpStatusIndex[status]}`);
         this.status = status;
     }
 }
@@ -20,6 +21,7 @@ export function apiUrl(location: string): string {
 
 
 export function apiQuery(location: string, init: RequestInit) {
+    init.credentials = "include";
     return fetch(apiUrl(`/api/${location}`), init)
         .then(response => {
             if (!response.ok) {
