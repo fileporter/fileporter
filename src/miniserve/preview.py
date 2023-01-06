@@ -20,15 +20,13 @@ async def root(fp: str, tasks: fastapi.BackgroundTasks):
     if not os.path.isfile(fp):
         raise fastapi.HTTPException(fastapi.status.HTTP_404_NOT_FOUND)
 
-    file_ext = ""
-
     manager = PreviewManager(tempfile.gettempdir())
     try:
-        if not manager.has_jpeg_preview(fp, file_ext=file_ext):
+        if not manager.has_jpeg_preview(fp):
             raise fastapi.HTTPException(fastapi.status.HTTP_424_FAILED_DEPENDENCY)
     except UnsupportedMimeType:
         raise fastapi.HTTPException(fastapi.status.HTTP_424_FAILED_DEPENDENCY)
 
-    fp = manager.get_jpeg_preview(fp, file_ext=file_ext)
+    fp = manager.get_jpeg_preview(fp)
     tasks.add_task(os.remove, fp)
     return fastapi.responses.FileResponse(fp)
