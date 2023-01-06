@@ -51,7 +51,7 @@ function RenderItem(item: FileOrDirectory) {
             <img className="object-cover w-full h-auto mx-auto rounded-lg aspect-square" src={apiUrl(`/preview/${item.path}`)} onError={({ currentTarget }) => {
                 currentTarget.onerror = null;
                 currentTarget.src = FileIcon;
-            }} alt="" />
+            }} alt="" loading="lazy" />
             <span className="w-full text-center break-words group-hover:underline">
                 {item.basename}
             </span>
