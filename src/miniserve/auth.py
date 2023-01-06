@@ -49,5 +49,7 @@ def get_origins():
     for ip in ips:
         yield f"http://{ip}"
         yield f"https://{ip}"
+        yield f"http://{ip}:3000"
+        yield f"https://{ip}:3000"
         yield f"http://{ip}:{args.port}"
         yield f"https://{ip}:{args.port}"
