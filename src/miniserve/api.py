@@ -25,7 +25,6 @@ class ResponseModel(BasicMetaModel):
 @api.get("/{fp:path}", response_model=ResponseModel)
 async def get_meta(fp: str):
     fp = os.path.join(args.root, fp.removeprefix("/"))
-    print(fp)
     response = meta(fp)
     if os.path.isdir(fp):
         response['contents'] = [meta(os.path.join(fp, _)) for _ in os.listdir(fp)

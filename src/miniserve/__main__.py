@@ -7,5 +7,6 @@ import os
 from config import args
 
 if __name__ == '__main__':
+    print(args)
     import uvicorn
     uvicorn.run("main:app", host=args.host, port=args.port, app_dir=os.path.dirname(__file__), workers=args.worker)
