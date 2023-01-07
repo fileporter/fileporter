@@ -3,7 +3,7 @@ import { apiUrl, sortItems } from "../../common";
 import { FileOrDirectory } from "../../types";
 import FolderIcon from "./images/folder.png";
 import FolderOpenIcon from "./images/folder-open.png";
-import DownloadFailed from "./images/download-fail.png"
+import DownloadFailedIcon from "./images/download-fail.png"
 import ApiFileLink from "../ApiFileLink";
 import FileIcon from "../FileIcon";
 import { ViewProps } from "./ViewManager";
@@ -25,15 +25,14 @@ function RenderItem(item: FileOrDirectory) {
             </span>
         </Link>
     } else if (item.mime?.startsWith("image/")) {
+        const imgSrc = apiUrl(`/low-resolution/${item.path}`);
         return <img width={item.size?.[0] ?? 100} height={item.size?.[1] ?? 200} className="w-full max-w-5xl mx-auto"
-            src={apiUrl(`/low-resolution/${item.path}`)} onError={({currentTarget}) => {
+            src={imgSrc} onError={({currentTarget}) => {
                 currentTarget.onerror = null;
-                currentTarget.src = DownloadFailed;
+                currentTarget.src = DownloadFailedIcon;
             }} onClick={({ currentTarget }) => {
-                if (currentTarget.complete) {
-                    currentTarget.onclick = null;
-                } else if (currentTarget.src === DownloadFailed) {
-                    const url = new URL(currentTarget.src);
+                if (currentTarget.src === DownloadFailedIcon) {
+                    const url = new URL(imgSrc);
                     url.searchParams.set("ts", Date.now().toString())
                     currentTarget.src = url.toString();
                 }
