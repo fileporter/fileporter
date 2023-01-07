@@ -25,12 +25,21 @@ function RenderItem(item: FileOrDirectory) {
             </span>
         </Link>
     } else if (item.mime?.startsWith("image/")) {
-        console.log(item);
         return <img width={item.size?.[0] ?? 100} height={item.size?.[1] ?? 200} className="w-full max-w-5xl mx-auto"
-            src={apiUrl(`/files/${item.path}`)} onError={({currentTarget}) => {
+            src={apiUrl(`/low-resolution/${item.path}`)} onError={({currentTarget}) => {
                 currentTarget.onerror = null;
                 currentTarget.src = DownloadFailed;
-            }} alt="" onDoubleClick={() => window.open(apiUrl(`/files/${item.path}`), '_blank')?.focus()} loading="lazy"
+            }} onClick={({ currentTarget }) => {
+                if (currentTarget.complete) {
+                    currentTarget.onclick = null;
+                } else if (currentTarget.src === DownloadFailed) {
+                    const url = new URL(currentTarget.src);
+                    url.searchParams.set("ts", Date.now().toString())
+                    currentTarget.src = url.toString();
+                }
+            }} onDoubleClick={() => {
+                window.open(apiUrl(`/files/${item.path}`), '_blank')?.focus()
+            }} alt="" loading="lazy"
         />
     } else {
         return <ApiFileLink to={item.path} className="flex gap-1 px-2 group">
