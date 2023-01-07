@@ -41,7 +41,7 @@ parser.add_argument('-w', '--worker', type=int,
                     help="number of workers to use", default=os.cpu_count())
 parser.add_argument('--dotall', action="store_true",
                     help="serve also dot-files", default=False)
-parser.add_argument('root', type=str, nargs='?', default=".",
+parser.add_argument('root', type=os.path.expanduser, nargs='?', default=".",
                     help="directory to serve")
 
 

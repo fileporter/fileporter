@@ -9,6 +9,8 @@ import typing as t
 import fastapi
 from pydantic import BaseModel
 from config import args
+from image_size import get_image_size, UnknownImageFormat
+
 
 api = fastapi.APIRouter(prefix="/api")
 
@@ -18,6 +20,7 @@ class BasicMetaModel(BaseModel):
     basename: str
     path: str
     mime: t.Optional[str]
+    size: t.Optional[t.Tuple[int, int]]
 
 
 class ResponseModel(BasicMetaModel):
@@ -36,17 +39,24 @@ async def get_meta(fp: str):
 
 def meta(fp: str) -> dict:
     if os.path.isfile(fp):
-        return dict(
+        mime = mimetypes.guess_type(fp)[0]
+        data = dict(
             type="file",
             basename=os.path.basename(fp),
-            path=fp,
-            mime=mimetypes.guess_type(fp)[0],
+            path=os.path.relpath(fp, args.root),
+            mime=mime,
         )
+        if mime and mime.startswith("image/"):
+            try:
+                data['size'] = get_image_size(fp)
+            except UnknownImageFormat:
+                pass
+        return data
     elif os.path.isdir(fp):
         return dict(
             type="directory",
             basename=os.path.basename(fp),
-            path=fp,
+            path=os.path.relpath(fp, args.root),
         )
     else:
         raise fastapi.HTTPException(fastapi.status.HTTP_404_NOT_FOUND)
