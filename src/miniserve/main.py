@@ -10,7 +10,7 @@ import fastapi.middleware.gzip
 from config import args, __version__
 import auth
 from api import api as api_router
-from preview import preview as preview_router
+from preview import preview as preview_router, lowRes as lowRes_router
 
 
 app = fastapi.FastAPI(
@@ -32,6 +32,7 @@ app.add_middleware(
 )
 app.include_router(api_router)
 app.include_router(preview_router)
+app.include_router(lowRes_router)
 app.mount(
     "/files",
     fastapi.staticfiles.StaticFiles(
