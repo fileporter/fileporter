@@ -1,6 +1,13 @@
 import httpStatusIndex from "./httpStatusIndex";
 import { FileOrDirectory } from "./types";
 
+export enum ViewEnum {
+    icon,
+    list,
+    gallery,
+}
+
+
 export class HttpError extends Error {
     status: number;
 

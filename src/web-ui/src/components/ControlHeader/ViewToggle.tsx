@@ -1,17 +1,36 @@
-import ListViewIcon from "./list-view.png";
-import GridViewIcon from "./grid-view.png";
+import ListViewIcon from "./images/list-view.png";
+import IconViewIcon from "./images/grid-view.png";
+import GalleryViewIcon from "./images/gallery-view.png";
+import { ViewEnum } from "../../common";
 
 
 interface Props {
-    isIconView: boolean
-    setIconView: (v: boolean) => void
+    currentView: ViewEnum
+    setCurrentView: (v: ViewEnum) => void,
 }
 
+const imgMap = {
+    [ViewEnum.icon]: IconViewIcon,
+    [ViewEnum.list]: ListViewIcon,
+    [ViewEnum.gallery]: GalleryViewIcon,
+}
+
+
 export default function ViewToggle(props: Props) {
-    return <img
-        className="h-5 my-auto cursor-pointer" alt=""
-        title={`switch to ${props.isIconView ? "List" : "Icon"}-View`}
-        onClick={() => props.setIconView(!props.isIconView)}
-        src={props.isIconView ? GridViewIcon : ListViewIcon}
+    function getNextView() {
+        switch(props.currentView) {
+            case ViewEnum.icon:
+                return ViewEnum.list;
+            case ViewEnum.list:
+                return ViewEnum.gallery;
+            case ViewEnum.gallery:
+            default:
+                return ViewEnum.icon;
+        }
+    }
+
+    return <img className="h-5 my-auto cursor-pointer" alt=""
+        onClick={() => props.setCurrentView(getNextView())}
+        src={imgMap[props.currentView]}
     />
 }

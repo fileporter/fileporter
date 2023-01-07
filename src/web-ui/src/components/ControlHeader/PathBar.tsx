@@ -1,3 +1,4 @@
+import React from "react";
 import { Link, useLocation } from "react-router-dom"
 
 
@@ -9,11 +10,11 @@ export default function PathBar() {
 
     return <div className="flex flex-wrap gap-1 grow">
         <Link className="w-5 text-right" to="/">/</Link>
-        {paths.map((p, i) => <>
-            <Link key={p} to={paths.slice(0, i+1).join("/")} className="break-words hover:underline">
-                {p}
+        {paths.map((p, i) => <React.Fragment key={p}>
+            <Link to={paths.slice(0, i+1).join("/")} className="break-words hover:underline">
+                {decodeURI(p)}
             </Link>
             <span className="select-none">/</span>
-        </>)}
+        </React.Fragment>)}
     </div>
 }

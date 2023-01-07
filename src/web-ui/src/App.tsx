@@ -1,10 +1,9 @@
 import { useState } from "react";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { HashRouter, Routes, Route } from "react-router-dom";
-import { HttpError } from "./common";
+import { HttpError, ViewEnum } from "./common";
 import ControlHeader from "./components/ControlHeader";
-import IconView from "./components/views/icon";
-import ListView from "./components/views/list";
+import ViewManager from "./components/views/ViewManager";
 
 
 const queryClient = new QueryClient({
@@ -33,14 +32,11 @@ export default function Provider() {
 
 
 function App() {
-    const [isIconView, setIconView] = useState(true);
+    const [currentView, setCurrentView] = useState(ViewEnum.icon);
 
     return <div>
-        <ControlHeader isIconView={isIconView} setIconView={setIconView} />
-        {isIconView ?
-            <IconView />
-            :
-            <ListView />
-        }
+        <ControlHeader {...{currentView, setCurrentView}} />
+        {/* <GalleryView /> */}
+        <ViewManager view={currentView} />
     </div>
 }

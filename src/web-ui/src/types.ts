@@ -6,6 +6,7 @@ interface ResponseBase {
 export interface FileTypeResponse extends ResponseBase {
     type: "file",
     mime?: string,
+    size?: [number, number]
 }
 export interface DirectoryTypeResponse extends ResponseBase {
     type: "directory",

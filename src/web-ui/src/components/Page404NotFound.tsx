@@ -1,5 +1,5 @@
 export default function Page404NotFound() {
-    return <div>
-        404 Not Found
-    </div>
+    return <h1 className="text-xl text-center">
+        Directory not Found
+    </h1>
 }
