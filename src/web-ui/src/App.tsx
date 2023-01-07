@@ -32,7 +32,13 @@ export default function Provider() {
 
 
 function App() {
-    const [currentView, setCurrentView] = useState(ViewEnum.icon);
+    const [currentView, setView] = useState(() => parseInt(localStorage.getItem("view") ?? ViewEnum.icon.valueOf().toString()));
+
+    function setCurrentView(view: ViewEnum) {
+        console.log([view.toString()]);
+        localStorage.setItem("view", view.toString());
+        setView(view);
+    }
 
     return <div>
         <ControlHeader {...{currentView, setCurrentView}} />

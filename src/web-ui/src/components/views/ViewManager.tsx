@@ -36,7 +36,11 @@ export default function ViewManager(props: Props) {
     }
     if (query.isError) {
         return <h1 className="text-xl text-center text-red-300">
-            {`${query.error}`}
+            {window.navigator.onLine ? 
+                `${query.error}`
+                :
+                "You are offline"
+            }
         </h1>
     }
     if (query.data!.type === "file") {
@@ -49,6 +53,6 @@ export default function ViewManager(props: Props) {
         path: data.path + "/..",
     });
 
-    const View = viewMap[props.view];
+    const View = viewMap[props.view] ?? IconView;
     return <View data={data} contents={contents} />;
 }
