@@ -9,6 +9,7 @@ uvicorn = {extras = ["standard"], version = "*"}
 pydantic = "*"
 preview-generator = {extras = ["all"], version = "*"}
 pillow = "*"
+baize = "*"
 
 [dev-packages]
 

@@ -4,9 +4,11 @@ r"""
 
 """
 import os
-import fastapi.staticfiles
 import fastapi.middleware.cors
 import fastapi.middleware.gzip
+# import fastapi.staticfiles
+# baize is needed for better FileResponses because starlette doesn't support range-headers
+from baize.asgi.staticfiles import Files as StaticFiles, Pages as StaticPages
 from config import args, __version__
 import auth
 from api import api as api_router
@@ -35,14 +37,9 @@ app.include_router(preview_router)
 app.include_router(lowRes_router)
 app.mount(
     "/files",
-    fastapi.staticfiles.StaticFiles(
-        directory=args.root,
-    )
+    StaticFiles(directory=args.root)
 )
 app.mount(
     "/",
-    fastapi.staticfiles.StaticFiles(
-        directory=os.path.join(os.path.dirname(__file__), "web-ui"),
-        html=True,
-    )
+    StaticPages(directory=os.path.join(os.path.dirname(__file__), "web-ui"))
 )

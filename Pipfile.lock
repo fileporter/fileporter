@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "7ebf4c7c8ab3c811a1e2593e88ece94a75d34f7204c501d8a50d7e2de79fbd81"
+            "sha256": "fdd99d8b52b7c00545df0f323dcb6b12ccb7bc5dc3b3b164ce7a104bc1a18617"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -23,6 +23,29 @@
             ],
             "markers": "python_full_version >= '3.6.2'",
             "version": "==3.6.2"
+        },
+        "baize": {
+            "hashes": [
+                "sha256:17a50eb3f8c7ee3c659acbd432428739c2fc318003aa85ecfe4a6ab6181b095b",
+                "sha256:1f88393f83b73e551538e13d96385a7bd28f854d79285a3ba6342f468224aaec",
+                "sha256:36ecfecee9f71fb732377889c174a4c86d44800276ca31d425ebdc8679f8fbf9",
+                "sha256:4b5b6f9e6a794c6e5da83638ab44227c2347e4ae2e7d6b39bb8fa7e6ae1b7ade",
+                "sha256:4ee9886321d3d83b6975a5ffd7ddfac15d88748a327e27d32e1cc255c41e601c",
+                "sha256:64682bdfa36e38088bc74f257daa80ada2b0baf5653de7e539de5dac56648557",
+                "sha256:81affa27f14790895300544b70d485f8bd8b3eb359fc10dd2c94e7cd16021dad",
+                "sha256:8d454d738442fea89fef432b39d70a1f01a8bd5cf05ab74aad11fc2e86ec720c",
+                "sha256:a9e6bc38684194c680d29612f344b7e10c85812eb7a968bab20a916490351f93",
+                "sha256:acb31343f4c769c31a1cfb0ee8d8ea9f2dcec248dc8e4da046148cedeb921dd6",
+                "sha256:af3b4f1e968a8e061d80afa7e4c49bf13c68d501568ff3e920570cea2bddb5e3",
+                "sha256:c343d88502489dbba618e7bd35e4500b9e49e306f7ffafa744e5fa41b47fd80f",
+                "sha256:d82fc9a2021d89c8ac9d9f55a95cc4151f289293767d9fa88f7382985f60ad86",
+                "sha256:dcd29e9e1adbe246817fcd0ffd58be5d651c7993a6ab79e8da93bf84335990f5",
+                "sha256:e602745748f7454384f173b1b0980a7efe33305acc3d2a2ae02db718d3cd867c",
+                "sha256:f14f9113d811fabe115a3915a6c84526615601c82214645ecd79ae45f53ba76c",
+                "sha256:fadd4c8607a9f69cc30b8a1395e593ef286393faffa79b52ea8a5e8f512933e3"
+            ],
+            "index": "pypi",
+            "version": "==0.18.2"
         },
         "cairocffi": {
             "hashes": [
@@ -133,11 +156,11 @@
         },
         "fastapi": {
             "hashes": [
-                "sha256:263b718bb384422fe3d042ffc9a0c8dece5e034ab6586ff034f6b4b1667c3eee",
-                "sha256:915bf304180a0e7c5605ec81097b7d4cd8826ff87a02bb198e336fb9f3b5ff02"
+                "sha256:34990132751324c988db7bd15bf43a86f5c8580e58a4438e14b12d72fb0ae1d1",
+                "sha256:d8cafbd223b5a3c010119ba61fb246d5fd3b8f4766cfa93f922a416650797976"
             ],
             "index": "pypi",
-            "version": "==0.88.0"
+            "version": "==0.89.0"
         },
         "ffmpeg-python": {
             "hashes": [
