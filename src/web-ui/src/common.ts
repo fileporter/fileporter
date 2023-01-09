@@ -6,6 +6,10 @@ export enum ViewEnum {
     list,
     gallery,
 }
+export enum OpenMode {
+    intern,
+    browser
+}
 
 
 export class HttpError extends Error {

@@ -1,7 +1,6 @@
-import { useState } from "react";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { HashRouter, Routes, Route } from "react-router-dom";
-import { HttpError, ViewEnum } from "./common";
+import { HttpError } from "./common";
 import ControlHeader from "./components/ControlHeader";
 import ViewManager from "./components/views/ViewManager";
 
@@ -32,17 +31,8 @@ export default function Provider() {
 
 
 function App() {
-    const [currentView, setView] = useState(() => parseInt(localStorage.getItem("view") ?? ViewEnum.icon.valueOf().toString()));
-
-    function setCurrentView(view: ViewEnum) {
-        console.log([view.toString()]);
-        localStorage.setItem("view", view.toString());
-        setView(view);
-    }
-
     return <div>
-        <ControlHeader {...{currentView, setCurrentView}} />
-        {/* <GalleryView /> */}
-        <ViewManager view={currentView} />
+        <ControlHeader />
+        <ViewManager />
     </div>
 }

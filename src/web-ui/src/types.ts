@@ -2,6 +2,7 @@
 interface ResponseBase {
     basename: string,
     path: string,
+    directory: string
 }
 export interface FileTypeResponse extends ResponseBase {
     type: "file",

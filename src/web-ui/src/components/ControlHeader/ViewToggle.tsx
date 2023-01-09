@@ -1,7 +1,8 @@
+import ReactDOM from "react-dom";
+import { ViewEnum } from "../../common";
 import ListViewIcon from "./images/list-view.png";
 import IconViewIcon from "./images/grid-view.png";
 import GalleryViewIcon from "./images/gallery-view.png";
-import { ViewEnum } from "../../common";
 
 
 interface Props {
@@ -17,6 +18,11 @@ const imgMap = {
 
 
 export default function ViewToggle(props: Props) {
+    const header = document.getElementById("control-header");
+    if (!header) {
+        return null;
+    }
+
     function getNextView() {
         switch(props.currentView) {
             case ViewEnum.icon:
@@ -29,8 +35,10 @@ export default function ViewToggle(props: Props) {
         }
     }
 
-    return <img className="h-5 my-auto cursor-pointer" alt=""
-        onClick={() => props.setCurrentView(getNextView())}
-        src={imgMap[props.currentView]}
-    />
+    return ReactDOM.createPortal(<>
+        <img className="h-5 my-auto cursor-pointer" alt="" title="how to view directories"
+            onClick={() => props.setCurrentView(getNextView())}
+            src={imgMap[props.currentView]}
+        />
+    </>, header)
 }
