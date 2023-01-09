@@ -22,6 +22,19 @@ class NameSpace:
         return f"<args {self.__dict__}>"
 
 
+def ranged(mini, maxi, cls=int):
+    def range_checker(arg):
+        try:
+            f = cls(arg)
+        except ValueError:
+            raise argparse.ArgumentTypeError("bad value")
+        if f < mini or f > maxi:
+            raise argparse.ArgumentTypeError(f"must be in range [{mini}..{maxi}]")
+        return f
+
+    return range_checker
+
+
 parser = argparse.ArgumentParser(
     description=__doc__,
     formatter_class=argparse.ArgumentDefaultsHelpFormatter,
@@ -36,7 +49,7 @@ parser.add_argument('-p', '--port', type=int,
                     help="port to serve on", default=8000)
 parser.add_argument('--auth', nargs='?', const=..., default=None,
                     help="requires user-login")
-parser.add_argument('-w', '--worker', type=int,
+parser.add_argument('-w', '--worker', type=ranged(1, 8),
                     help="number of workers to use", default=os.cpu_count())
 parser.add_argument('--dotall', action="store_true",
                     help="serve also dot-files", default=False)
