@@ -19,6 +19,7 @@ class BasicMetaModel(BaseModel):
     type: t.Literal["file", "directory"]
     basename: str
     path: str
+    directory: str
     mime: t.Optional[str]
     size: t.Optional[t.Tuple[int, int]]
 
@@ -38,12 +39,16 @@ async def get_meta(fp: str):
 
 
 def meta(fp: str) -> dict:
+    basename = os.path.basename(fp)
+    path = os.path.relpath(fp, args.root)
+    directory = os.path.split(path)[0]
     if os.path.isfile(fp):
         mime = mimetypes.guess_type(fp)[0]
         data = dict(
             type="file",
-            basename=os.path.basename(fp),
-            path=os.path.relpath(fp, args.root),
+            basename=basename,
+            path=path,
+            directory=directory,
             mime=mime,
         )
         if mime and mime.startswith("image/"):
@@ -55,8 +60,9 @@ def meta(fp: str) -> dict:
     elif os.path.isdir(fp):
         return dict(
             type="directory",
-            basename=os.path.basename(fp),
-            path=os.path.relpath(fp, args.root),
+            basename=basename,
+            path=path,
+            directory=directory,
         )
     else:
         raise fastapi.HTTPException(fastapi.status.HTTP_404_NOT_FOUND)
