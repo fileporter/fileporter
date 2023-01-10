@@ -40,13 +40,18 @@ lowRes = fastapi.APIRouter(prefix="/low-resolution")
 
 @lowRes.get("/{fp:path}")
 async def root(fp: str):
-    fp = os.path.join(args.root, fp.removeprefix("/"))
+    raw_fp = fp.removeprefix("/")
+    fp = os.path.join(args.root, raw_fp)
     if not os.path.isfile(fp):
         raise fastapi.HTTPException(fastapi.status.HTTP_404_NOT_FOUND)
+
     try:
         image = Image.open(fp)
     except UnidentifiedImageError:
         raise fastapi.HTTPException(fastapi.status.HTTP_415_UNSUPPORTED_MEDIA_TYPE)
+
+    if image.is_animated:
+        return fastapi.responses.RedirectResponse(f"/files/{raw_fp}")
 
     optimized = io.BytesIO()
     image = image.convert('RGB')
