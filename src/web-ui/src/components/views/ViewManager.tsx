@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useQuery } from "react-query";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { apiQuery, apiUrl, OpenMode, ViewEnum } from "../../common";
 import { ApiResponse, DirectoryRootTypeResponse, FileTypeResponse } from "../../types";
 import Loading from "../Loading";
@@ -41,6 +41,7 @@ export default function ViewManager() {
     }
 
     const location = useLocation();
+    const navigate = useNavigate();
     const path = location.pathname;
     const query = useQuery<ApiResponse, Error>(path, ({ signal }) => apiQuery(path, { signal }));
 
@@ -64,8 +65,11 @@ export default function ViewManager() {
                 return <Comp {...file} />
             }
         }
-        window.location.href = apiUrl(`/files/${query.data!.path}`);
-        return null;
+        // otherwise these functions could be called multiple times
+        return <CallbackComp callback={() => {
+            window.open(apiUrl(`/files/${query.data!.path}`), "_blank")?.focus();
+            navigate(-1);
+        }} />;
     }
     const data = query.data as DirectoryRootTypeResponse;
     const contents = !data.basename.length ? data.contents : data.contents.concat({
@@ -81,4 +85,15 @@ export default function ViewManager() {
         <ViewToggleHeader {...{currentView, setCurrentView}} />
         <View data={data} contents={contents} openMode={openMode} />
     </>
+}
+
+
+function CallbackComp({ callback }: {callback: () => void}) {
+    // prevent calling this multiple times
+    useEffect(() => {
+        const id = setTimeout(callback, 10);
+        return () => clearTimeout(id);
+    });
+
+    return null;
 }

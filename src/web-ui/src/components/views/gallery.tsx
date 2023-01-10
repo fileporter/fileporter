@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { apiUrl, sortItems } from "../../common";
+import { apiUrl, OpenMode, sortItems } from "../../common";
 import { FileOrDirectory } from "../../types";
 import FolderIcon from "./images/folder.png";
 import FolderOpenIcon from "./images/folder-open.png";
@@ -9,13 +9,21 @@ import FileIcon from "../FileIcon";
 import { ViewProps } from "./ViewManager";
 
 
-export default function GalleryView({ contents }: ViewProps) {
+export default function GalleryView({ contents, openMode }: ViewProps) {
     return <div className="flex flex-col py-1">
-        {contents.sort(sortItems).map(item => <RenderItem key={item.path} {...item} />)}
+        {contents.sort(sortItems).map(item => <RenderItem key={item.path} item={item} openMode={openMode} />)}
     </div>
 }
 
-function RenderItem(item: FileOrDirectory) {
+
+interface RenderItemProps {
+    item: FileOrDirectory
+    openMode: OpenMode
+}
+
+
+function RenderItem(props: RenderItemProps) {
+    const item = props.item;
     if (item.type === "directory") {
         return <Link to={item.path} className="flex gap-1 px-2 group">
             <img className="block w-auto h-6 group-hover:hidden aspect-square" src={FolderIcon} alt="" />
@@ -26,26 +34,35 @@ function RenderItem(item: FileOrDirectory) {
         </Link>
     } else if (item.mime?.startsWith("image/")) {
         const imgSrc = apiUrl(`/low-resolution/${item.path}`);
-        return <img width={item.size?.[0] ?? 100} height={item.size?.[1] ?? 200} className="w-full max-w-5xl mx-auto"
-            src={imgSrc} onError={({currentTarget}) => {
-                currentTarget.onerror = null;
-                currentTarget.src = DownloadFailedIcon;
-            }} onClick={({ currentTarget }) => {
-                if (currentTarget.src === DownloadFailedIcon) {
+
+        const onError: React.ReactEventHandler<HTMLImageElement> = ({ currentTarget }) => {
+            currentTarget.onerror = null;
+            currentTarget.src = DownloadFailedIcon;
+        }
+
+        return <img width={item.size?.[0] ?? 320} height={item.size?.[1] ?? 180} className="w-full max-w-5xl mx-auto"
+            src={imgSrc} onError={onError} onClick={({ currentTarget }) => {
+                if (currentTarget.onerror === null) {
                     const url = new URL(imgSrc);
                     url.searchParams.set("ts", Date.now().toString())
                     currentTarget.src = url.toString();
+                    currentTarget.onerror = onError as never;
                 }
             }} onDoubleClick={() => {
-                window.open(apiUrl(`/files/${item.path}`), '_blank')?.focus()
+                if (props.openMode === OpenMode.intern) {
+                    window.open(`/#/${item.path}`, '_blank')?.focus();
+                } else {
+                    window.open(apiUrl(`/files/${item.path}`), '_blank')?.focus();
+                }
             }} alt="" loading="lazy"
         />
     } else {
-        return <ApiFileLink to={item.path} className="flex gap-1 px-2 group">
+        const LinkComp = props.openMode === OpenMode.intern ? Link : ApiFileLink;
+        return <LinkComp to={item.path} className="flex gap-1 px-2 group">
             <FileIcon className="w-auto h-6 my-auto aspect-square" mime={item.mime} />
             <span className="group-hover:underline">
                 {item.basename}
             </span>
-        </ApiFileLink>
+        </LinkComp>
     }
 }
