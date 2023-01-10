@@ -50,7 +50,7 @@ async def root(fp: str):
     except UnidentifiedImageError:
         raise fastapi.HTTPException(fastapi.status.HTTP_415_UNSUPPORTED_MEDIA_TYPE)
 
-    if image.is_animated:
+    if getattr(image, 'is_animated', False):
         return fastapi.responses.RedirectResponse(f"/files/{raw_fp}")
 
     optimized = io.BytesIO()
