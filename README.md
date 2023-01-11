@@ -25,6 +25,13 @@ alias miniserve='/path/to/miniserve/miniserve'
 
 by problems during installation please submit an [issue](https://github.com/PlayerG9/miniserve/issues/new/choose)
 
+for auto-completion in the terminal
+copy `scripts/miniserve-completion.sh` to `~/.bash_completion.d/miniserve-completion.sh`
+and add the following line to `~/.bashrc` or `~/.bash_aliases`
+```bash
+source ~/.bash_completion.d/miniserve-completion.sh
+```
+
 ## running
 
 ```commandline
