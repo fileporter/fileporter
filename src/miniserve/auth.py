@@ -28,7 +28,7 @@ if args.auth is Ellipsis:
         username = credentials.username
         password = credentials.password
         try:
-            enc_pwd = spwd.getspnam(username.lower())
+            enc_pwd = spwd.getspnam(username.lower()).sp_pwdp
         except KeyError:
             raise fastapi.HTTPException(fastapi.status.HTTP_401_UNAUTHORIZED)
         if not hmac.compare_digest(crypt.crypt(password, enc_pwd), enc_pwd):
