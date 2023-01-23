@@ -1,6 +1,30 @@
 # <img width=auto height="30" src="https://raw.githubusercontent.com/PlayerG9/miniserve/master/README.assets/repo-icon.png" alt="" /> miniserve
 serve a directory in your local network for view over the browser
 
+```bash
+user@pc:~/path/to/folder$ miniserve
+INFO:     Started server process [11472]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
+                                 
+                                 
+    █▀▀▀▀▀█ ▀▀▀  ▄▄▀  █▀▀▀▀▀█    
+    █ ███ █ ▄▄▀▄▄▄  ▀ █ ███ █    
+    █ ▀▀▀ █ █▀▄▄ █▄▀  █ ▀▀▀ █    
+    ▀▀▀▀▀▀▀ █ ▀▄▀ ▀▄▀ ▀▀▀▀▀▀▀    
+    ▀  ▄▀ ▀▀█▀██▀▄▀▄█▀▀▀██ ▄▀    
+    ▄▄██▀█▀ ▀▄▀██  ▀▄▀▄██▀█▄     
+    █ ▄▄▄▀▀▄▀█▄▀▀▄▀▄█▀▀▀▄▀▀█▀    
+      ▀▄▄█▀▀▀   ▄  ▀ ▀ ▄▄██▄     
+    ▀▀ ▀ ▀▀▀▄ ▀▀▄▀█▀█▀▀▀█▀█      
+    █▀▀▀▀▀█ ▀ ▄█▀█▀ █ ▀ ██▄      
+    █ ███ █ ▀   ▀█▄ ▀███▀▄███    
+    █ ▀▀▀ █   █ ▄ ▄█ ▀██▄▄▄█     
+    ▀▀▀▀▀▀▀ ▀  ▀ ▀▀▀  ▀   ▀▀▀    
+     
+```
+
 ![eg. fresh start](README.assets/eg-start.png)
 
 ## installation
