@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { FileOrDirectory } from "../../types";
 import ApiFileLink from "../ApiFileLink";
-import { OpenMode, sortItems } from "../../common";
+import { OpenMode } from "../../common";
 
 import FolderIcon from "./images/folder.png";
 import FolderOpenIcon from "./images/folder-open.png";
@@ -11,7 +11,7 @@ import { ViewProps } from "./ViewManager";
 
 export default function ListView({ contents, openMode }: ViewProps) {
     return <div className="flex flex-col gap-1 px-2 py-1">
-        {contents.sort(sortItems).map(item => <RenderItem key={item.path} item={item} openMode={openMode} />)}
+        {contents.map(item => <RenderItem key={item.path} item={item} openMode={openMode} />)}
     </div>
 }
 

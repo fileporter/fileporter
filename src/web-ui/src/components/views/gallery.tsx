@@ -1,17 +1,19 @@
 import { Link } from "react-router-dom";
-import { apiUrl, OpenMode, sortItems } from "../../common";
+import { apiUrl, OpenMode } from "../../common";
 import { FileOrDirectory } from "../../types";
+import { ViewProps } from "./ViewManager";
+import ApiFileLink from "../ApiFileLink";
+import FileIcon from "../FileIcon";
+
 import FolderIcon from "./images/folder.png";
 import FolderOpenIcon from "./images/folder-open.png";
 import DownloadFailedIcon from "./images/download-fail.png"
-import ApiFileLink from "../ApiFileLink";
-import FileIcon from "../FileIcon";
-import { ViewProps } from "./ViewManager";
+
 
 
 export default function GalleryView({ contents, openMode }: ViewProps) {
     return <div className="flex flex-col py-1">
-        {contents.sort(sortItems).map(item => <RenderItem key={item.path} item={item} openMode={openMode} />)}
+        {contents.map(item => <RenderItem key={item.path} item={item} openMode={openMode} />)}
     </div>
 }
 

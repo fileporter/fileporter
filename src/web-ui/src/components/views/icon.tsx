@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { apiUrl, OpenMode, sortItems } from "../../common";
+import { apiUrl, OpenMode } from "../../common";
 import { FileOrDirectory } from "../../types";
 import ApiFileLink from "../ApiFileLink";
 import FileIcon from "../FileIcon";
@@ -12,7 +12,7 @@ import FolderOpenIcon from "./images/folder-open.png";
 export default function IconView({ contents, openMode }: ViewProps) {
 
     return <div className="grid gap-3 px-2 py-1 justify-evenly" style={{gridTemplateColumns: "repeat(auto-fill, minmax(150px, 1fr))"}}>
-        {contents.sort(sortItems).map(item => <RenderItem key={item.path} item={item} openMode={openMode} />)}
+        {contents.map(item => <RenderItem key={item.path} item={item} openMode={openMode} />)}
     </div>
 }
 

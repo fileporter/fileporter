@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import { useLocation, useNavigate } from "react-router-dom";
-import { apiQuery, apiUrl, OpenMode, ViewEnum } from "../../common";
+import { apiQuery, apiUrl, numberBaseSort, OpenMode, SortMode, textBasedSort, ViewEnum } from "../../common";
 import { ApiResponse, DirectoryRootTypeResponse, FileTypeResponse } from "../../types";
 import Loading from "../Loading";
 import ViewToggleHeader from "../ControlHeader/ViewToggle";
 import OpenModeToggleHeader from "../ControlHeader/OpenModeToggle";
+import SortModeToggleHeader from "../ControlHeader/SortModeToggle";
 import { MediaSupportIndex } from "../SupportedMediaViews";
 
 import GalleryView from "./gallery";
@@ -30,6 +31,7 @@ export interface ViewProps {
 export default function ViewManager() {
     const [currentView, setView] = useState<ViewEnum>(() => parseInt(localStorage.getItem("view") ?? ViewEnum.icon.valueOf().toString()));
     const [openMode, setMode] = useState<OpenMode>(() => parseInt(localStorage.getItem("open-mode") ?? OpenMode.intern.valueOf().toString()));
+    const [sortMode, setSort] = useState<SortMode>(() => parseInt(localStorage.getItem("sort-mode") ?? SortMode.alphabetic.valueOf().toString()));
 
     function setCurrentView(view: ViewEnum) {
         localStorage.setItem("view", view.toString());
@@ -38,6 +40,10 @@ export default function ViewManager() {
     function setOpenMode(mode: OpenMode) {
         localStorage.setItem("open-mode", mode.toString());
         setMode(mode);
+    }
+    function setSortMode(mode: SortMode) {
+        localStorage.setItem("sort-mode", mode.toString());
+        setSort(mode);
     }
 
     const location = useLocation();
@@ -72,15 +78,16 @@ export default function ViewManager() {
         }} />;
     }
     const data = query.data as DirectoryRootTypeResponse;
-    const contents = !data.basename.length ? data.contents : data.contents.concat({
+    const contents = (!data.basename.length ? data.contents : data.contents.concat({
         type: "directory",
         basename: "..",
         path: data.directory,
         directory: data.directory + "/..",
-    });
+    })).sort(sortMode === SortMode.alphabetic ? textBasedSort : numberBaseSort);
 
     const View = viewMap[currentView] ?? IconView;
     return <>
+        <SortModeToggleHeader {...{sortMode, setSortMode}}/>
         <OpenModeToggleHeader {...{openMode, setOpenMode}} />
         <ViewToggleHeader {...{currentView, setCurrentView}} />
         <View data={data} contents={contents} openMode={openMode} />
