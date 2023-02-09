@@ -1,9 +1,9 @@
-import ArchiveIcon from "./icons8-archive-96.png";
-import AudioIcon from "./icons8-audio-file-96.png";
-import ImageIcon from "./icons8-image-file-96.png";
-import VideoIcon from "./icons8-video-file-96.png";
-import DocumentIcon from "./icons8-document-96.png";
-import EmptyFileIcon from "./icons8-file-96.png";
+import ArchiveIcon from "./icons/archive-96.png";
+import AudioIcon from "./icons/audio-file-96.png";
+import ImageIcon from "./icons/image-file-96.png";
+import VideoIcon from "./icons/video-file-96.png";
+import DocumentIcon from "./icons/document-96.png";
+import EmptyFileIcon from "./icons/file-96.png";
 
 
 interface Props {
