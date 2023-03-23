@@ -7,15 +7,13 @@ import FileIcon from "../FileIcon";
 
 import FolderIcon from "./images/folder.png";
 import FolderOpenIcon from "./images/folder-open.png";
-import DownloadFailedIcon from "./images/download-fail.png"
-import FullScreenToggle from "../ControlHeader/FullScreenButton";
+import DownloadFailedIcon from "./images/download-fail.png";
 import useIsFullScreen from "../../hooks/useIsFullScreen";
 
 
 
 export default function GalleryView({ contents, openMode }: ViewProps) {
     return <div className="flex flex-col py-1">
-        <FullScreenToggle />
         {contents.map(item => <RenderItem key={item.path} item={item} openMode={openMode} />)}
     </div>
 }

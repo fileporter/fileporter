@@ -12,6 +12,7 @@ import { MediaSupportIndex } from "../SupportedMediaViews";
 import GalleryView from "./gallery";
 import IconView from "./icon";
 import ListView from "./list";
+import FullScreenToggle from "../ControlHeader/FullScreenButton";
 
 
 const viewMap = {
@@ -87,6 +88,7 @@ export default function ViewManager() {
 
     const View = viewMap[currentView] ?? IconView;
     return <>
+        <FullScreenToggle />
         <SortModeToggleHeader {...{sortMode, setSortMode}}/>
         <OpenModeToggleHeader {...{openMode, setOpenMode}} />
         <ViewToggleHeader {...{currentView, setCurrentView}} />
