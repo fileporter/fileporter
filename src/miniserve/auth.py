@@ -13,7 +13,7 @@ from config import args
 security = fastapi.security.HTTPBasic()
 
 
-if args.auth is Ellipsis:
+if args.auth is Ellipsis:  # only --auth (use system password)
     # use system password
     import spwd
     import crypt
@@ -23,7 +23,6 @@ if args.auth is Ellipsis:
     except PermissionError:
         raise PermissionError("unable to verify system password. please provide one with '--auth password'")
 
-    @fastapi.Depends
     def auth_dependency(credentials: fastapi.security.HTTPBasicCredentials = fastapi.Depends(security)):
         username = credentials.username
         password = credentials.password
@@ -33,8 +32,7 @@ if args.auth is Ellipsis:
             raise fastapi.HTTPException(fastapi.status.HTTP_401_UNAUTHORIZED)
         if not hmac.compare_digest(crypt.crypt(password, enc_pwd), enc_pwd):
             raise fastapi.HTTPException(fastapi.status.HTTP_401_UNAUTHORIZED)
-else:
-    @fastapi.Depends
+elif args.auth:  # --auth [password]
     def auth_dependency(credentials: fastapi.security.HTTPBasicCredentials = fastapi.Depends(security)):
         username = credentials.username
         if username.casefold() != getpass.getuser().casefold():
@@ -42,10 +40,12 @@ else:
         password = credentials.password
         if not hmac.compare_digest(password, args.auth):
             raise fastapi.HTTPException(fastapi.status.HTTP_401_UNAUTHORIZED)
+else:  # no --auth used
+    def auth_dependency():
+        pass
 
 
 def get_network_ip():
-
     # `socket.gethostbyname(socket.gethostname())` doesn't work always
     with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as client:
         client.connect(("8.8.8.8", 80))

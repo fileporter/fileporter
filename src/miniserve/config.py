@@ -17,6 +17,7 @@ class NameSpace:
     worker: int
     root: str
     dotall: bool
+    dependencies: bool
 
     def __repr__(self):
         return f"<args {self.__dict__}>"
@@ -51,8 +52,10 @@ parser.add_argument('--auth', nargs='?', const=..., default=None,
                     help="requires user-login")
 parser.add_argument('-w', '--worker', type=ranged(1, 8),
                     help="number of workers to use", default=min(8, os.cpu_count()))
-parser.add_argument('--dotall', action="store_true",
-                    help="serve also dot-files", default=False)
+parser.add_argument('--dotall', action="store_true", default=False,
+                    help="serve also dot-files")
+parser.add_argument('--dependencies', action="store_true", default=False,
+                    help="show which dependencies are missing for previews")
 parser.add_argument('root', type=os.path.expanduser, nargs='?', default=".",
                     help="directory to serve")
 

@@ -19,7 +19,7 @@ app = fastapi.FastAPI(
     title="miniserve",
     version=__version__,
     docs_url=None,
-    dependencies=[auth.auth_dependency] if args.auth else None,
+    dependencies=[fastapi.Depends(auth.auth_dependency)],
     # redoc_url=None,
 )
 app.add_middleware(
