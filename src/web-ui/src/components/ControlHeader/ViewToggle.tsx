@@ -36,7 +36,7 @@ export default function ViewToggle(props: Props) {
     }
 
     return ReactDOM.createPortal(<>
-        <img className="h-5 my-auto cursor-pointer" alt="" title="how to view directories"
+        <img className="order-10 h-5 my-auto cursor-pointer" alt="" title="how to view directories"
             onClick={() => props.setCurrentView(getNextView())}
             src={imgMap[props.currentView]}
         />

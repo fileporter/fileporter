@@ -8,7 +8,7 @@ export default function PathBar() {
 
     const paths = path.split("/").filter(e => e.length);
 
-    return <div className="flex flex-wrap gap-1 grow">
+    return <div className="flex flex-wrap order-5 gap-1 grow">
         <Link className="w-5 text-right" to="/">/</Link>
         {paths.map((p, i) => <React.Fragment key={p}>
             <Link to={paths.slice(0, i+1).join("/")} className="break-words hover:underline max-w-[50vw] whitespace-nowrap overflow-x-clip overflow-ellipsis">

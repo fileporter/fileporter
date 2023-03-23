@@ -8,11 +8,14 @@ import FileIcon from "../FileIcon";
 import FolderIcon from "./images/folder.png";
 import FolderOpenIcon from "./images/folder-open.png";
 import DownloadFailedIcon from "./images/download-fail.png"
+import FullScreenToggle from "../ControlHeader/FullScreenButton";
+import useIsFullScreen from "../../hooks/useIsFullScreen";
 
 
 
 export default function GalleryView({ contents, openMode }: ViewProps) {
     return <div className="flex flex-col py-1">
+        <FullScreenToggle />
         {contents.map(item => <RenderItem key={item.path} item={item} openMode={openMode} />)}
     </div>
 }
@@ -26,6 +29,8 @@ interface RenderItemProps {
 
 function RenderItem(props: RenderItemProps) {
     const item = props.item;
+    const isFullScreen = useIsFullScreen();
+
     if (item.type === "directory") {
         return <Link to={item.path} className="flex gap-1 px-2 group">
             <img className="block w-auto h-6 group-hover:hidden aspect-square" src={FolderIcon} alt="" />
@@ -42,7 +47,7 @@ function RenderItem(props: RenderItemProps) {
             currentTarget.src = DownloadFailedIcon;
         }
 
-        return <img width={item.size?.[0] ?? 320} height={item.size?.[1] ?? 180} className="w-full max-w-5xl mx-auto"
+        return <img width={item.size?.[0] ?? 320} height={item.size?.[1] ?? 180} className={`w-full mx-auto ${isFullScreen ? "" : "max-w-5xl"}`}
             src={imgSrc} onError={onError} onClick={({ currentTarget }) => {
                 if (currentTarget.onerror === null) {
                     const url = new URL(imgSrc);

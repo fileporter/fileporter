@@ -44,8 +44,17 @@ else:
             raise fastapi.HTTPException(fastapi.status.HTTP_401_UNAUTHORIZED)
 
 
+def get_network_ip():
+
+    # `socket.gethostbyname(socket.gethostname())` doesn't work always
+    with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as client:
+        client.connect(("8.8.8.8", 80))
+        return client.getsockname()[0]
+
+
 def get_origins():
-    ips = ["localhost", "0.0.0.0", socket.gethostbyname(socket.gethostname())]
+    # socket.gethostbyname(socket.gethostname()) is bad (returns sometimes 127.0.1.1 or so)
+    ips = ["localhost", "0.0.0.0", get_network_ip(), socket.getfqdn()]
     for ip in ips:
         yield f"http://{ip}"
         yield f"https://{ip}"

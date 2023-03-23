@@ -23,11 +23,6 @@ def get_info():
 
 
 def print_qrcode():
-    time.sleep(2.5)  # wait for workers to start etc.
     qr = qrcode.QRCode()
     qr.add_data(get_info())
     qr.print_ascii()
-
-
-def run_background():
-    start_new_thread(print_qrcode, ())
