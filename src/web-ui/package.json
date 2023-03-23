@@ -22,7 +22,8 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "postbuild": "cp build/index.html build/404.html && rm -rf ../miniserve/web-ui/* && mv build/* ../miniserve/web-ui"
+    "postbuild": "rm -rf ../miniserve/web-ui/* && mv build/* ../miniserve/web-ui",
+    "failcopy": "cp build/index.html build/404.html && rm -rf ../miniserve/web-ui/* && mv build/* ../miniserve/web-ui"
   },
   "eslintConfig": {
     "extends": [
