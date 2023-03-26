@@ -48,6 +48,7 @@ else:  # no --auth used
 def get_network_ip():
     # `socket.gethostbyname(socket.gethostname())` doesn't work always
     with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as client:
+        client.settimeout(0)
         client.connect(("8.8.8.8", 80))
         return client.getsockname()[0]
 

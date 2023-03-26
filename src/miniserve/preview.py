@@ -26,10 +26,18 @@ manager = PreviewManager(tempfile.gettempdir())
 
 
 @preview.get("/preview/{fp:path}")
-async def root(fp: str, tasks: fastapi.BackgroundTasks):
+async def root(tasks: fastapi.BackgroundTasks,
+               fp: str = fastapi.Path(),
+               directory: bool = fastapi.Query(False)):
     fp = os.path.join(args.root, fp.removeprefix("/"))
-    if not os.path.isfile(fp):
+    if not os.path.exists(fp):
         raise fastapi.HTTPException(fastapi.status.HTTP_404_NOT_FOUND)
+
+    if os.path.isdir(fp):
+        if not directory:
+            raise fastapi.HTTPException(fastapi.status.HTTP_422_UNPROCESSABLE_ENTITY)
+        # take first file for preview
+        fp = os.path.join(fp, os.listdir(fp)[0])
 
     try:
         if not manager.has_jpeg_preview(fp):
@@ -50,7 +58,7 @@ lowRes = fastapi.APIRouter()
 
 
 @lowRes.get("/low-resolution/{fp:path}")
-async def root(fp: str):
+async def root(fp: str = fastapi.Path()):
     raw_fp = fp.removeprefix("/")
     fp = os.path.join(args.root, raw_fp)
     if not os.path.isfile(fp):

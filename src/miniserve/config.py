@@ -8,6 +8,7 @@ __version__ = ".".join(str(_) for _ in __version_info__)
 
 import os
 import argparse
+from util.argstuff import ranged
 
 
 class NameSpace:
@@ -21,19 +22,6 @@ class NameSpace:
 
     def __repr__(self):
         return f"<args {self.__dict__}>"
-
-
-def ranged(mini, maxi, cls=int):
-    def range_checker(arg):
-        try:
-            f = cls(arg)
-        except ValueError:
-            raise argparse.ArgumentTypeError("bad value")
-        if f < mini or f > maxi:
-            raise argparse.ArgumentTypeError(f"must be in range [{mini}..{maxi}]")
-        return f
-
-    return range_checker
 
 
 parser = argparse.ArgumentParser(

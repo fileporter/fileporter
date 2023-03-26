@@ -9,7 +9,7 @@ import typing as t
 import fastapi
 from pydantic import BaseModel
 from config import args
-from image_size import get_image_size, UnknownImageFormat
+from util.image_size import get_image_size, UnknownImageFormat
 
 
 api = fastapi.APIRouter(prefix="/api")
@@ -29,7 +29,7 @@ class ResponseModel(BasicMetaModel):
 
 
 @api.get("/{fp:path}", response_model=ResponseModel)
-async def get_meta(fp: str):
+async def get_meta(fp: str = fastapi.Path()):
     fp = os.path.join(args.root, fp.removeprefix("/"))
     response = meta(fp)
     if os.path.isdir(fp):

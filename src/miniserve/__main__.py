@@ -5,7 +5,8 @@ r"""
 """
 import os
 from config import args
-import qr_code_printer
+from util import qr_code_printer
+
 
 if __name__ == '__main__':
     import uvicorn
