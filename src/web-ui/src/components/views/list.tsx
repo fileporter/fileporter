@@ -3,8 +3,8 @@ import { FileOrDirectory } from "~/types";
 import ApiFileLink from "../ApiFileLink";
 import { OpenMode } from "~/common";
 
-import FolderIcon from "./images/folder.png";
-import FolderOpenIcon from "./images/folder-open.png";
+import FolderIcon from "@assets/icons/folder.png";
+import FolderOpenIcon from "@assets/icons/folder-open.png";
 import FileIcon from "../FileIcon";
 import { ViewProps } from "./ViewManager";
 

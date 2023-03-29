@@ -5,8 +5,8 @@ import ApiFileLink from "../ApiFileLink";
 import FileIcon from "../FileIcon";
 import { ViewProps } from "./ViewManager";
 
-import FolderIcon from "./images/folder.png";
-import FolderOpenIcon from "./images/folder-open.png";
+import FolderIcon from "@assets/icons/folder.png";
+import FolderOpenIcon from "@assets/icons/folder-open.png";
 
 
 export default function IconView({ contents, openMode }: ViewProps) {

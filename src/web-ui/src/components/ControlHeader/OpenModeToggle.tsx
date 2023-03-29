@@ -1,6 +1,6 @@
 import ReactDOM from "react-dom";
-import FileModeIcon from "./images/file-mode.png";
-import BrowserModeIcon from "./images/browser-mode.png";
+import FileModeIcon from "@assets/icons/file-mode.png";
+import BrowserModeIcon from "@assets/icons/browser-mode.png";
 import { OpenMode } from "~/common/";
 
 

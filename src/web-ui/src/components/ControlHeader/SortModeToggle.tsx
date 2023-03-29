@@ -1,8 +1,8 @@
 import ReactDOM from "react-dom";
 import { SortMode } from "~/common/";
 
-import AlphabeticSortIcon from "./images/alphabetic-sort.svg";
-import NumericSortIcon from "./images/numeric-sort.svg";
+import AlphabeticSortIcon from "@assets/icons/alphabetic-sort.svg";
+import NumericSortIcon from "@assets/icons/numeric-sort.svg";
 
 
 interface Props {

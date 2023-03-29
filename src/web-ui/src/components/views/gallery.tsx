@@ -5,9 +5,9 @@ import { ViewProps } from "./ViewManager";
 import ApiFileLink from "../ApiFileLink";
 import FileIcon from "../FileIcon";
 
-import FolderIcon from "./images/folder.png";
-import FolderOpenIcon from "./images/folder-open.png";
-import DownloadFailedIcon from "./images/download-fail.png";
+import FolderIcon from "@assets/icons/folder.png";
+import FolderOpenIcon from "@assets/icons/folder-open.png";
+import DownloadFailedIcon from "@assets/icons/download-fail.png";
 import useIsFullScreen from "~/hooks/useIsFullScreen";
 
 

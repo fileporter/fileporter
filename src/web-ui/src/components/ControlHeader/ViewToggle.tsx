@@ -1,8 +1,8 @@
 import ReactDOM from "react-dom";
 import { ViewEnum } from "~/common/";
-import ListViewIcon from "./images/list-view.png";
-import IconViewIcon from "./images/grid-view.png";
-import GalleryViewIcon from "./images/gallery-view.png";
+import ListViewIcon from "@assets/icons/list-view.png";
+import IconViewIcon from "@assets/icons/grid-view.png";
+import GalleryViewIcon from "@assets/icons/gallery-view.png";
 
 
 interface Props {

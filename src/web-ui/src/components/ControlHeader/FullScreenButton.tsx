@@ -1,8 +1,8 @@
 import ReactDOM from "react-dom";
 import useIsFullScreen from "~/hooks/useIsFullScreen";
 
-import FullScreenIcon from "./images/full-screen.png";
-import MinimizeIcon from "./images/minimize.png";
+import FullScreenIcon from "@assets/icons/full-screen.png";
+import MinimizeIcon from "@assets/icons/minimize.png";
 
 export default function FullScreenToggle() {
     const isFullScreen = useIsFullScreen();
