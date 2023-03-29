@@ -8,11 +8,11 @@ import ViewToggleHeader from "../ControlHeader/ViewToggle";
 import OpenModeToggleHeader from "../ControlHeader/OpenModeToggle";
 import SortModeToggleHeader from "../ControlHeader/SortModeToggle";
 import { MediaSupportIndex } from "../SupportedMediaViews";
-
-import GalleryView from "./gallery";
-import IconView from "./icon";
-import ListView from "./list";
 import FullScreenToggle from "../ControlHeader/FullScreenButton";
+
+import GalleryView from "./Gallery";
+import IconView from "./Icon";
+import ListView from "./List";
 
 
 const viewMap = {
