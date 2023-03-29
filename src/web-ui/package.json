@@ -4,8 +4,7 @@
   "private": true,
   "scripts": {
     "start": "vite --strictPort --port 3000 --cors",
-    "build": "tsc && vite build",
-    "postbuild": "rm -rf ../miniserve/web-ui/* && mv build/* ../miniserve/web-ui"
+    "build": "tsc && vite build --emptyOutDir --outDir ../miniserve/web-ui/ --base /"
   },
   "dependencies": {
     "react": "^18.2.0",
