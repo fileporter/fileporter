@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import { useLocation, useNavigate } from "react-router-dom";
-import { apiQuery, apiUrl, numberBaseSort, OpenMode, SortMode, textBasedSort, ViewEnum } from "../../common";
-import { ApiResponse, DirectoryRootTypeResponse, FileTypeResponse } from "../../types";
+import { apiQuery, apiUrl, numberBaseSort, OpenMode, SortMode, textBasedSort, ViewEnum } from "~/common";
+import { ApiResponse, DirectoryRootTypeResponse, FileTypeResponse } from "~/types";
 import Loading from "../Loading";
 import ViewToggleHeader from "../ControlHeader/ViewToggle";
 import OpenModeToggleHeader from "../ControlHeader/OpenModeToggle";

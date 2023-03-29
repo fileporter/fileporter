@@ -1,4 +1,4 @@
-import { FileTypeResponse } from "../../types";
+import { FileTypeResponse } from "~/types";
 import ImageSupport from "./Image";
 import VideoSupport from "./Video";
 

@@ -1,5 +1,5 @@
 import { PropsWithChildren } from "react";
-import { apiUrl } from "../common";
+import { apiUrl } from "~/common";
 
 interface Props extends PropsWithChildren {
     to: string

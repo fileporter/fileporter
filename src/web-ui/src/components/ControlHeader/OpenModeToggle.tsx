@@ -1,7 +1,7 @@
 import ReactDOM from "react-dom";
 import FileModeIcon from "./images/file-mode.png";
 import BrowserModeIcon from "./images/browser-mode.png";
-import { OpenMode } from "../../common";
+import { OpenMode } from "~/common/";
 
 
 interface Props {

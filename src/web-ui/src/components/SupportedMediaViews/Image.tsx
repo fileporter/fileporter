@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useLocation } from "react-router-dom";
-import { apiUrl } from "../../common";
-import { FileTypeResponse } from "../../types";
+import { apiUrl } from "~/common/";
+import { FileTypeResponse } from "~/types";
 
 
 export default function ImageSupport(file: FileTypeResponse) {

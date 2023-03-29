@@ -1,5 +1,5 @@
 import ReactDOM from "react-dom";
-import { ViewEnum } from "../../common";
+import { ViewEnum } from "~/common/";
 import ListViewIcon from "./images/list-view.png";
 import IconViewIcon from "./images/grid-view.png";
 import GalleryViewIcon from "./images/gallery-view.png";

@@ -1,5 +1,5 @@
 import ReactDOM from "react-dom";
-import useIsFullScreen from "../../hooks/useIsFullScreen";
+import useIsFullScreen from "~/hooks/useIsFullScreen";
 
 import FullScreenIcon from "./images/full-screen.png";
 import MinimizeIcon from "./images/minimize.png";

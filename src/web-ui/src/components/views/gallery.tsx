@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
-import { apiUrl, OpenMode } from "../../common";
-import { FileOrDirectory } from "../../types";
+import { apiUrl, OpenMode } from "~/common";
+import { FileOrDirectory } from "~/types";
 import { ViewProps } from "./ViewManager";
 import ApiFileLink from "../ApiFileLink";
 import FileIcon from "../FileIcon";
@@ -8,7 +8,7 @@ import FileIcon from "../FileIcon";
 import FolderIcon from "./images/folder.png";
 import FolderOpenIcon from "./images/folder-open.png";
 import DownloadFailedIcon from "./images/download-fail.png";
-import useIsFullScreen from "../../hooks/useIsFullScreen";
+import useIsFullScreen from "~/hooks/useIsFullScreen";
 
 
 

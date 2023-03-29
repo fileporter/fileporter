@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import useIsFullScreen from "../../hooks/useIsFullScreen";
+import useIsFullScreen from "~/hooks/useIsFullScreen";
 import PathBar from "./PathBar";
 
 export default function ControlHeader() {
