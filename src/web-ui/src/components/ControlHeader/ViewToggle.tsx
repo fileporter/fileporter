@@ -1,19 +1,19 @@
 import ReactDOM from "react-dom";
-import { ViewEnum } from "~/common/";
+import { ViewMode } from "~/common/";
 import ListViewIcon from "@assets/icons/list-view.png";
 import IconViewIcon from "@assets/icons/grid-view.png";
 import GalleryViewIcon from "@assets/icons/gallery-view.png";
 
 
 interface Props {
-    currentView: ViewEnum
-    setCurrentView: (v: ViewEnum) => void,
+    currentView: ViewMode
+    setCurrentView: (v: ViewMode) => void,
 }
 
 const imgMap = {
-    [ViewEnum.icon]: IconViewIcon,
-    [ViewEnum.list]: ListViewIcon,
-    [ViewEnum.gallery]: GalleryViewIcon,
+    [ViewMode.icon]: IconViewIcon,
+    [ViewMode.list]: ListViewIcon,
+    [ViewMode.gallery]: GalleryViewIcon,
 }
 
 
@@ -25,13 +25,13 @@ export default function ViewToggle(props: Props) {
 
     function getNextView() {
         switch(props.currentView) {
-            case ViewEnum.icon:
-                return ViewEnum.list;
-            case ViewEnum.list:
-                return ViewEnum.gallery;
-            case ViewEnum.gallery:
+            case ViewMode.icon:
+                return ViewMode.list;
+            case ViewMode.list:
+                return ViewMode.gallery;
+            case ViewMode.gallery:
             default:
-                return ViewEnum.icon;
+                return ViewMode.icon;
         }
     }
 

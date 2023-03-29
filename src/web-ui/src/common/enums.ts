@@ -1,5 +1,5 @@
 
-export enum ViewEnum {
+export enum ViewMode {
     icon,
     list,
     gallery,
