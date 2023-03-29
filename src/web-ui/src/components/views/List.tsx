@@ -28,7 +28,7 @@ function RenderItem(props: RenderItemProps) {
         return <Link to={item.path} className="flex gap-1 group">
             <img className="block w-auto h-6 group-hover:hidden aspect-square" src={FolderIcon} alt="" />
             <img className="hidden w-auto h-6 group-hover:block aspect-square" src={FolderOpenIcon} alt="" />
-            <span className="group-hover:underline">
+            <span className="break-words group-hover:underline">
                 {item.basename}
             </span>
         </Link>
@@ -37,7 +37,7 @@ function RenderItem(props: RenderItemProps) {
         return <LinkComp to={item.path} className="flex gap-1 group">
             <FileIcon className="w-auto h-6 my-auto aspect-square" mime={item.mime} />
             {/* <img className="w-auto h-6 aspect-square" src={FileIcon} alt="" /> */}
-            <span className="group-hover:underline">
+            <span className="break-words group-hover:underline">
                 {item.basename}
             </span>
         </LinkComp>

@@ -29,7 +29,7 @@ function RenderItem(props: RenderItemProps) {
         return <Link to={item.path} className="flex flex-col gap-1 group">
             <img className="block w-full h-auto mx-auto aspect-square group-hover:hidden" src={FolderIcon} alt="" />
             <img className="hidden w-full h-auto mx-auto aspect-square group-hover:block" src={FolderOpenIcon} alt="" />
-            <span className="text-center group-hover:underline">
+            <span className="text-center break-words group-hover:underline">
                 {item.basename}
             </span>
         </Link>
