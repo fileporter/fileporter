@@ -3,11 +3,21 @@
 r"""
 
 """
-import time
 import socket
-from _thread import start_new_thread
 import qrcode
 from config import args
+
+
+class BGColors:
+    HEADER = '\033[95m'
+    OKBLUE = '\033[94m'
+    OKCYAN = '\033[96m'
+    OKGREEN = '\033[92m'
+    WARNING = '\033[93m'
+    FAIL = '\033[91m'
+    ENDC = '\033[0m'
+    BOLD = '\033[1m'
+    UNDERLINE = '\033[4m'
 
 
 def get_info():
@@ -24,5 +34,7 @@ def get_info():
 
 def print_qrcode():
     qr = qrcode.QRCode()
-    qr.add_data(get_info())
+    info = get_info()
+    qr.add_data(info)
     qr.print_ascii()
+    print(f"{BGColors.OKGREEN}    {info}{BGColors.ENDC}")
