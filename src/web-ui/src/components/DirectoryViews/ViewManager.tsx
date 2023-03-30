@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useQuery } from "react-query";
 import { useLocation, useNavigate } from "react-router-dom";
 import { apiQuery, apiUrl, numberBaseSort, OpenMode, SortMode, textBasedSort, ViewMode } from "~/common";
@@ -15,6 +15,7 @@ import useSortMode from "~/hooks/useSortMode";
 import GalleryView from "./Gallery";
 import IconView from "./Icon";
 import ListView from "./List";
+import ErrorMessageBox from "~/elements/ErrorMessageBox";
 
 
 const viewMap = {
@@ -35,24 +36,14 @@ export default function ViewManager() {
     const [viewMode, setViewMode] = useViewMode();
     const [openMode, setOpenMode] = useOpenMode();
     const [sortMode, setSortMode] = useSortMode();
-
     const location = useLocation();
     const navigate = useNavigate();
     const path = location.pathname;
     const query = useQuery<ApiResponse, Error>(path, ({ signal }) => apiQuery(path, { signal }));
 
-    if (query.isLoading) {
-        return <Loading />
-    }
-    if (query.isError) {
-        return <h1 className="text-xl text-center text-red-300">
-            {window.navigator.onLine ? 
-                `${query.error}`
-                :
-                "You are offline"
-            }
-        </h1>
-    }
+    if (query.isLoading) return <Loading />;
+    if (query.isError) return <ErrorMessageBox error={query.error} />;
+    
     if (query.data!.type === "file") {
         const file = query.data as FileTypeResponse
         if (openMode === OpenMode.intern) {
