@@ -16,7 +16,7 @@ export default function ViewToggle(props: Props) {
     if (!header) return null;
 
     return ReactDOM.createPortal(<>
-        <img className="order-10 h-5 my-auto cursor-pointer" alt="" title="how to open files"
+        <img className="order-10 h-5 my-auto cursor-pointer" alt="" title="how to sort files"
             onClick={() => props.setSortMode(props.sortMode === SortMode.numeric ? SortMode.alphabetic : SortMode.numeric)}
             src={props.sortMode === SortMode.alphabetic ? AlphabeticSortIcon : NumericSortIcon}
         />
