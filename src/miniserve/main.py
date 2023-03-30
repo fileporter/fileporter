@@ -8,11 +8,17 @@ import fastapi.middleware.cors
 import fastapi.middleware.gzip
 # import fastapi.staticfiles
 # baize is needed for better FileResponses because starlette doesn't support range-headers
-from baize.asgi.staticfiles import Files as StaticFiles, Pages as StaticPages
+from baize.asgi.staticfiles import (
+    Files as StaticFiles,
+    Pages as StaticPages
+)
 from config import args, __version__
 import auth
 from api import api as api_router
-from preview import preview as preview_router, lowRes as lowRes_router
+from preview import (
+    preview as preview_router,
+    lowRes as lowRes_router
+)
 
 
 app = fastapi.FastAPI(
