@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 # -*- coding=utf-8 -*-
 r"""
-
+serve a directory in your local network for view over the browser
 """
 __version_info__ = (0, 1, 0)
 __version__ = ".".join(str(_) for _ in __version_info__)
@@ -27,7 +27,8 @@ class NameSpace:
 parser = argparse.ArgumentParser(
     description=__doc__,
     formatter_class=argparse.ArgumentDefaultsHelpFormatter,
-    add_help=True)
+    add_help=True,
+)
 
 parser.add_argument('-v', '--version', action="version", version=__version__)
 parser.add_argument('--local', action="store_const", const="127.0.0.1", dest="host", default="0.0.0.0",
@@ -46,6 +47,5 @@ parser.add_argument('--dependencies', action="store_true", default=False,
                     help="show which dependencies are missing for previews")
 parser.add_argument('root', type=os.path.expanduser, nargs='?', default=".",
                     help="directory to serve")
-
 
 args = parser.parse_args(namespace=NameSpace())
