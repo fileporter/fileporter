@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useLocation } from "react-router-dom";
 import { apiUrl } from "~/common/";
 import { FileTypeResponse } from "~/types";
-import ApiFileLink from "../ApiFileLink";
+import ApiFileLink from "../../elements/ApiFileLink";
 
 export default function VideoSupport(file: FileTypeResponse) {
     const [videoFailed, setFailed] = useState(false);

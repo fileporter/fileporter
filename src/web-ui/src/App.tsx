@@ -2,8 +2,8 @@ import { QueryClient, QueryClientProvider } from "react-query";
 import { HashRouter, Routes, Route } from "react-router-dom";
 import { HttpError } from "~/common";
 import ControlHeader from "~/components/ControlHeader";
-import ViewManager from "~/components/views/ViewManager";
-import HookProviders from "./hooks/HookProviders";
+import ViewManager from "~/components/DirectoryViews/ViewManager";
+import HookProviders from "~/hooks/HookProviders";
 
 
 const queryClient = new QueryClient({

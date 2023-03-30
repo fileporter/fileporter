@@ -3,7 +3,7 @@ import { useQuery } from "react-query";
 import { useLocation, useNavigate } from "react-router-dom";
 import { apiQuery, apiUrl, numberBaseSort, OpenMode, SortMode, textBasedSort, ViewMode } from "~/common";
 import { ApiResponse, DirectoryRootTypeResponse, FileTypeResponse } from "~/types";
-import Loading from "../Loading";
+import Loading from "../../elements/Loading";
 import ViewToggleHeader from "../ControlHeader/ViewToggle";
 import OpenModeToggleHeader from "../ControlHeader/OpenModeToggle";
 import SortModeToggleHeader from "../ControlHeader/SortModeToggle";

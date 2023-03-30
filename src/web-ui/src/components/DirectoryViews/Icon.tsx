@@ -1,8 +1,8 @@
 import { Link } from "react-router-dom";
 import { apiUrl, OpenMode } from "~/common";
 import { FileOrDirectory } from "~/types";
-import ApiFileLink from "../ApiFileLink";
-import FileIcon from "../FileIcon";
+import ApiFileLink from "../../elements/ApiFileLink";
+import FileIcon from "../../elements/FileIcon";
 import { ViewProps } from "./ViewManager";
 
 import FolderIcon from "@assets/icons/folder.png";
