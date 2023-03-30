@@ -8,12 +8,6 @@ import FileView from "./FileView";
 import DirectoryView from "./DirectoryView";
 
 
-export interface ViewProps {
-    data: DirectoryRootTypeResponse
-    contents: DirectoryRootTypeResponse["contents"]
-}
-
-
 export default function ViewManager() {
     const location = useLocation();
     const path = location.pathname;

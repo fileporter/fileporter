@@ -1,13 +1,12 @@
 import { Link } from "react-router-dom";
 import { apiUrl, OpenMode } from "~/common";
 import { FileOrDirectory } from "~/types";
-import ApiFileLink from "../../elements/ApiFileLink";
-import FileIcon from "../../elements/FileIcon";
-import { ViewProps } from "./ViewManager";
-
+import ApiFileLink from "~/elements/ApiFileLink";
+import FileIcon from "~/elements/FileIcon";
+import useOpenMode from "~/hooks/useOpenMode";
+import { ViewProps } from ".";
 import FolderIcon from "@assets/icons/folder.png";
 import FolderOpenIcon from "@assets/icons/folder-open.png";
-import useOpenMode from "~/hooks/useOpenMode";
 
 
 export default function IconView({ contents }: ViewProps) {
