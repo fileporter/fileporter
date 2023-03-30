@@ -24,7 +24,7 @@ export default function ControlHeader() {
     return <>
         {(isTopMost || isFullScreen) ?
             <>
-                <div id="control-header" className="z-50 flex gap-3 px-2 py-px bg-black bg-opacity-75 rounded-md">
+                <div key="control-header" id="control-header" className="z-50 flex gap-3 px-2 py-px bg-black bg-opacity-75 rounded-md">
                     <PathBar />
                 </div>
             </>
@@ -34,7 +34,7 @@ export default function ControlHeader() {
                 <div className="flex invisible gap-3 px-2 py-px">
                     <PathBar />
                 </div>
-                <div id="control-header" className="fixed inset-x-0 z-50 flex gap-3 px-2 py-px transition-all duration-300 bg-black bg-opacity-75 rounded-md" style={{top: isVisible ? "0px" : "-100%"}}>
+                <div key="control-header" id="control-header" className="fixed inset-x-0 z-50 flex gap-3 px-2 py-px transition-all duration-300 bg-black bg-opacity-75 rounded-md" style={{top: isVisible ? "0px" : "-100%"}}>
                     <PathBar />
                 </div>
             </>
