@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import { useQuery } from "react-query";
 import { useLocation, useNavigate } from "react-router-dom";
 import { apiQuery, apiUrl, numberBaseSort, OpenMode, SortMode, textBasedSort, ViewMode } from "~/common";
@@ -28,16 +28,11 @@ const viewMap = {
 export interface ViewProps {
     data: DirectoryRootTypeResponse
     contents: DirectoryRootTypeResponse["contents"]
-    openMode: OpenMode
 }
 
 
 export default function ViewManager() {
-    const [viewMode, setViewMode] = useViewMode();
-    const [openMode, setOpenMode] = useOpenMode();
-    const [sortMode, setSortMode] = useSortMode();
     const location = useLocation();
-    const navigate = useNavigate();
     const path = location.pathname;
     const query = useQuery<ApiResponse, Error>(path, ({ signal }) => apiQuery(path, { signal }));
 
@@ -45,37 +40,62 @@ export default function ViewManager() {
     if (query.isError) return <ErrorMessageBox error={query.error} />;
     
     if (query.data!.type === "file") {
-        const file = query.data as FileTypeResponse
-        if (openMode === OpenMode.intern) {
-            const Comp = MediaSupportIndex[file.mime?.split("/")[0] ?? ""];
-            if (Comp) {
-                return <Comp {...file} />
-            }
-        }
-        // otherwise these functions could be called multiple times
-        return <CallbackComp callback={() => {
-            window.open(apiUrl(`/files/${query.data!.path}`), "_blank")?.focus();
-            navigate(-1);
-        }} />;
+        return <FileView {...query.data as FileTypeResponse} />
+    } else {
+        return <DirectoryView {...query.data as DirectoryRootTypeResponse} />
     }
-    const data = query.data as DirectoryRootTypeResponse;
-    const contents = (!data.basename.length ? data.contents : data.contents.concat({
+}
+
+
+function FileView(file: FileTypeResponse) {
+    const [openMode] = useOpenMode();
+    const navigate = useNavigate();
+
+    useMemo(() => console.log("callback"), []);
+    
+    useEffect(() => {
+        console.log("OPn")
+        return () => console.log("OFF")
+    }, [])
+
+    if (openMode === OpenMode.intern) {
+        const MediaView = MediaSupportIndex[file.mime?.split("/")[0] ?? ""];
+        if (MediaView) {
+            return <>
+                <FullScreenToggle />
+                <MediaView {...file} />
+            </>;
+        }
+    }
+
+    // otherwise these functions could be called multiple times
+    return <CallbackComp callback={() => {
+        window.open(apiUrl(`/files/${file.path}`), "_blank")?.focus();
+        navigate(-1);
+    }} />;
+}
+
+
+function DirectoryView(directory: DirectoryRootTypeResponse) {
+    const [viewMode] = useViewMode();
+    const [sortMode] = useSortMode();
+    
+    const contents = (!directory.basename.length ? directory.contents : directory.contents.concat({
         type: "directory",
         basename: "..",
-        path: data.directory,
-        directory: data.directory + "/..",
+        path: directory.directory,
+        directory: directory.directory + "/..",
     })).sort(sortMode === SortMode.alphabetic ? textBasedSort : numberBaseSort);
 
     const View = viewMap[viewMode] ?? IconView;
     return <>
         <FullScreenToggle />
-        <SortModeToggleHeader {...{sortMode, setSortMode}}/>
-        <OpenModeToggleHeader {...{openMode, setOpenMode}} />
-        <ViewToggleHeader currentView={viewMode} setCurrentView={setViewMode} />
-        <View data={data} contents={contents} openMode={openMode} />
-    </>
+        <SortModeToggleHeader />
+        <OpenModeToggleHeader />
+        <ViewToggleHeader />
+        <View data={directory} contents={contents} />
+    </>;
 }
-
 
 function CallbackComp({ callback }: {callback: () => void}) {
     // prevent calling this multiple times

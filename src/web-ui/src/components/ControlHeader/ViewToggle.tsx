@@ -3,12 +3,8 @@ import { ViewMode } from "~/common/";
 import ListViewIcon from "@assets/icons/list-view.png";
 import IconViewIcon from "@assets/icons/grid-view.png";
 import GalleryViewIcon from "@assets/icons/gallery-view.png";
+import useViewMode from "~/hooks/useViewMode";
 
-
-interface Props {
-    currentView: ViewMode
-    setCurrentView: (v: ViewMode) => void,
-}
 
 const imgMap = {
     [ViewMode.icon]: IconViewIcon,
@@ -17,14 +13,14 @@ const imgMap = {
 }
 
 
-export default function ViewToggle(props: Props) {
+export default function ViewToggle() {
+    const [viewMode, setViewMode] = useViewMode();
+
     const header = document.getElementById("control-header");
-    if (!header) {
-        return null;
-    }
+    if (!header) return null;
 
     function getNextView() {
-        switch(props.currentView) {
+        switch(viewMode) {
             case ViewMode.icon:
                 return ViewMode.list;
             case ViewMode.list:
@@ -37,8 +33,8 @@ export default function ViewToggle(props: Props) {
 
     return ReactDOM.createPortal(<>
         <img className="order-10 h-5 my-auto cursor-pointer" alt="" title="how to view directories"
-            onClick={() => props.setCurrentView(getNextView())}
-            src={imgMap[props.currentView]}
+            onClick={() => setViewMode(getNextView())}
+            src={imgMap[viewMode]}
         />
     </>, header)
 }

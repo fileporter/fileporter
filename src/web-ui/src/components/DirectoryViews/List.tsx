@@ -7,23 +7,19 @@ import FolderIcon from "@assets/icons/folder.png";
 import FolderOpenIcon from "@assets/icons/folder-open.png";
 import FileIcon from "../../elements/FileIcon";
 import { ViewProps } from "./ViewManager";
+import useOpenMode from "~/hooks/useOpenMode";
 
 
-export default function ListView({ contents, openMode }: ViewProps) {
+export default function ListView({ contents }: ViewProps) {
     return <div className="flex flex-col gap-1 px-2 py-1">
-        {contents.map(item => <RenderItem key={item.path} item={item} openMode={openMode} />)}
+        {contents.map(item => <RenderItem key={item.path} {...item} />)}
     </div>
 }
 
 
-interface RenderItemProps {
-    item: FileOrDirectory
-    openMode: OpenMode
-}
+function RenderItem(item: FileOrDirectory) {
+    const [openMode] = useOpenMode();
 
-
-function RenderItem(props: RenderItemProps) {
-    const item = props.item;
     if (item.type === "directory") {
         return <Link to={item.path} className="flex gap-1 group">
             <img className="block w-auto h-6 group-hover:hidden aspect-square" src={FolderIcon} alt="" />
@@ -33,7 +29,7 @@ function RenderItem(props: RenderItemProps) {
             </span>
         </Link>
     } else {
-        const LinkComp = props.openMode === OpenMode.intern ? Link : ApiFileLink;
+        const LinkComp = openMode === OpenMode.intern ? Link : ApiFileLink;
         return <LinkComp to={item.path} className="flex gap-1 group">
             <FileIcon className="w-auto h-6 my-auto aspect-square" mime={item.mime} />
             {/* <img className="w-auto h-6 aspect-square" src={FileIcon} alt="" /> */}

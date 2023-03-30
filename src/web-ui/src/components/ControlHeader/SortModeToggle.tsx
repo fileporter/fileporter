@@ -3,22 +3,19 @@ import { SortMode } from "~/common/";
 
 import AlphabeticSortIcon from "@assets/icons/alphabetic-sort.svg";
 import NumericSortIcon from "@assets/icons/numeric-sort.svg";
+import useSortMode from "~/hooks/useSortMode";
 
 
-interface Props {
-    sortMode: SortMode
-    setSortMode: (v: SortMode) => void,
-}
+export default function ViewToggle() {
+    const [sortMode, setSortMode] = useSortMode();
 
-
-export default function ViewToggle(props: Props) {
     const header = document.getElementById("control-header");
     if (!header) return null;
 
     return ReactDOM.createPortal(<>
         <img className="order-10 h-5 my-auto cursor-pointer" alt="" title="how to sort files"
-            onClick={() => props.setSortMode(props.sortMode === SortMode.numeric ? SortMode.alphabetic : SortMode.numeric)}
-            src={props.sortMode === SortMode.alphabetic ? AlphabeticSortIcon : NumericSortIcon}
+            onClick={() => setSortMode(sortMode === SortMode.numeric ? SortMode.alphabetic : SortMode.numeric)}
+            src={sortMode === SortMode.alphabetic ? AlphabeticSortIcon : NumericSortIcon}
         />
     </>, header)
 }

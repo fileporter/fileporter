@@ -9,24 +9,19 @@ import FolderIcon from "@assets/icons/folder.png";
 import FolderOpenIcon from "@assets/icons/folder-open.png";
 import DownloadFailedIcon from "@assets/icons/download-fail.png";
 import useIsFullScreen from "~/hooks/useIsFullScreen";
+import useOpenMode from "~/hooks/useOpenMode";
 
 
 
-export default function GalleryView({ contents, openMode }: ViewProps) {
+export default function GalleryView({ contents }: ViewProps) {
     return <div className="flex flex-col py-1">
-        {contents.map(item => <RenderItem key={item.path} item={item} openMode={openMode} />)}
+        {contents.map(item => <RenderItem key={item.path} {...item} />)}
     </div>
 }
 
 
-interface RenderItemProps {
-    item: FileOrDirectory
-    openMode: OpenMode
-}
-
-
-function RenderItem(props: RenderItemProps) {
-    const item = props.item;
+function RenderItem(item: FileOrDirectory) {
+    const [openMode] = useOpenMode();
     const isFullScreen = useIsFullScreen();
 
     if (item.type === "directory") {
@@ -54,7 +49,7 @@ function RenderItem(props: RenderItemProps) {
                     currentTarget.onerror = onError as never;
                 }
             }} onDoubleClick={() => {
-                if (props.openMode === OpenMode.intern) {
+                if (openMode === OpenMode.intern) {
                     window.open(`/#/${item.path}`, '_blank')?.focus();
                 } else {
                     window.open(apiUrl(`/files/${item.path}`), '_blank')?.focus();
@@ -62,7 +57,7 @@ function RenderItem(props: RenderItemProps) {
             }} alt="" loading="lazy"
         />
     } else {
-        const LinkComp = props.openMode === OpenMode.intern ? Link : ApiFileLink;
+        const LinkComp = openMode === OpenMode.intern ? Link : ApiFileLink;
         return <LinkComp to={item.path} className="flex gap-1 px-2 group">
             <FileIcon className="w-auto h-6 my-auto aspect-square" mime={item.mime} />
             <span className="break-words group-hover:underline">
