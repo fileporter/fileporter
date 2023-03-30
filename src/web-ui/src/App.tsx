@@ -4,6 +4,7 @@ import { HttpError } from "~/common";
 import ControlHeader from "~/components/ControlHeader";
 import ViewManager from "~/components/DirectoryViews/ViewManager";
 import HookProviders from "~/hooks/HookProviders";
+import OfflineHeader from "./components/OfflineHeader";
 
 
 const queryClient = new QueryClient({
@@ -35,6 +36,7 @@ export default function Provider() {
 
 function App() {
     return <>
+        <OfflineHeader />
         <ControlHeader />
         <ViewManager />
     </>
