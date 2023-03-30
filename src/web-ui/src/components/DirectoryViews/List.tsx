@@ -7,6 +7,7 @@ import useOpenMode from "~/hooks/useOpenMode";
 import { ViewProps } from ".";
 import FolderIcon from "@assets/icons/folder.png";
 import FolderOpenIcon from "@assets/icons/folder-open.png";
+import { OpenModeLinkMap } from "~/common/maps";
 
 
 export default function ListView({ contents }: ViewProps) {
@@ -28,7 +29,7 @@ function RenderItem(item: FileOrDirectory) {
             </span>
         </Link>
     } else {
-        const LinkComp = openMode === OpenMode.intern ? Link : ApiFileLink;
+        const LinkComp = OpenModeLinkMap[openMode];
         return <LinkComp to={item.path} className="flex gap-1 group">
             <FileIcon className="w-auto h-6 my-auto aspect-square" mime={item.mime} />
             {/* <img className="w-auto h-6 aspect-square" src={FileIcon} alt="" /> */}

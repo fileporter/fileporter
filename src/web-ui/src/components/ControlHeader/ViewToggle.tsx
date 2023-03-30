@@ -19,7 +19,7 @@ export default function ViewToggle() {
     const header = document.getElementById("control-header");
     if (!header) return null;
 
-    function getNextView() {
+    function getNextMode() {
         switch(viewMode) {
             case ViewMode.icon:
                 return ViewMode.list;
@@ -33,7 +33,7 @@ export default function ViewToggle() {
 
     return ReactDOM.createPortal(<>
         <img className="order-10 h-5 my-auto cursor-pointer" alt="" title="how to view directories"
-            onClick={() => setViewMode(getNextView())}
+            onClick={() => setViewMode(getNextMode())}
             src={imgMap[viewMode]}
         />
     </>, header)
