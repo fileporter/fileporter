@@ -2,7 +2,7 @@ import { QueryClient, QueryClientProvider } from "react-query";
 import { HashRouter, Routes, Route } from "react-router-dom";
 import { HttpError } from "~/common";
 import ControlHeader from "~/components/ControlHeader";
-import ViewManager from "~/components/DirectoryViews/ViewManager";
+import ViewManager from "~/components/ViewManager";
 import HookProviders from "~/hooks/HookProviders";
 import OfflineHeader from "./components/OfflineHeader";
 
@@ -21,7 +21,7 @@ const queryClient = new QueryClient({
 });
 
 
-export default function Provider() {
+export default function ProviderCollection() {
     return <QueryClientProvider client={queryClient}>
         <HookProviders>
             <HashRouter>
