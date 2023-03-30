@@ -1,14 +1,11 @@
 import { useState } from "react";
-import { useLocation } from "react-router-dom";
 import { apiUrl } from "~/common/";
 import { FileTypeResponse } from "~/types";
 
 
 export default function ImageSupport(file: FileTypeResponse) {
     const [useFullView, setFullView] = useState(true);
-    const location = useLocation();
-    const path = location.pathname;
-    const srcUrl = apiUrl(`/files/${path}`);
+    const srcUrl = apiUrl(`/files/${file.path}`);
 
     function toggleView() {
         setFullView(!useFullView);
