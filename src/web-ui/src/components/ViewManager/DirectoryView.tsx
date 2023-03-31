@@ -3,7 +3,7 @@ import { DirectoryRootTypeResponse } from "~/types";
 import ViewToggleHeader from "../ControlHeader/ViewToggle";
 import OpenModeToggleHeader from "../ControlHeader/OpenModeToggle";
 import SortModeToggleHeader from "../ControlHeader/SortModeToggle";
-import FullScreenToggle from "../ControlHeader/FullScreenButton";
+import FullScreenToggle from "../ControlHeader/FullScreenToggle";
 import useViewMode from "~/hooks/useViewMode";
 import useSortMode from "~/hooks/useSortMode";
 import GalleryView from "~/components/DirectoryViews/Gallery";

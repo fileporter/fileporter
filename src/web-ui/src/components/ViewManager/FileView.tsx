@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { apiUrl, OpenMode } from "~/common";
 import { FileTypeResponse } from "~/types";
 import { MediaSupportIndex } from "~/components/SupportedMediaViews";
-import FullScreenToggle from "~/components/ControlHeader/FullScreenButton";
+import FullScreenToggle from "~/components/ControlHeader/FullScreenToggle";
 import useOpenMode from "~/hooks/useOpenMode";
 
 
