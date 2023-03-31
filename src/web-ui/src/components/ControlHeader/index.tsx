@@ -23,21 +23,13 @@ export default function ControlHeader() {
 
     return <>
         {(isTopMost || isFullScreen) ?
-            <>
-                <div key="control-header" id="control-header" className="z-50 flex gap-3 px-2 py-px bg-black bg-opacity-75 rounded-md">
-                    <PathBar />
-                </div>
-            </>
+            <div key="control-header" id="control-header" className="z-50 flex gap-3 px-2 py-px bg-black bg-opacity-75 rounded-md">
+                <PathBar />
+            </div>
             :
-            <>
-                {/* this (invisible) is needed to avoid a bug */}
-                <div className="flex invisible gap-3 px-2 py-px">
-                    <PathBar />
-                </div>
-                <div key="control-header" id="control-header" className="fixed inset-x-0 z-50 flex gap-3 px-2 py-px transition-all duration-300 bg-black bg-opacity-75 rounded-md" style={{top: isVisible ? "0px" : "-100%"}}>
-                    <PathBar />
-                </div>
-            </>
+            <div key="control-header" id="control-header" className="sticky inset-x-0 z-50 flex gap-3 px-2 py-px transition-all duration-300 bg-black bg-opacity-75 rounded-md" style={{top: isVisible ? "0px" : "-100%"}}>
+                <PathBar />
+            </div>
         }
     </>
 }
