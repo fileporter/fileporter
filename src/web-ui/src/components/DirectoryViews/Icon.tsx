@@ -1,13 +1,11 @@
 import { Link } from "react-router-dom";
-import { apiUrl, OpenMode } from "~/common";
+import { apiUrl } from "~/common";
 import { FileOrDirectory } from "~/types";
-import ApiFileLink from "~/elements/ApiFileLink";
 import FileIcon from "~/elements/FileIcon";
 import useOpenMode from "~/hooks/useOpenMode";
 import { ViewProps } from ".";
-import FolderIcon from "@assets/icons/folder.png";
-import FolderOpenIcon from "@assets/icons/folder-open.png";
 import { OpenModeLinkMap } from "~/common/maps";
+import FolderIcon from "~/elements/FolderIcon";
 
 
 export default function IconView({ contents }: ViewProps) {
@@ -23,8 +21,7 @@ function RenderItem(item: FileOrDirectory) {
 
     if (item.type === "directory") {
         return <Link to={item.path} className="flex flex-col gap-1 group">
-            <img className="block w-full h-auto mx-auto aspect-square group-hover:hidden" src={FolderIcon} alt="" />
-            <img className="hidden w-full h-auto mx-auto aspect-square group-hover:block" src={FolderOpenIcon} alt="" />
+            <FolderIcon previewSrc={apiUrl(`/preview/${item.path}?directories=true`)} />
             <span className="text-center break-words group-hover:underline">
                 {item.basename}
             </span>

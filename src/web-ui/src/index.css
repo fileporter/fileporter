@@ -1,3 +1,8 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+    /* used to adjust the color of icon etc */
+    --color-rotation: 0deg;
+}

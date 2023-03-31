@@ -10,7 +10,7 @@ export default function FullScreenToggle() {
     if (!header) return null;
 
     return ReactDOM.createPortal(<>
-        <img className="order-10 h-5 my-auto cursor-pointer" alt="" title="request fullscreen for better experience"
+        <img className="order-10 h-5 my-auto cursor-pointer hue-rotate-color" alt="" title="request fullscreen for better experience"
             onClick={() => {
                 if (isFullScreen) {
                     document.exitFullscreen();

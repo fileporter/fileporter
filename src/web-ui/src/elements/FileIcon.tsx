@@ -4,6 +4,7 @@ import ImageIcon from "@assets/files/image-file.png";
 import VideoIcon from "@assets/files/video-file.png";
 import DocumentIcon from "@assets/files/document.png";
 import EmptyFileIcon from "@assets/files/default-file.png";
+import { useState } from "react";
 
 
 interface Props {
@@ -13,25 +14,27 @@ interface Props {
 }
 
 export default function FileIcon(props: Props) {
-    function getIcon(): string {
-        switch(props.mime?.split("/", 1)[0]) {
-            case "application":
-                return ArchiveIcon;
-            case "audio":
-                return AudioIcon;
-            case "image":
-                return ImageIcon;
-            case "video":
-                return VideoIcon;
-            case "text":
-                return DocumentIcon;
-            default:
-                return EmptyFileIcon;
-        }
-    }
+    const [imgSrc, setSrc] = useState(props.imgSrc);
+    const failed = imgSrc !== props.imgSrc;
 
-    return <img className={props.className} src={props.imgSrc ?? getIcon()} onError={({ currentTarget }) => {
-        currentTarget.onerror = null;
-        currentTarget.src = getIcon();
+    return <img className={`${failed ? "hue-rotate-color" : ""} ${props.className}`} src={imgSrc} onError={failed ? undefined : () => {
+        setSrc(getIcon(props.mime))
     }} alt="" loading="lazy" />;
+}
+
+function getIcon(mime: string | undefined): string {
+    switch(mime?.split("/", 1)[0]) {
+        case "application":
+            return ArchiveIcon;
+        case "audio":
+            return AudioIcon;
+        case "image":
+            return ImageIcon;
+        case "video":
+            return VideoIcon;
+        case "text":
+            return DocumentIcon;
+        default:
+            return EmptyFileIcon;
+    }
 }

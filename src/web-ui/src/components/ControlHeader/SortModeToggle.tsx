@@ -13,7 +13,7 @@ export default function ViewToggle() {
     if (!header) return null;
 
     return ReactDOM.createPortal(<>
-        <img className="order-10 h-5 my-auto cursor-pointer" alt="" title="how to sort files"
+        <img className="order-10 h-5 my-auto cursor-pointer hue-rotate-color" alt="" title="how to sort files"
             onClick={() => setSortMode(sortMode === SortMode.numeric ? SortMode.alphabetic : SortMode.numeric)}
             src={sortMode === SortMode.alphabetic ? AlphabeticSortIcon : NumericSortIcon}
         />

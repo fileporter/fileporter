@@ -8,7 +8,10 @@ module.exports = {
     extend: {
       colors: {
         gray: "#22272e",
-      }
+      },
+      hueRotate: {
+        color: "var(--color-rotation)",
+      },
     },
   },
   plugins: [],

@@ -32,7 +32,7 @@ export default function ViewToggle() {
     }
 
     return ReactDOM.createPortal(<>
-        <img className="order-10 h-5 my-auto cursor-pointer" alt="" title="how to open files"
+        <img className="order-10 h-5 my-auto cursor-pointer hue-rotate-color" alt="" title="how to open files"
             onClick={() => setOpenMode(getNextMode())}
             src={imgMap[openMode]}
         />

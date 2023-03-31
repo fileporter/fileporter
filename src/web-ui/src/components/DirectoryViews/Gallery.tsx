@@ -2,12 +2,11 @@ import { Link } from "react-router-dom";
 import { apiUrl, OpenMode } from "~/common";
 import { FileOrDirectory } from "~/types";
 import { ViewProps } from ".";
-import ApiFileLink from "~/elements/ApiFileLink";
 import FileIcon from "~/elements/FileIcon";
 import useIsFullScreen from "~/hooks/useIsFullScreen";
 import useOpenMode from "~/hooks/useOpenMode";
-import FolderIcon from "@assets/icons/folder.png";
-import FolderOpenIcon from "@assets/icons/folder-open.png";
+import FolderIcon from "@assets/files/folder.png";
+import FolderOpenIcon from "@assets/files/folder-open.png";
 import DownloadFailedIcon from "@assets/icons/download-fail.png";
 import { OpenModeLinkMap } from "~/common/maps";
 
