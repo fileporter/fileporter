@@ -1,7 +1,7 @@
 import { createContext, PropsWithChildren, useContext, useState } from "react";
 import { ViewMode } from "~/common";
 
-const getDefault = () => parseInt(localStorage.getItem("view") ?? ViewMode.icon.valueOf().toString());
+const getDefault = () => parseInt(localStorage.getItem("view-mode") ?? ViewMode.icon.toString());
 
 const ViewContext = createContext<{
     viewMode: ViewMode
@@ -16,7 +16,7 @@ export function Provider(props: PropsWithChildren) {
     const [value, set] = useState<ViewMode>(getDefault);
 
     function setMode(mode: ViewMode) {
-        localStorage.setItem("open-mode", mode.toString());
+        localStorage.setItem("view-mode", mode.toString());
         set(mode);
     }
 

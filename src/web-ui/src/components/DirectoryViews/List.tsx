@@ -3,9 +3,8 @@ import { FileOrDirectory } from "~/types";
 import FileIcon from "~/elements/FileIcon";
 import useOpenMode from "~/hooks/useOpenMode";
 import { ViewProps } from ".";
-import FolderIcon from "@assets/files/folder.png";
-import FolderOpenIcon from "@assets/files/folder-open.png";
 import { OpenModeLinkMap } from "~/common/maps";
+import FolderIcon from "~/elements/FolderIcon";
 
 
 export default function ListView({ contents }: ViewProps) {
@@ -20,8 +19,7 @@ function RenderItem(item: FileOrDirectory) {
 
     if (item.type === "directory") {
         return <Link to={item.path} className="flex gap-1 group">
-            <img className="block w-auto h-6 group-hover:hidden aspect-square" src={FolderIcon} alt="" />
-            <img className="hidden w-auto h-6 group-hover:block aspect-square" src={FolderOpenIcon} alt="" />
+            <FolderIcon className="w-auto h-6 aspect-square" />
             <span className="break-words group-hover:underline">
                 {item.basename}
             </span>
@@ -30,7 +28,6 @@ function RenderItem(item: FileOrDirectory) {
         const LinkComp = OpenModeLinkMap[openMode];
         return <LinkComp to={item.path} className="flex gap-1 group">
             <FileIcon className="w-auto h-6 my-auto aspect-square" mime={item.mime} />
-            {/* <img className="w-auto h-6 aspect-square" src={FileIcon} alt="" /> */}
             <span className="break-words group-hover:underline">
                 {item.basename}
             </span>

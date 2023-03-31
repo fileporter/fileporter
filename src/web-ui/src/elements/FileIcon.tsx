@@ -14,15 +14,15 @@ interface Props {
 }
 
 export default function FileIcon(props: Props) {
-    const [imgSrc, setSrc] = useState(props.imgSrc);
+    const [imgSrc, setSrc] = useState(props.imgSrc ?? getIconFromMimeType(props.mime));
     const failed = imgSrc !== props.imgSrc;
 
     return <img className={`${failed ? "hue-rotate-color" : ""} ${props.className}`} src={imgSrc} onError={failed ? undefined : () => {
-        setSrc(getIcon(props.mime))
+        setSrc(getIconFromMimeType(props.mime))
     }} alt="" loading="lazy" />;
 }
 
-function getIcon(mime: string | undefined): string {
+function getIconFromMimeType(mime: string | undefined): string {
     switch(mime?.split("/", 1)[0]) {
         case "application":
             return ArchiveIcon;

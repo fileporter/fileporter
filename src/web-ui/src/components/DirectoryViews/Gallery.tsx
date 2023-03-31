@@ -1,32 +1,64 @@
 import { Link } from "react-router-dom";
 import { apiUrl, OpenMode } from "~/common";
-import { FileOrDirectory } from "~/types";
+import { FileOrDirectory, FileTypeResponse } from "~/types";
 import { ViewProps } from ".";
 import FileIcon from "~/elements/FileIcon";
 import useIsFullScreen from "~/hooks/useIsFullScreen";
 import useOpenMode from "~/hooks/useOpenMode";
-import FolderIcon from "@assets/files/folder.png";
-import FolderOpenIcon from "@assets/files/folder-open.png";
-import DownloadFailedIcon from "@assets/icons/download-fail.png";
 import { OpenModeLinkMap } from "~/common/maps";
-
+import FolderIcon from "~/elements/FolderIcon";
+import DownloadFailedIcon from "@assets/icons/download-fail.png";
+import FolderIconSrc from "@assets/files/folder.png";
+import FolderOpenIconSrc from "@assets/files/folder-open.png";
 
 
 export default function GalleryView({ contents }: ViewProps) {
-    return <div className="flex flex-col py-1">
-        {contents.map(item => <RenderItem key={item.path} {...item} />)}
-    </div>
+    const imageCount = contents.filter(item => item.type === "file" && item.mime?.startsWith("image/")).length;
+    const otherCount = contents.length - imageCount;
+
+    // comparing the ratio between image-files and other stuff (directories+files)
+    if ((imageCount/otherCount) <= 1.0) {
+        return <div className="grid gap-3 px-2 py-1 justify-evenly" style={{gridTemplateColumns: "repeat(auto-fill, minmax(150px, 1fr))"}}>
+            {contents.map(item => <GridRenderItem key={item.path} {...item} />)}
+        </div>;
+    } else {
+        return <div className="flex flex-col py-1">
+            {contents.map(item => <ListRenderItem key={item.path} {...item} />)}
+        </div>;
+    }
 }
 
 
-function RenderItem(item: FileOrDirectory) {
+function GridRenderItem(item: FileOrDirectory) {
+    const [openMode] = useOpenMode();
+
+    if (item.type === "directory") {
+        return <Link to={item.path} className="flex flex-col gap-1 group">
+            <FolderIcon previewSrc={apiUrl(`/preview/${item.path}?directories=true`)} />
+            <span className="text-center break-words group-hover:underline">
+                {item.basename}
+            </span>
+        </Link>
+    } else {
+        const LinkComp = OpenModeLinkMap[openMode];
+        return <LinkComp to={item.path} className="flex flex-col gap-1 group">
+            <FileIcon className="object-cover w-full h-auto mx-auto rounded-lg aspect-square" imgSrc={apiUrl(`/preview/${item.path}`)} mime={item.mime} /> 
+            <span className="w-full text-center break-words group-hover:underline">
+                {item.basename}
+            </span>
+        </LinkComp>
+    }
+}
+
+
+function ListRenderItem(item: FileOrDirectory) {
     const [openMode] = useOpenMode();
     const isFullScreen = useIsFullScreen();
 
     if (item.type === "directory") {
         return <Link to={item.path} className="flex gap-1 px-2 group">
-            <img className="block w-auto h-6 group-hover:hidden aspect-square" src={FolderIcon} alt="" />
-            <img className="hidden w-auto h-6 group-hover:block aspect-square" src={FolderOpenIcon} alt="" />
+            <img className="block w-auto h-6 group-hover:hidden aspect-square" src={FolderIconSrc} alt="" />
+            <img className="hidden w-auto h-6 group-hover:block aspect-square" src={FolderOpenIconSrc} alt="" />
             <span className="break-words group-hover:underline">
                 {item.basename}
             </span>

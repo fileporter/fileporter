@@ -1,7 +1,7 @@
 import { createContext, PropsWithChildren, useContext, useState } from "react";
 import { SortMode } from "~/common";
 
-const getDefault = () => parseInt(localStorage.getItem("sort-mode") ?? SortMode.alphabetic.valueOf().toString());
+const getDefault = () => parseInt(localStorage.getItem("sort-mode") ?? SortMode.alphabetic.toString());
 
 const ViewContext = createContext<{
     viewMode: SortMode
@@ -16,7 +16,7 @@ export function Provider(props: PropsWithChildren) {
     const [value, set] = useState<SortMode>(getDefault);
 
     function setMode(mode: SortMode) {
-        localStorage.setItem("open-mode", mode.toString());
+        localStorage.setItem("sort-mode", mode.toString());
         set(mode);
     }
 

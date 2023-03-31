@@ -1,7 +1,7 @@
 import { createContext, PropsWithChildren, useContext, useState } from "react";
 import { OpenMode } from "~/common";
 
-const getDefault = () => parseInt(localStorage.getItem("open-mode") ?? OpenMode.intern.valueOf().toString());
+const getDefault = () => parseInt(localStorage.getItem("open-mode") ?? OpenMode.intern.toString());
 
 const ViewContext = createContext<{
     viewMode: OpenMode
