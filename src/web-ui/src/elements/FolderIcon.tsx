@@ -1,3 +1,4 @@
+import { useState } from "react";
 import FolderIconSrc from "@assets/files/directory.png";
 // import FolderBackgroundSrc from "@assets/files/folder-background.png";
 // import FolderFrontClosedSrc from "@assets/files/folder-front-closed.png";
@@ -11,10 +12,11 @@ interface Props {
 
 // not animated (preview on directory pinned)
 export default function FolderIcon(props: Props) {
+    const [success, setSuccess] = useState(false);
     return <div className={`relative group ${props.className}`}>
         <img className="w-full" src={FolderIconSrc} />
         {props.previewSrc &&
-            <img className="absolute object-cover w-1/2 border border-black rounded-md top-1/2 left-1/2 -translate-x-[15%] -translate-y-1/3 aspect-square rotate-6" src={props.previewSrc} onError={e => e.currentTarget.style.display = 'none'} />
+            <img className="absolute object-cover w-1/2 border border-black rounded-md top-1/2 left-1/2 -translate-x-[15%] -translate-y-1/3 aspect-square rotate-6" src={props.previewSrc} style={{display: success ? "block" : "none"}} onLoad={() => setSuccess(true)} />
         }
     </div>;
 }
