@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { apiUrl, OpenMode } from "~/common";
-import { FileOrDirectory, FileTypeResponse } from "~/types";
+import { FileOrDirectory } from "~/types";
 import { ViewProps } from ".";
 import FileIcon from "~/elements/FileIcon";
 import useIsFullScreen from "~/hooks/useIsFullScreen";
@@ -8,8 +8,6 @@ import useOpenMode from "~/hooks/useOpenMode";
 import { OpenModeLinkMap } from "~/common/maps";
 import FolderIcon from "~/elements/FolderIcon";
 import DownloadFailedIcon from "@assets/icons/download-fail.png";
-import FolderIconSrc from "@assets/files/folder.png";
-import FolderOpenIconSrc from "@assets/files/folder-open.png";
 
 
 export default function GalleryView({ contents }: ViewProps) {
@@ -57,8 +55,7 @@ function ListRenderItem(item: FileOrDirectory) {
 
     if (item.type === "directory") {
         return <Link to={item.path} className="flex gap-1 px-2 group">
-            <img className="block w-auto h-6 group-hover:hidden aspect-square" src={FolderIconSrc} alt="" />
-            <img className="hidden w-auto h-6 group-hover:block aspect-square" src={FolderOpenIconSrc} alt="" />
+            <FolderIcon />
             <span className="break-words group-hover:underline">
                 {item.basename}
             </span>
