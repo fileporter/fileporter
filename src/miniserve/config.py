@@ -19,6 +19,7 @@ class NameSpace:
     root: str
     dotall: bool
     dependencies: bool
+    cache: bool
 
     def __repr__(self):
         return f"<args {self.__dict__}>"
@@ -45,6 +46,8 @@ parser.add_argument('--dotall', action="store_true", default=False,
                     help="serve also dot-files")
 parser.add_argument('--dependencies', action="store_true", default=False,
                     help="show which dependencies are missing for previews")
+parser.add_argument('--no-cache', action="store_false", default=True,
+                    help="disable cache")
 parser.add_argument('root', type=os.path.expanduser, nargs='?', default=".",
                     help="directory to serve")
 

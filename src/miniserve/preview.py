@@ -6,7 +6,7 @@ r"""
 import os
 import io
 import tempfile
-import mimetypes
+import zlib
 import logging
 import fastapi
 from preview_generator.manager import PreviewManager
@@ -20,26 +20,30 @@ from config import args
 if not args.dependencies:
     logging.getLogger(PREVIEW_LOGGER_NAME).setLevel(logging.CRITICAL)
 
+
+# DELETION of the Previews is done at the end of the execution
+CACHE = tempfile.TemporaryDirectory()
+
 preview = fastapi.APIRouter()
-manager = PreviewManager(tempfile.gettempdir())
+manager = PreviewManager(CACHE.name)
 
 
 @preview.get("/preview/{fp:path}")
 async def get_preview(request: fastapi.Request,
                       tasks: fastapi.BackgroundTasks,
                       fp: str = fastapi.Path(),
-                      directory: bool = fastapi.Query(False)):
+                      directories: bool = fastapi.Query(False)):
     fp = os.path.join(args.root, fp.removeprefix("/"))
     if not os.path.exists(fp):
         raise fastapi.HTTPException(fastapi.status.HTTP_404_NOT_FOUND)
 
     if os.path.isdir(fp):
-        if not directory:
+        if not directories:
             raise fastapi.HTTPException(fastapi.status.HTTP_422_UNPROCESSABLE_ENTITY)
         else:
             files = os.listdir(fp)
             if not files:
-                raise fastapi.HTTPException(fastapi.status.HTTP_404_NOT_FOUND)
+                raise fastapi.HTTPException(fastapi.status.HTTP_422_UNPROCESSABLE_ENTITY)
             return fastapi.responses.RedirectResponse(
                 url=request.url_for("get_preview", fp=os.path.join(fp, files[0])),
                 status_code=fastapi.status.HTTP_302_FOUND,
@@ -47,17 +51,19 @@ async def get_preview(request: fastapi.Request,
 
     try:
         if not manager.has_jpeg_preview(fp):
-            raise fastapi.HTTPException(fastapi.status.HTTP_424_FAILED_DEPENDENCY)
+            raise fastapi.HTTPException(fastapi.status.HTTP_422_UNPROCESSABLE_ENTITY)
     except UnsupportedMimeType:
-        raise fastapi.HTTPException(fastapi.status.HTTP_424_FAILED_DEPENDENCY)
+        raise fastapi.HTTPException(fastapi.status.HTTP_422_UNPROCESSABLE_ENTITY)
 
     try:
-        fp = manager.get_jpeg_preview(fp)
+        preview_fp = manager.get_jpeg_preview(fp)
     except MissingDelegateError:
-        raise fastapi.HTTPException(fastapi.status.HTTP_424_FAILED_DEPENDENCY)
+        raise fastapi.HTTPException(fastapi.status.HTTP_422_UNPROCESSABLE_ENTITY)
 
-    tasks.add_task(os.remove, fp)
-    return fastapi.responses.FileResponse(fp)
+    if not args.cache:
+        tasks.add_task(os.remove, preview_fp)
+
+    return fastapi.responses.FileResponse(preview_fp, filename=os.path.split(fp)[1])
 
 
 lowRes = fastapi.APIRouter()
@@ -69,6 +75,12 @@ async def low_resolution(fp: str = fastapi.Path()):
     fp = os.path.join(args.root, raw_fp)
     if not os.path.isfile(fp):
         raise fastapi.HTTPException(fastapi.status.HTTP_404_NOT_FOUND)
+
+    path, filename = os.path.split(fp)
+    cache_name = os.path.join(CACHE.name, f"{zlib.adler32(path.encode())}-{filename}")
+
+    if args.cache and os.path.isfile(cache_name):
+        return fastapi.responses.FileResponse(cache_name, filename=filename)
 
     try:
         image = Image.open(fp)
@@ -84,4 +96,11 @@ async def low_resolution(fp: str = fastapi.Path()):
     # image.save(optimized, format='JPEG', optimize=90)
     optimized.seek(0)
 
-    return fastapi.Response(optimized.read(), media_type=mimetypes.guess_type(fp)[0])
+    content = optimized.read()
+
+    if args.cache:
+        with open(cache_name, 'wb') as file:
+            file.write(content)
+
+    # faster than to send now a FileResponse
+    return fastapi.Response(content, media_type="image/jpeg")
