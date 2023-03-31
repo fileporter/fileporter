@@ -1,7 +1,7 @@
 import { createContext, PropsWithChildren, useContext, useState } from "react";
 import { ViewMode } from "~/common";
 
-const getDefault = () => parseInt(localStorage.getItem("view-mode") ?? ViewMode.icon.toString());
+const getDefault = () => parseInt(localStorage.getItem("view-mode") ?? ViewMode.gallery.toString());
 
 const ViewContext = createContext<{
     viewMode: ViewMode
