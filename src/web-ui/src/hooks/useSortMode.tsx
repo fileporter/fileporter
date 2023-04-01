@@ -1,5 +1,5 @@
 import { SortMode } from "~/common";
-import useBrowserState from "./useBrowserState";
+import useCrossTabState from "./useCrossTabState";
 import { PropsWithChildren, createContext, useContext } from "react";
 
 
@@ -13,7 +13,7 @@ const SortContext = createContext<{
 
 
 export function Provider(props: PropsWithChildren) {
-    const [value, setValue] = useBrowserState("sort-mode", SortMode.alphabetic);
+    const [value, setValue] = useCrossTabState("sort-mode", SortMode.alphabetic);
 
     return <SortContext.Provider value={{sortMode: value, setSortMode: setValue}}>
         {props.children}

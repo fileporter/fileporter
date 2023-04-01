@@ -1,5 +1,5 @@
 import { ViewMode } from "~/common";
-import useBrowserState from "./useBrowserState";
+import useCrossTabState from "./useCrossTabState";
 import { PropsWithChildren, createContext, useContext } from "react";
 
 
@@ -13,7 +13,7 @@ const ViewContext = createContext<{
 
 
 export function Provider(props: PropsWithChildren) {
-    const [value, setValue] = useBrowserState("view-mode", ViewMode.gallery);
+    const [value, setValue] = useCrossTabState("view-mode", ViewMode.gallery);
 
     return <ViewContext.Provider value={{viewMode: value, setViewMode: setValue}}>
         {props.children}

@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react"
 
-export default function useBrowserState<T>(stateKey: string, defaultValue: T): [T, (n: T) => void] {
+export default function useCrossTabState<T>(stateKey: string, defaultValue: T): [T, (n: T) => void] {
     const [state, setState] = useState(defaultValue)
     const isNewSession = useRef(true)
 

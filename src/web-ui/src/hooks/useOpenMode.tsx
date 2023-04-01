@@ -1,5 +1,5 @@
 import { OpenMode } from "~/common";
-import useBrowserState from "./useBrowserState";
+import useCrossTabState from "./useCrossTabState";
 import { PropsWithChildren, createContext, useContext } from "react";
 
 
@@ -13,7 +13,7 @@ const OpenContext = createContext<{
 
 
 export function Provider(props: PropsWithChildren) {
-    const [value, setValue] = useBrowserState("open-mode", OpenMode.intern);
+    const [value, setValue] = useCrossTabState("open-mode", OpenMode.intern);
 
     return <OpenContext.Provider value={{openMode: value, setOpenMode: setValue}}>
         {props.children}
