@@ -1,30 +1,24 @@
-import { createContext, PropsWithChildren, useContext, useState } from "react";
 import { ViewMode } from "~/common";
+import useBrowserState from "./useBrowserState";
+import { PropsWithChildren, createContext, useContext } from "react";
 
-const getDefault = () => parseInt(localStorage.getItem("view-mode") ?? ViewMode.gallery.toString());
 
 const ViewContext = createContext<{
     viewMode: ViewMode
     setViewMode: (m: ViewMode) => void
 }>({
-    viewMode: getDefault(),
+    viewMode: ViewMode.gallery,
     setViewMode: () => undefined
 });
 
 
 export function Provider(props: PropsWithChildren) {
-    const [value, set] = useState<ViewMode>(getDefault);
+    const [value, setValue] = useBrowserState("view-mode", ViewMode.gallery);
 
-    function setMode(mode: ViewMode) {
-        localStorage.setItem("view-mode", mode.toString());
-        set(mode);
-    }
-
-    return <ViewContext.Provider value={{viewMode: value, setViewMode: setMode}}>
+    return <ViewContext.Provider value={{viewMode: value, setViewMode: setValue}}>
         {props.children}
     </ViewContext.Provider>;
 }
-
 
 export default function useViewMode(): [ViewMode, (m: ViewMode) => void] {
     const context = useContext(ViewContext);

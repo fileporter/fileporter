@@ -1,32 +1,26 @@
-import { createContext, PropsWithChildren, useContext, useState } from "react";
 import { OpenMode } from "~/common";
+import useBrowserState from "./useBrowserState";
+import { PropsWithChildren, createContext, useContext } from "react";
 
-const getDefault = () => parseInt(localStorage.getItem("open-mode") ?? OpenMode.intern.toString());
 
-const ViewContext = createContext<{
-    viewMode: OpenMode
-    setViewMode: (m: OpenMode) => void
+const OpenContext = createContext<{
+    openMode: OpenMode
+    setOpenMode: (m: OpenMode) => void
 }>({
-    viewMode: getDefault(),
-    setViewMode: () => undefined
+    openMode: OpenMode.intern,
+    setOpenMode: () => undefined
 });
 
 
 export function Provider(props: PropsWithChildren) {
-    const [value, set] = useState<OpenMode>(getDefault);
+    const [value, setValue] = useBrowserState("open-mode", OpenMode.intern);
 
-    function setMode(mode: OpenMode) {
-        localStorage.setItem("open-mode", mode.toString());
-        set(mode);
-    }
-
-    return <ViewContext.Provider value={{viewMode: value, setViewMode: setMode}}>
+    return <OpenContext.Provider value={{openMode: value, setOpenMode: setValue}}>
         {props.children}
-    </ViewContext.Provider>;
+    </OpenContext.Provider>;
 }
 
-
 export default function useOpenMode(): [OpenMode, (m: OpenMode) => void] {
-    const context = useContext(ViewContext);
-    return [context.viewMode, context.setViewMode];
+    const context = useContext(OpenContext);
+    return [context.openMode, context.setOpenMode];
 }
