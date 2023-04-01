@@ -1,32 +1,26 @@
-import { createContext, PropsWithChildren, useContext, useState } from "react";
 import { SortMode } from "~/common";
+import useCrossTabState from "./useCrossTabState";
+import { PropsWithChildren, createContext, useContext } from "react";
 
-const getDefault = () => parseInt(localStorage.getItem("sort-mode") ?? SortMode.alphabetic.toString());
 
-const ViewContext = createContext<{
-    viewMode: SortMode
-    setViewMode: (m: SortMode) => void
+const SortContext = createContext<{
+    sortMode: SortMode
+    setSortMode: (m: SortMode) => void
 }>({
-    viewMode: getDefault(),
-    setViewMode: () => undefined
+    sortMode: SortMode.alphabetic,
+    setSortMode: () => undefined
 });
 
 
 export function Provider(props: PropsWithChildren) {
-    const [value, set] = useState<SortMode>(getDefault);
+    const [value, setValue] = useCrossTabState("sort-mode", SortMode.alphabetic);
 
-    function setMode(mode: SortMode) {
-        localStorage.setItem("sort-mode", mode.toString());
-        set(mode);
-    }
-
-    return <ViewContext.Provider value={{viewMode: value, setViewMode: setMode}}>
+    return <SortContext.Provider value={{sortMode: value, setSortMode: setValue}}>
         {props.children}
-    </ViewContext.Provider>;
+    </SortContext.Provider>;
 }
 
-
 export default function useSortMode(): [SortMode, (m: SortMode) => void] {
-    const context = useContext(ViewContext);
-    return [context.viewMode, context.setViewMode];
+    const context = useContext(SortContext);
+    return [context.sortMode, context.setSortMode];
 }
