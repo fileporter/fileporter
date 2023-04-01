@@ -55,7 +55,7 @@ function ListRenderItem(item: FileOrDirectory) {
 
     if (item.type === "directory") {
         return <Link to={item.path} className="flex gap-1 px-2 group">
-            <FolderIcon />
+            <FolderIcon className="w-auto h-6 aspect-square" />
             <span className="break-words group-hover:underline">
                 {item.basename}
             </span>
@@ -77,11 +77,8 @@ function ListRenderItem(item: FileOrDirectory) {
                     currentTarget.onerror = onError as never;
                 }
             }} onDoubleClick={() => {
-                if (openMode === OpenMode.intern) {
-                    window.open(`/#/${item.path}`, '_blank')?.focus();
-                } else {
-                    window.open(apiUrl(`/files/${item.path}`), '_blank')?.focus();
-                }
+                const url = openMode === OpenMode.intern ? `/#/${item.path}` : apiUrl(`/files/${item.path}`);
+                window.open(url, '_blank')?.focus();
             }} alt="" loading="lazy"
         />
     } else {
