@@ -8,6 +8,7 @@ import useOpenMode from "~/hooks/useOpenMode";
 import { OpenModeLinkMap } from "~/common/maps";
 import FolderIcon from "~/elements/FolderIcon";
 import DownloadFailedIcon from "@assets/icons/download-fail.png";
+import { useHref } from "react-router-dom";
 
 
 export default function GalleryView({ contents }: ViewProps) {
@@ -52,6 +53,7 @@ function GridRenderItem(item: FileOrDirectory) {
 function ListRenderItem(item: FileOrDirectory) {
     const [openMode] = useOpenMode();
     const isFullScreen = useIsFullScreen();
+    const href = useHref(item.path);
 
     if (item.type === "directory") {
         return <Link to={item.path} className="flex gap-1 px-2 group">
@@ -77,7 +79,7 @@ function ListRenderItem(item: FileOrDirectory) {
                     currentTarget.onerror = onError as never;
                 }
             }} onDoubleClick={() => {
-                const url = openMode === OpenMode.intern ? `/#/${item.path}` : apiUrl(`/files/${item.path}`);
+                const url = openMode === OpenMode.intern ? href : apiUrl(`/files/${item.path}`);
                 window.open(url, '_blank')?.focus();
             }} alt="" loading="lazy"
         />
