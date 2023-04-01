@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import FolderIconSrc from "@assets/files/directory.png";
 // import FolderBackgroundSrc from "@assets/files/folder-background.png";
 // import FolderFrontClosedSrc from "@assets/files/folder-front-closed.png";
@@ -13,10 +13,16 @@ interface Props {
 // not animated (preview on directory pinned)
 export default function FolderIcon(props: Props) {
     const [success, setSuccess] = useState(false);
+    const imgRef = useRef<HTMLImageElement>(null);
+    // aspect > 1 == landscape | aspect < 1 == portrait
+    const aspect = imgRef.current ? imgRef.current.naturalWidth / imgRef.current.naturalHeight : 1;
+
     return <div className={`relative group ${props.className}`}>
         <img className="w-full" src={FolderIconSrc} />
         {props.previewSrc &&
-            <img className="absolute object-cover w-1/2 border border-black rounded-md top-1/2 left-1/2 -translate-x-[15%] -translate-y-1/3 aspect-square rotate-6" src={props.previewSrc} style={{display: success ? "block" : "none"}} onLoad={() => setSuccess(true)} />
+            <img ref={imgRef} className="absolute object-cover h-3/5 border border-black rounded-md bottom-[10%] right-[10%] aspect-square rotate-6" src={props.previewSrc}
+            style={{display: success ? "block" : "none", aspectRatio: aspect <= 1 ? "1 / 1" : "5 / 4"}}
+            onLoad={() => setSuccess(true)} />
         }
     </div>;
 }
