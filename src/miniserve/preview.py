@@ -41,7 +41,7 @@ async def get_preview(request: fastapi.Request,
         if not directories:
             raise fastapi.HTTPException(fastapi.status.HTTP_422_UNPROCESSABLE_ENTITY)
         else:
-            files = os.listdir(fp)
+            files = [name for name in os.listdir(fp) if os.path.isfile(os.path.join(fp, name))]
             if not files:
                 raise fastapi.HTTPException(fastapi.status.HTTP_422_UNPROCESSABLE_ENTITY)
             return fastapi.responses.RedirectResponse(
