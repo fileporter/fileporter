@@ -19,7 +19,7 @@ class NameSpace(pydantic.BaseModel):
     username: t.Optional[str] = getpass.getuser()
     auth: t.Optional[str | t.Literal[Ellipsis]]
     worker: t.Optional[int] = min(8, os.cpu_count())
-    root_path: t.Optional[str]
+    root_path: t.Optional[str] = "/"
     uds: t.Optional[str]
     logs: t.Optional[str]
     dotall: t.Optional[bool] = False

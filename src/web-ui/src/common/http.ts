@@ -12,12 +12,15 @@ export class HttpError extends Error {
 
 
 export function apiUrl(location: string): string {
+    if (!location.startsWith("/")) {
+        throw new Error("Bad location");
+    }
     let url;
     if (import.meta.env.DEV) {
         url = new URL(location, window.location.origin)
         url.port = "8000";
     } else {
-        url = new URL(import.meta.env.BASE_URL + location, window.location.origin)
+        url = new URL(import.meta.env.BASE_URL + location.slice(1), window.location.origin)
     }
     return url.toString();
 }
@@ -33,4 +36,3 @@ export function apiQuery(location: string, init: RequestInit) {
             return response.json();
         })
 }
-
