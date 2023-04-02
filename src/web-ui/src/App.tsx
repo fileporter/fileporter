@@ -24,6 +24,7 @@ const queryClient = new QueryClient({
 export default function ProviderCollection() {
     return <QueryClientProvider client={queryClient}>
         <HookProviders>
+            {/* <HashRouter basename={import.meta.env.BASE_URL}> */}
             <HashRouter>
                 <Routes>
                     <Route path="*" element={<App />} />

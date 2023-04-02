@@ -12,9 +12,12 @@ export class HttpError extends Error {
 
 
 export function apiUrl(location: string): string {
-    const url = new URL(location, window.location.origin)
-    if (process.env.NODE_ENV !== "production") {
+    let url;
+    if (import.meta.env.DEV) {
+        url = new URL(location, window.location.origin)
         url.port = "8000";
+    } else {
+        url = new URL(import.meta.env.BASE_URL + location, window.location.origin)
     }
     return url.toString();
 }

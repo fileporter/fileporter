@@ -5,4 +5,9 @@ import tsconfigpaths from "vite-tsconfig-paths";
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react(), tsconfigpaths()],
+  base: "/",
+  build: {
+    emptyOutDir: true,
+    outDir: "../miniserve/web-ui/",
+  }
 })

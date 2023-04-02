@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "start": "vite --strictPort --port 3000 --cors",
-    "build": "tsc && vite build --emptyOutDir --outDir ../miniserve/web-ui/ --base /"
+    "prebuild": "tsc",
+    "build": "vite build"
   },
   "dependencies": {
     "react": "^18.2.0",
@@ -13,7 +14,6 @@
     "react-router-dom": "^6.9.0"
   },
   "devDependencies": {
-    "@types/node": "^18.15.11",
     "@types/react": "^18.0.28",
     "@types/react-dom": "^18.0.11",
     "@vitejs/plugin-react-swc": "^3.0.0",
