@@ -1,0 +1,51 @@
+name: Pipfile-2-Requirements
+
+on:
+  push:
+    branches:
+      - main
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+env:
+  P2R_PATH: ${{ vars.P2R_PATH }}
+  P2R_AUTHOR: ${{ vars.P2R_AUTHOR }}
+  P2R_COMMIT_MESSAGE: ${{ vars.P2R_COMMIT_MESSAGE }}
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  pipfile-2-requirements:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+    permissions: write-all
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v3
+      
+      - name: Echo Variables
+        run: |
+          echo "Path: '${P2R_PATH:=./}'"
+          echo "Author: '${P2R_AUTHOR:=P2R}'"
+          echo "Commit-msg: '${P2R_COMMIT_MESSAGE:=P2R-Update}'"
+
+      - name: Install pipenv
+        run: python3 -m pip install pipenv
+
+      - name: Export Requirements
+        run: python3 -m pipenv requirements > requirements.txt
+      
+      - name: Configure git
+        run: |
+          git config --global user.name "${P2R_AUTHOR}"
+          git config --global user.email "${P2R_AUTHOR}@users.noreply.github.com"
+      - name: Commit Updates
+        run: |
+          git add -A
+          git commit -m "${P2R_COMMIT_MESSAGE}"
+        
+      - name: Push Changes
+        run: git push
