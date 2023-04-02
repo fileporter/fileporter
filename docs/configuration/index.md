@@ -3,6 +3,9 @@ title: Configuration
 layout: default
 ---
 
+* TOC
+{:toc}
+
 # Options to configure
 
 ## host

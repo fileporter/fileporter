@@ -1,7 +1,11 @@
 ---
 title: Getting Started
 layout: default
+nav_order: 0
 ---
+
+* TOC
+{:toc}
 
 # Getting Started
 
@@ -21,7 +25,7 @@ alias miniserve='~/.commands/miniserve/miniserve'
 
 ### Configuration
 
-[see here for configuration](../config/index.md)
+[see here for configuration](../configuration/index.md)
 
 ### Autocompletion
 

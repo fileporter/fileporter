@@ -4,7 +4,7 @@ layout: default
 ---
 
 * TOC
-{:TOC}
+{:toc}
 
 # How to Deploy on a server
 
