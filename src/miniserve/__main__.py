@@ -12,6 +12,7 @@ if __name__ == '__main__':
     from util import qr_code_printer
 
     print(args)
+
     if not args.uds:
         qr_code_printer.print_qrcode()
 

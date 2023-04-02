@@ -12,7 +12,8 @@ from baize.asgi.staticfiles import (
     Files as StaticFiles,
     Pages as StaticPages
 )
-from config import args, __version__
+from config import args
+from __version__ import __version__
 import auth
 from api import api as api_router
 from preview import (
