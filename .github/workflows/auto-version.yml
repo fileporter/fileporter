@@ -1,0 +1,52 @@
+name: Auto-Version-Increment
+
+on:
+  push:
+    branches:
+      - main
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+env:
+  AVI_PATH: ${{ vars.AVI_PATH }}
+  AVI_AUTHOR: ${{ vars.AVI_AUTHOR }}
+  AVI_COMMIT_MESSAGE: ${{ vars.AVI_COMMIT_MESSAGE }}
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  version-increment:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+    permissions: write-all
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v3
+      
+      - name: Echo Variables
+        run: |
+          echo "Path: '${AVI_PATH:=./}'"
+          echo "Author: '${AVI_AUTHOR:=AVI}'"
+          echo "Commit-msg: '${AVI_COMMIT_MESSAGE:=AVI-Update}'"
+      
+      - name: Create Path
+        run: mkdir -p "${AVI_PATH}"
+
+      - name: Create __version__.py
+        run: |
+          python3 -c 'import datetime; print(datetime.datetime.now().strftime("__version_info__ = (%-y, %-m, %-d, %-H, %-M)"))' > "${AVI_PATH}__version__.py"
+          echo "__version__ = '.'.join(str(_) for _ in __version_info__)" >> "${AVI_PATH}__version__.py"
+      - name: Configure git
+        run: |
+          git config --global user.name "${AVI_AUTHOR}"
+          git config --global user.email "${AVI_AUTHOR}@users.noreply.github.com"
+      - name: Commit Updates
+        run: |
+          git add -A
+          git commit -m "${AVI_COMMIT_MESSAGE}"
+        
+      - name: Push Changes
+        run: git push
