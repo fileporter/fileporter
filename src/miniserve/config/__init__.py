@@ -21,10 +21,12 @@ class NameSpace(pydantic.BaseModel):
     worker: t.Optional[int] = min(8, os.cpu_count())
     root_path: t.Optional[str] = "/"
     uds: t.Optional[str]
-    logs: t.Optional[str]
+    logs: t.Optional[bool]
     dotall: t.Optional[bool] = False
     dependencies: t.Optional[bool] = False
     cache: t.Optional[bool] = True
+
+    config: t.Optional[str]
 
     def __str__(self):
         return f"<args {self.__dict__}>"
@@ -33,9 +35,13 @@ class NameSpace(pydantic.BaseModel):
         extra = pydantic.Extra.forbid  # error on wrong keys
 
 
-args = NameSpace(**{
-    **functools.reduce(lambda a, b: a | b, (
-        {key: value for key, value in file_config.items(section)} for section in file_config)
-                       ),
-    **{key: value for key, value in vars(command_args).items() if value}
-})
+try:
+    args = NameSpace(**{
+        **functools.reduce(lambda a, b: a | b, (
+            {key: value for key, value in file_config.items(section)} for section in file_config)
+                           ),
+        **{key: value for key, value in vars(command_args).items() if value}
+    })
+except pydantic.ValidationError as _:
+    print(_)
+    exit(1)
