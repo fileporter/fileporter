@@ -3,8 +3,9 @@
 r"""
 
 """
-import os
 import io
+import os
+import os.path as p
 import tempfile
 import zlib
 import logging
@@ -41,19 +42,19 @@ async def get_preview(request: fastapi.Request,
                       tasks: fastapi.BackgroundTasks,
                       fp: str = fastapi.Path(),
                       directories: bool = fastapi.Query(False)):
-    fp = os.path.join(args.root, fp.removeprefix("/"))
-    if not os.path.exists(fp):
+    fp = p.join(args.root, fp.removeprefix("/"))
+    if not p.exists(fp):
         raise fastapi.HTTPException(fastapi.status.HTTP_404_NOT_FOUND)
 
-    if os.path.isdir(fp):
+    if p.isdir(fp):
         if not directories:
             raise fastapi.HTTPException(fastapi.status.HTTP_422_UNPROCESSABLE_ENTITY)
         else:
-            files = [name for name in os.listdir(fp) if os.path.isfile(os.path.join(fp, name))]
+            files = [name for name in os.listdir(fp) if p.isfile(p.join(fp, name))]
             if not files:
                 raise fastapi.HTTPException(fastapi.status.HTTP_422_UNPROCESSABLE_ENTITY)
             return fastapi.responses.RedirectResponse(
-                url=request.url_for("get_preview", fp=os.path.join(fp, files[0])),
+                url=request.url_for("get_preview", fp=p.relpath(p.join(fp, files[0]), args.root)),
                 status_code=fastapi.status.HTTP_302_FOUND,
             )
 
@@ -71,7 +72,7 @@ async def get_preview(request: fastapi.Request,
     if not args.cache:
         tasks.add_task(os.remove, preview_fp)
 
-    return fastapi.responses.FileResponse(preview_fp, filename=os.path.split(fp)[1])
+    return fastapi.responses.FileResponse(preview_fp, filename=p.split(fp)[1])
 
 
 lowRes = fastapi.APIRouter()
@@ -88,14 +89,14 @@ lowRes = fastapi.APIRouter()
 )
 async def low_resolution(fp: str = fastapi.Path()):
     raw_fp = fp.removeprefix("/")
-    fp = os.path.join(args.root, raw_fp)
-    if not os.path.isfile(fp):
+    fp = p.join(args.root, raw_fp)
+    if not p.isfile(fp):
         raise fastapi.HTTPException(fastapi.status.HTTP_404_NOT_FOUND)
 
-    path, filename = os.path.split(fp)
-    cache_name = os.path.join(CACHE.name, f"{zlib.adler32(path.encode())}-{filename}")
+    path, filename = p.split(fp)
+    cache_name = p.join(CACHE.name, f"{zlib.adler32(path.encode())}-{filename}")
 
-    if args.cache and os.path.isfile(cache_name):
+    if args.cache and p.isfile(cache_name):
         return fastapi.responses.FileResponse(cache_name, filename=filename)
 
     try:
