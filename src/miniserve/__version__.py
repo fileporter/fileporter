@@ -1,2 +1,2 @@
-__version_info__ = (23, 4, 3, 11, 8)
+__version_info__ = (23, 4, 3, 11, 34)
 __version__ = '.'.join(str(_) for _ in __version_info__)
