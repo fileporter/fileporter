@@ -10,8 +10,9 @@ import fastapi.middleware.gzip
 # baize is needed for better FileResponses because starlette doesn't support range-headers
 from baize.asgi.staticfiles import (
     Files as StaticFiles,
-    Pages as StaticPages
+    # Pages as StaticPages  # bad 404 fallback handling
 )
+from fastapi.staticfiles import StaticFiles as StaticPages
 from config import args
 from __version__ import __version__
 import auth
@@ -48,5 +49,5 @@ app.mount(
 )
 app.mount(
     "/",
-    StaticPages(directory=os.path.join(os.path.dirname(__file__), "web-ui"))
+    StaticPages(directory=os.path.join(os.path.dirname(__file__), "web-ui"), html=True)
 )
