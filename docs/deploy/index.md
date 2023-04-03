@@ -1,6 +1,7 @@
 ---
 title: Deploy
 layout: default
+has_children: true
 ---
 
 * TOC
@@ -27,10 +28,3 @@ make new-frontend BASE="/miniserve/"
 ```
 
 ## Behind a reverse Proxy
-
-
-### NGINX
-
-```nginx
-
-```
