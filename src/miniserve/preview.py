@@ -28,7 +28,15 @@ preview = fastapi.APIRouter()
 manager = PreviewManager(CACHE.name)
 
 
-@preview.get("/preview/{fp:path}")
+@preview.get(
+    "/preview/{fp:path}",
+    responses={
+        200: {
+            'content': {"image/jpeg": {}},
+        },
+    },
+    response_class=fastapi.responses.FileResponse,
+)
 async def get_preview(request: fastapi.Request,
                       tasks: fastapi.BackgroundTasks,
                       fp: str = fastapi.Path(),
@@ -69,7 +77,15 @@ async def get_preview(request: fastapi.Request,
 lowRes = fastapi.APIRouter()
 
 
-@lowRes.get("/low-resolution/{fp:path}")
+@lowRes.get(
+    "/low-resolution/{fp:path}",
+    responses={
+        200: {
+            'content': {"image/jpeg": {}},
+        },
+    },
+    response_class=fastapi.responses.FileResponse,
+)
 async def low_resolution(fp: str = fastapi.Path()):
     raw_fp = fp.removeprefix("/")
     fp = os.path.join(args.root, raw_fp)
