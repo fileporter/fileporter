@@ -29,6 +29,9 @@ class NameSpace(pydantic.BaseModel):
     def __str__(self):
         return f"<args {self.__dict__}>"
 
+    class Config:
+        extra = pydantic.Extra.forbid  # error on wrong keys
+
 
 args = NameSpace(**{
     **functools.reduce(lambda a, b: a | b, (
