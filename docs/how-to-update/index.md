@@ -11,13 +11,13 @@ layout: default
 ## Normal upgrade
 
 ```bash
-./scripts/make-update.sh
+make update
 ```
 
 ## With custom starting url
 
 ```bash
-git clean -f && git reset --hard
-./scripts/make-update.sh
+make clean
+make update
 make new-frontend BASE="[YOUR-URL]"
 ```
