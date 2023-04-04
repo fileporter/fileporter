@@ -5,6 +5,7 @@ import ControlHeader from "~/components/ControlHeader";
 import ViewManager from "~/components/ViewManager";
 import HookProviders from "~/hooks/HookProviders";
 import OfflineHeader from "./components/OfflineHeader";
+import ScrollProgressFix from "./components/ScrollProgressFix";
 
 
 const queryClient = new QueryClient({
@@ -37,6 +38,7 @@ export default function ProviderCollection() {
 
 function App() {
     return <>
+        <ScrollProgressFix />
         <OfflineHeader />
         <ControlHeader />
         <ViewManager />
