@@ -17,4 +17,7 @@ else
   exit 1
 fi
 
-echo "Installation success"
+.venv/bin/pip3 --quiet install -U pip
+.venv/bin/pip3 --quiet install -r requirements.txt
+
+echo "Installation successful"

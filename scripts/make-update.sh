@@ -3,6 +3,13 @@ set -e
 
 cd "$(dirname "$0")/.."
 
-git pull
+echo "Update source-code"
 
-.venv/bin/pip3 install -r requirements.txt
+git pull --no-commit
+
+echo "Update dependencies"
+
+.venv/bin/pip3 --quiet install -U pip
+.venv/bin/pip3 --quiet install -r requirements.txt
+
+echo "Update successful"
