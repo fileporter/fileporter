@@ -9,7 +9,7 @@ nav_order: -1
 # ![](assets/logo512.png){:style="height: 30px"} miniserve
 {: .text-center }
 
-[getting started](getting-started/index.md){: .btn .btn-blue .fs-7 }
+[getting started](getting-started/index.md){: .btn .btn-blue .fs-5 }
 {: .d-flex .flex-justify-around }
 
 ## Example usage
@@ -39,5 +39,5 @@ user@pc:~/path/to/folder$ miniserve
 
 ![eg. fresh start](assets/eg-start.png)
 
-[use it now](getting-started/index.md){: .btn .btn-blue .mx-auto .fs-7 }
+[use it now](getting-started/index.md){: .btn .btn-blue .mx-auto .fs-5 }
 {: .d-flex .flex-justify-around }
