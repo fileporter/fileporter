@@ -70,7 +70,7 @@ function ListRenderItem(item: FileOrDirectory) {
             currentTarget.src = DownloadFailedIcon;
         }
 
-        return <img width={item.size?.[0] ?? 320} height={item.size?.[1] ?? 180} className={`w-full mx-auto ${isFullScreen ? "" : "max-w-5xl"}`}
+        return <img width={item.size?.[0] ?? 500} height={item.size?.[1] ?? 375} className={`w-full mx-auto ${isFullScreen ? "" : "max-w-5xl"}`}
             src={imgSrc} onError={onError} onClick={({ currentTarget }) => {
                 if (currentTarget.onerror === null) {
                     const url = new URL(imgSrc);
