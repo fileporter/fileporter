@@ -7,11 +7,12 @@ nav_order: -1
 ![pages-build-deployment](https://github.com/PlayerG9/miniserve/actions/workflows/pages/pages-build-deployment/badge.svg)
 
 # ![](assets/logo512.png){:style="height: 30px"} miniserve
+{: .text-center }
 
-[getting started](getting-started/index.md){: .btn .btn-blue }
+[getting started](getting-started/index.md){: .btn .btn-blue .fs-7 }
 {: .d-flex .flex-justify-around }
 
-# Example usage
+## Example usage
 
 ```
 user@pc:~/path/to/folder$ miniserve
@@ -38,5 +39,5 @@ user@pc:~/path/to/folder$ miniserve
 
 ![eg. fresh start](assets/eg-start.png)
 
-[use it now](getting-started/index.md){: .btn .btn-blue .mx-auto }
+[use it now](getting-started/index.md){: .btn .btn-blue .mx-auto .fs-7 }
 {: .d-flex .flex-justify-around }
