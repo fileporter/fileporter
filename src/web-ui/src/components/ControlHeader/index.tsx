@@ -23,7 +23,7 @@ export default function ControlHeader() {
 
     return <>
         {(isTopMost || isFullScreen) ?
-            <div key="control-header" id="control-header" className="z-50 flex gap-3 px-2 py-px bg-black bg-opacity-75 rounded-md">
+            <div key="control-header" id="control-header" className="relative z-50 flex gap-3 px-2 py-px bg-black bg-opacity-75 rounded-md">
                 <PathBar />
             </div>
             :
