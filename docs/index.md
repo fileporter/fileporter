@@ -8,7 +8,8 @@ nav_order: -1
 
 # ![](assets/logo512.png){:style="height: 30px"} miniserve
 
-[getting started](getting-started/index.md){: .btn .btn-blue .mx-auto }
+[getting started](getting-started/index.md){: .btn .btn-blue .flex-justify-around }
+{: .d-flex }
 
 # Example usage
 
