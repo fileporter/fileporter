@@ -15,7 +15,8 @@ export default function FullScreenToggle() {
                 if (isFullScreen) {
                     document.exitFullscreen();
                 } else {
-                    document.documentElement.requestFullscreen();
+                    document.documentElement.requestFullscreen()
+                        .catch(() => alert("Fullscreen failed"));  // TODO: make this better
                 }
             }}
             src={isFullScreen ? MinimizeIcon : FullScreenIcon}
