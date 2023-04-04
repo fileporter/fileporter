@@ -1,4 +1,4 @@
-import { numberBaseSort, SortMode, textBasedSort, ViewMode } from "~/common";
+import { numberBasedSort, SortMode, textBasedSort, ViewMode } from "~/common";
 import { DirectoryRootTypeResponse } from "~/types";
 import ViewToggleHeader from "../ControlHeader/ViewToggle";
 import OpenModeToggleHeader from "../ControlHeader/OpenModeToggle";
@@ -26,7 +26,7 @@ export default function DirectoryView(directory: DirectoryRootTypeResponse) {
         basename: "..",
         path: directory.directory,
         directory: directory.directory + "/..",
-    })).sort(sortMode === SortMode.alphabetic ? textBasedSort : numberBaseSort);
+    })).sort(sortMode === SortMode.alphabetic ? textBasedSort : numberBasedSort);
 
     const View = viewMap[viewMode] ?? IconView;
     return <>
