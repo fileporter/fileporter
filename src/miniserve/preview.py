@@ -108,10 +108,11 @@ async def low_resolution(fp: str = fastapi.Path()):
         return fastapi.responses.RedirectResponse(f"/files/{raw_fp}")
 
     optimized = io.BytesIO()
-    image = image.convert('RGB')
+    image.thumbnail((2000, 2000))  # limit size
+    image = image.convert('RGB')  # needed to save as jpg
     image.save(optimized, format='JPEG')
     # image.save(optimized, format='JPEG', optimize=90)
-    optimized.seek(0)
+    optimized.seek(0)  # seek to start for read
 
     content = optimized.read()
 
