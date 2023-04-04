@@ -8,8 +8,8 @@ nav_order: -1
 
 # ![](assets/logo512.png){:style="height: 30px"} miniserve
 
-[getting started](getting-started/index.md){: .btn .btn-blue .flex-justify-around }
-{: .d-flex }
+[getting started](getting-started/index.md){: .btn .btn-blue }
+{: .d-flex .flex-justify-around }
 
 # Example usage
 
@@ -34,7 +34,9 @@ user@pc:~/path/to/folder$ miniserve
                                       
     http://10.20.30.40:8000
 ```
+{: .lh-0 }
 
 ![eg. fresh start](assets/eg-start.png)
 
 [use it now](getting-started/index.md){: .btn .btn-blue .mx-auto }
+{: .d-flex .flex-justify-around }
