@@ -109,7 +109,7 @@ see `miniserve --help` for more information
 
 [CUSTOMIZATION]
 ;cache: no
-;web-ui: {HOME}/miniserve-custom/
+;web-ui: ${HOME}/miniserve-custom/
 
 [PROXY]
 ;root-path: /custom/

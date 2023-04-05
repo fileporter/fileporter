@@ -4,7 +4,6 @@ r"""
 
 """
 import os.path as p
-from pathlib import Path
 import configparser
 from .commandconfig import args
 
@@ -32,12 +31,6 @@ parser = configparser.ConfigParser(
 )
 parser.optionxform = lambda option: option.lower().replace('-', '_')  # 'Hello-World' => 'hello_world'
 # default values for interpolation
-parser.read_dict({
-    "DEFAULT": {
-        "APP": Path(__file__).parent.parent.resolve(),
-        "HOME": Path.home().resolve(),
-    }
-})
 config_file = find_config_file()
 if config_file:
     if not parser.read(config_file):

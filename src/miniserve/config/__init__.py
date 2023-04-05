@@ -7,6 +7,7 @@ import os
 import getpass
 import functools
 import typing as t
+from pathlib import Path
 import pydantic
 from .commandconfig import args as command_args
 from .fileconfig import parser as file_config
@@ -35,11 +36,15 @@ class Configuration(pydantic.BaseModel):
         extra = pydantic.Extra.forbid  # error on wrong keys
 
 
+VARIABLES = dict(
+    APP=str(Path(__file__).parent.parent.resolve()),
+    HOME=str(Path.home().resolve()),
+)
 try:
     args = Configuration(**{
         **functools.reduce(
             lambda a, b: a | b,
-            [{key: value for key, value in file_config.items(section)} for section in file_config.sections()]
+            [{key: value for key, value in file_config.items(section, vars=VARIABLES)} for section in file_config.sections()]
             + [{}]  # to prevent "TypeError: reduce() of empty iterable with no initial value"
         ),
         **{key: value for key, value in vars(command_args).items() if value}
