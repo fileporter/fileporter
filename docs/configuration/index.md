@@ -81,6 +81,11 @@ whether or not to show missing dependencies for previews during the startup proc
 
 default: `no`
 
+## web-ui
+custom directory to use for the frontend (related to `root-path`-option and [custom starting url](../deploy/index.md))
+
+default: `{APP}/web-ui/`
+
 # Configuration via CLI
 
 see `miniserve --help` for more information
@@ -104,9 +109,10 @@ see `miniserve --help` for more information
 
 [CUSTOMIZATION]
 ;cache: no
+;web-ui: {HOME}/miniserve-custom/
 
 [PROXY]
-;root-path: /custom
+;root-path: /custom/
 ;uds: /tmp/miniserve.sock
 
 [DEBUG]
