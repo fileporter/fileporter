@@ -1,9 +1,7 @@
 import { useEffect, useState } from "react";
-import useIsFullScreen from "~/hooks/useIsFullScreen";
 import PathBar from "./PathBar";
 
 export default function ControlHeader() {
-    const isFullScreen = useIsFullScreen();
     const [isVisible, setVisible] = useState(true);
     const [lastScrollTop, setLastTop] = useState(0);
     const isTopMost = window.scrollY <= 20;  // could also be 0
@@ -22,7 +20,7 @@ export default function ControlHeader() {
     });
 
     return <>
-        {(isTopMost || isFullScreen) ?
+        {(isTopMost) ?
             <div key="control-header" id="control-header" className="relative z-50 flex gap-3 px-2 py-px bg-black bg-opacity-75 rounded-md">
                 <PathBar />
             </div>
