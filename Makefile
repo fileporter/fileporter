@@ -5,7 +5,7 @@ BASE ?= /
 OUT ?= ../miniserve/web-ui/
 
 new-frontend:
-	cd src/web-ui/; npm install; npm run build -- --base $(BASE) --outDir $(BASE)
+	cd src/web-ui/; npm install; npm run build -- --base $(BASE) --outDir $(OUT)
 
 install:
 	./scripts/make-install.sh
