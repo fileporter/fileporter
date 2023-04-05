@@ -1,38 +1,51 @@
 #!/usr/bin/python3
 # -*- coding=utf-8 -*-
 r"""
-
+see the documentation for more information.
+docs: https://playerg9.github.io/miniserve/
 """
-import os
 import argparse
-from util.argstuff import ranged
+from util.argstuff import ranged, existing_path
 from __version__ import __version__
 
 
 parser = argparse.ArgumentParser(
+    prog="miniserve",
     description=__doc__,
     add_help=True,
+    allow_abbrev=False,
 )
 
 parser.add_argument('-v', '--version', action="version", version=__version__)
-parser.add_argument('--config', help="configuration file to use")
+parser.add_argument('--config', type=existing_path,
+                    help="configuration file to use")
 parser.add_argument('--local', action="store_const", const="127.0.0.1", dest="host",
                     help="serve only locally")
-# parser.add_argument('--global', action="store_const", const="0.0.0.0", dest="host",
-#                     help="serve in the local network")
+parser.add_argument('--global', action="store_const", const="0.0.0.0", dest="host",
+                    help=argparse.SUPPRESS)
 parser.add_argument('-p', '--port', type=int,
                     help="port to serve on")
 parser.add_argument('--user', dest="username",
-                    help="specify username for login")
-parser.add_argument('--auth', nargs='?', const=...,
+                    help=argparse.SUPPRESS)
+parser.add_argument('--password', nargs='?', const=...,
                     help="requires user-login")
 parser.add_argument('-w', '--worker', type=ranged(1, 8),
-                    help="number of workers to use")
-parser.add_argument('--dotall', action="store_true",
+                    help=argparse.SUPPRESS)
+parser.add_argument('--root-path',
+                    help=argparse.SUPPRESS)
+parser.add_argument('--uds',
                     help="serve also dot-files")
-parser.add_argument('--no-cache', dest="cache", action="store_false",
-                    help="disable cache for previews and low-resolution images")
-parser.add_argument('root', type=os.path.expanduser, nargs='?',
+parser.add_argument('--logs', type=argparse.BooleanOptionalAction,
+                    help=argparse.SUPPRESS)
+parser.add_argument('--dotall', action=argparse.BooleanOptionalAction,
+                    help="serve also dot-files")
+parser.add_argument('--dependencies', type=argparse.BooleanOptionalAction,
+                    help=argparse.SUPPRESS)
+parser.add_argument('--cache', type=argparse.BooleanOptionalAction,
+                    help=argparse.SUPPRESS)
+parser.add_argument('--web-ui', type=existing_path,
+                    help=argparse.SUPPRESS)
+parser.add_argument('root', type=existing_path, nargs='?',
                     help="directory to serve")
 
 args = parser.parse_args()

@@ -3,7 +3,7 @@
 r"""
 
 """
-import os
+from pathlib import Path
 import fastapi.middleware.cors
 import fastapi.middleware.gzip
 # import fastapi.staticfiles
@@ -45,9 +45,14 @@ app.include_router(preview_router)
 app.include_router(lowRes_router)
 app.mount(
     "/files",
-    StaticFiles(directory=args.root)
+    StaticFiles(
+        directory=args.root
+    )
 )
 app.mount(
     "/",
-    StaticPages(directory=os.path.join(os.path.dirname(__file__), "web-ui"), html=True)
+    StaticPages(
+        directory=Path(Path(args.web_ui) if args.web_ui else Path(__file__).parent.joinpath("web-ui")).resolve(),
+        html=True
+    )
 )

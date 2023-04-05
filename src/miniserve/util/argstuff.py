@@ -3,6 +3,7 @@
 r"""
 
 """
+from pathlib import Path
 import argparse
 
 
@@ -17,3 +18,7 @@ def ranged(mini, maxi, cls=int):
         return f
 
     return range_checker
+
+
+def existing_path(path: str):
+    return Path(path).expanduser().resolve(strict=True)
