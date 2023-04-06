@@ -35,16 +35,18 @@ parser.add_argument('--root-path',
                     help=argparse.SUPPRESS)
 parser.add_argument('--uds',
                     help="serve also dot-files")
-parser.add_argument('--logs', type=argparse.BooleanOptionalAction,
+parser.add_argument('--logs', action=argparse.BooleanOptionalAction,
                     help=argparse.SUPPRESS)
 parser.add_argument('--dotall', action=argparse.BooleanOptionalAction,
                     help="serve also dot-files")
-parser.add_argument('--dependencies', type=argparse.BooleanOptionalAction,
+parser.add_argument('--dependencies', action=argparse.BooleanOptionalAction,
                     help=argparse.SUPPRESS)
-parser.add_argument('--cache', type=argparse.BooleanOptionalAction,
+parser.add_argument('--cache', action=argparse.BooleanOptionalAction,
                     help=argparse.SUPPRESS)
 parser.add_argument('--web-ui', type=existing_path,
                     help=argparse.SUPPRESS)
+parser.add_argument('--reload', action=argparse.BooleanOptionalAction,
+                    help=argparse.SUPPRESS)  # debug/development option
 parser.add_argument('root', type=existing_path, nargs='?',
                     help="directory to serve")
 

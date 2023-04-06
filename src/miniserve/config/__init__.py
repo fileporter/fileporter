@@ -16,7 +16,7 @@ from .fileconfig import parser as file_config
 class Configuration(pydantic.BaseModel):
     host: str = "0.0.0.0"
     port: t.Optional[int] = 8000
-    root: t.Optional[pydantic.DirectoryPath] = "."
+    root: t.Optional[pydantic.DirectoryPath | pydantic.FilePath] = "."
     username: t.Optional[str] = getpass.getuser()
     password: t.Optional[str | t.Literal[...]]
     worker: t.Optional[int] = min(8, os.cpu_count())
@@ -26,8 +26,9 @@ class Configuration(pydantic.BaseModel):
     dotall: t.Optional[bool] = False
     dependencies: t.Optional[bool] = False
     cache: t.Optional[bool] = True
-    web_ui: t.Optional[pydantic.DirectoryPath]
+    web_ui: t.Optional[pydantic.DirectoryPath | pydantic.FilePath]
     config: t.Optional[pydantic.FilePath]
+    reload: t.Optional[bool] = False
 
     def __str__(self):
         return f"<args {self.__dict__}>"
