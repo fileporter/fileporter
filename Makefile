@@ -15,3 +15,7 @@ update:
 
 clean:
 	git clean -f && git reset --hard
+
+password-encryption:
+	test -n "$(PASSWORD)" || (echo "Please provider an password with the PASSWORD=\"[PW]\" option" && exit 1);
+	python3 -c "import hashlib; pw = hashlib.sha256(\"$(PASSWORD)\".encode()).hexdigest(); print(f'hash:{pw}')";

@@ -44,7 +44,11 @@ default: default to currently logged in user
 ## password
 which password the authentication process requires
 
-<sup>note: if password is empty it falls back to the system-password of the current user</sup>
+it is possible to provide the `sha256`-hexdigest hashed version of the password.
+This version has to begin with `hash:` and can be generated with `make password-encryption PASSWORD="[YOUR PASSWORD]"`.
+This is meant for your to not store your plain password.
+
+<sup>note: if password is `yes`|`true` it falls back to the system-password of the current user</sup>
 
 default: no authentication
 

@@ -27,7 +27,7 @@ parser.add_argument('-p', '--port', type=int,
                     help="port to serve on")
 parser.add_argument('--user', dest="username",
                     help=argparse.SUPPRESS)
-parser.add_argument('--password', nargs='?', const=...,
+parser.add_argument('--password', '--pw', nargs='?', const=True,
                     help="requires user-login")
 parser.add_argument('-w', '--worker', type=ranged(1, 8),
                     help=argparse.SUPPRESS)
