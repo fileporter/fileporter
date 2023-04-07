@@ -45,6 +45,29 @@ http {
   upstream miniserve {
     server unix:/tmp/miniserve.sock;
   }
+}
+```
 
+{.highlight}
+> if this configuration is in `/etc/nginx/sites-available/` then you can ignore the `http {...}` block
+
+### Sub-URL
+
+{.note}
+> important is the `/` at the end.<br/>
+> This cuts the `/sub/*` path from the url so that the running miniserve will only receive the `/*` part at the end
+
+```nginx
+http {
+  ...
+  server {
+      ...
+      location /sub/ {
+        ...
+        proxy_pass http://miniserve/;
+      }
+      ...
+  }
+  ...
 }
 ```
