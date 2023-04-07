@@ -15,10 +15,10 @@ from preview_generator.utils import LOGGER_NAME as PREVIEW_LOGGER_NAME
 from preview_generator.exception import UnsupportedMimeType
 from wand.exceptions import MissingDelegateError
 from PIL import Image, UnidentifiedImageError
-from config import args
+from config import config
 
 
-if not args.dependencies:
+if not config.dependencies:
     logging.getLogger(PREVIEW_LOGGER_NAME).setLevel(logging.CRITICAL)
 
 
@@ -42,7 +42,7 @@ async def get_preview(request: fastapi.Request,
                       tasks: fastapi.BackgroundTasks,
                       fp: str = fastapi.Path(),
                       directories: bool = fastapi.Query(False)):
-    fp = p.join(args.root, fp.removeprefix("/"))
+    fp = p.join(config.root, fp.removeprefix("/"))
     if not p.exists(fp):
         raise fastapi.HTTPException(fastapi.status.HTTP_404_NOT_FOUND)
 
@@ -54,7 +54,7 @@ async def get_preview(request: fastapi.Request,
             if not files:
                 raise fastapi.HTTPException(fastapi.status.HTTP_422_UNPROCESSABLE_ENTITY)
             return fastapi.responses.RedirectResponse(
-                url=request.url_for("get_preview", fp=p.relpath(p.join(fp, files[0]), args.root)),
+                url=request.url_for("get_preview", fp=p.relpath(p.join(fp, files[0]), config.root)),
                 status_code=fastapi.status.HTTP_302_FOUND,
             )
 
@@ -69,7 +69,7 @@ async def get_preview(request: fastapi.Request,
     except MissingDelegateError:
         raise fastapi.HTTPException(fastapi.status.HTTP_422_UNPROCESSABLE_ENTITY)
 
-    if not args.cache:
+    if not config.cache:
         tasks.add_task(os.remove, preview_fp)
 
     return fastapi.responses.FileResponse(preview_fp, filename=p.split(fp)[1])
@@ -89,14 +89,14 @@ lowRes = fastapi.APIRouter()
 )
 async def low_resolution(fp: str = fastapi.Path()):
     raw_fp = fp.removeprefix("/")
-    fp = p.join(args.root, raw_fp)
+    fp = p.join(config.root, raw_fp)
     if not p.isfile(fp):
         raise fastapi.HTTPException(fastapi.status.HTTP_404_NOT_FOUND)
 
     path, filename = p.split(fp)
     cache_name = p.join(CACHE.name, f"{zlib.adler32(path.encode())}-{filename}")
 
-    if args.cache and p.isfile(cache_name):
+    if config.cache and p.isfile(cache_name):
         return fastapi.responses.FileResponse(cache_name, filename=filename)
 
     try:
@@ -116,7 +116,7 @@ async def low_resolution(fp: str = fastapi.Path()):
 
     content = optimized.read()
 
-    if args.cache:
+    if config.cache:
         with open(cache_name, 'wb') as file:
             file.write(content)
 

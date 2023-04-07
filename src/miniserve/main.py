@@ -13,7 +13,7 @@ from baize.asgi.staticfiles import (
     # Pages as StaticPages  # bad 404 fallback handling
 )
 from fastapi.staticfiles import StaticFiles as StaticPages
-from config import args
+from config import config
 from __version__ import __version__
 import auth
 from api import api as api_router
@@ -24,7 +24,7 @@ from preview import (
 
 
 app = fastapi.FastAPI(
-    debug=args.development,
+    debug=config.development,
     title="miniserve",
     description=__doc__,
     version=__version__,
@@ -49,13 +49,13 @@ app.include_router(lowRes_router)
 app.mount(
     "/files",
     StaticFiles(
-        directory=args.root
+        directory=config.root
     )
 )
 app.mount(
     "/",
     StaticPages(
-        directory=Path(Path(args.web_ui) if args.web_ui else Path(__file__).parent.joinpath("web-ui")).resolve(),
+        directory=Path(Path(config.web_ui) if config.web_ui else Path(__file__).parent.joinpath("web-ui")).resolve(),
         html=True
     )
 )

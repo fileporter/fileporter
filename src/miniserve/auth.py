@@ -7,16 +7,16 @@ import hmac
 import socket
 import hashlib
 import fastapi.security
-from config import args
+from config import config
 
 
 security = fastapi.security.HTTPBasic()
 
 
-USERNAME = args.username.lower()
+USERNAME = config.username.lower()
 
 
-if args.password is True:  # only --auth (use system password)
+if config.password is True:  # only --auth (use system password)
     # use system password
     import spwd
     import crypt
@@ -38,11 +38,11 @@ if args.password is True:  # only --auth (use system password)
             raise fastapi.HTTPException(fastapi.status.HTTP_401_UNAUTHORIZED)
         if not hmac.compare_digest(crypt.crypt(password, enc_pwd), enc_pwd):
             raise fastapi.HTTPException(fastapi.status.HTTP_401_UNAUTHORIZED)
-elif isinstance(args.password, str):  # --auth [password]
-    if args.password.startswith("hash:"):
-        PASSWORD = args.password.removeprefix("hash:")
+elif isinstance(config.password, str):  # --auth [password]
+    if config.password.startswith("hash:"):
+        PASSWORD = config.password.removeprefix("hash:")
     else:
-        PASSWORD = hashlib.sha256(args.password.encode()).hexdigest()
+        PASSWORD = hashlib.sha256(config.password.encode()).hexdigest()
 
     def auth_dependency(credentials: fastapi.security.HTTPBasicCredentials = fastapi.Depends(security)):
         username = credentials.username.lower()
@@ -71,8 +71,8 @@ def get_origins():
     for ip in ips:
         yield f"http://{ip}"
         yield f"https://{ip}"
-        yield f"http://{ip}:{args.port}"
-        yield f"https://{ip}:{args.port}"
-        if args.development:
+        yield f"http://{ip}:{config.port}"
+        yield f"https://{ip}:{config.port}"
+        if config.development:
             yield f"http://{ip}:3000"
             yield f"https://{ip}:3000"

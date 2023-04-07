@@ -8,7 +8,7 @@ import mimetypes
 import typing as t
 import fastapi
 from pydantic import BaseModel
-from config import args
+from config import config
 from util.image_size import get_image_size, UnknownImageFormat
 
 
@@ -30,17 +30,17 @@ class ResponseModel(BasicMetaModel):
 
 @api.get("/{fp:path}", response_model=ResponseModel)
 async def get_meta(fp: str = fastapi.Path()):
-    fp = os.path.join(args.root, fp.removeprefix("/"))
+    fp = os.path.join(config.root, fp.removeprefix("/"))
     response = meta(fp)
     if os.path.isdir(fp):
         response['contents'] = [meta(os.path.join(fp, _)) for _ in os.listdir(fp)
-                                if args.dotall or not _.startswith(".")]
+                                if config.dotall or not _.startswith(".")]
     return response
 
 
 def meta(fp: str) -> dict:
     basename = os.path.basename(fp)
-    path = os.path.relpath(fp, args.root)
+    path = os.path.relpath(fp, config.root)
     directory = os.path.split(path)[0]
     if os.path.isfile(fp):
         mime = mimetypes.guess_type(fp)[0]
