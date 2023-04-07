@@ -24,11 +24,14 @@ from preview import (
 
 
 app = fastapi.FastAPI(
+    debug=args.development,
     title="miniserve",
+    description=__doc__,
     version=__version__,
     docs_url=None,
-    dependencies=[fastapi.Depends(auth.auth_dependency)],
     # redoc_url=None,
+    dependencies=[fastapi.Depends(auth.auth_dependency)],
+    # root_path=args.root_path,
 )
 app.add_middleware(
     fastapi.middleware.gzip.GZipMiddleware,

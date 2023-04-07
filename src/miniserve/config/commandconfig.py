@@ -45,7 +45,7 @@ parser.add_argument('--cache', action=argparse.BooleanOptionalAction,
                     help=argparse.SUPPRESS)
 parser.add_argument('--web-ui', type=existing_path,
                     help=argparse.SUPPRESS)
-parser.add_argument('--reload', action=argparse.BooleanOptionalAction,
+parser.add_argument('--development', '--dev', action=argparse.BooleanOptionalAction,
                     help=argparse.SUPPRESS)
 parser.add_argument('root', type=existing_path, nargs='?',
                     help="directory to serve")

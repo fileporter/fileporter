@@ -58,6 +58,7 @@ else:  # no --auth used
 
 
 def get_network_ip():
+    # socket.gethostbyname(socket.gethostname()) is bad (returns sometimes 127.0.1.1 or so)
     # `socket.gethostbyname(socket.gethostname())` doesn't work always
     with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as client:
         client.settimeout(0)
@@ -66,12 +67,12 @@ def get_network_ip():
 
 
 def get_origins():
-    # socket.gethostbyname(socket.gethostname()) is bad (returns sometimes 127.0.1.1 or so)
     ips = ["localhost", "0.0.0.0", get_network_ip(), socket.getfqdn()]
     for ip in ips:
         yield f"http://{ip}"
         yield f"https://{ip}"
-        yield f"http://{ip}:3000"
-        yield f"https://{ip}:3000"
         yield f"http://{ip}:{args.port}"
         yield f"https://{ip}:{args.port}"
+        if args.development:
+            yield f"http://{ip}:3000"
+            yield f"https://{ip}:3000"

@@ -27,7 +27,7 @@ class Configuration(pydantic.BaseModel):
     dependencies: t.Optional[bool] = False
     cache: t.Optional[bool] = True
     web_ui: t.Optional[pydantic.DirectoryPath]
-    reload: t.Optional[bool] = False
+    development: t.Optional[bool] = False
     config: t.Optional[pydantic.FilePath]
 
     def __str__(self):
