@@ -35,3 +35,13 @@ user@pc:~/path/to/folder$ miniserve
 
 ### gallery-view
 ![gallery-view](README.assets/gallery-view.png)
+
+
+# Development Notes
+
+<!--
+after the clone to complete the setup
+```bash
+ln -rs "$PWD/scripts/dev/pre-push" ".git/hooks/"
+```
+-->

@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+echo "DON'T USE THIS. NOT WORKING"; exit 1
+echo "pre-push hook..."
+AVI_PATH="src/miniserve/"
+
+python3 -c '
+import datetime;
+print(datetime.datetime.now().strftime("__version_info__ = (%-y, %-m, %-d, %-H, %-M)"))
+' > "${AVI_PATH}__version__.py"
+echo "__version__ = '.'.join(str(_) for _ in __version_info__)" >> "${AVI_PATH}__version__.py"
+
+git add "${AVI_PATH}__version__.py"
+git commit -m "Automated-Version-Increment"
+
+exit 1
