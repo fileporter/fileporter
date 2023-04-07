@@ -5,7 +5,7 @@ r"""
 """
 import socket
 import qrcode
-from config import args
+from config import config
 
 
 class BGColors:
@@ -21,7 +21,7 @@ class BGColors:
 
 
 def get_info():
-    if args.host == "127.0.0.1":
+    if config.host == "127.0.0.1":
         ip = "localhost"
     else:
         # `socket.gethostbyname(socket.gethostname())` doesn't work always
@@ -29,7 +29,7 @@ def get_info():
             client.connect(("8.8.8.8", 80))
             ip = client.getsockname()[0]
 
-    return f"http://{ip}:{args.port}"
+    return f"http://{ip}:{config.port}"
 
 
 def print_qrcode():

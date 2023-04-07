@@ -13,9 +13,9 @@ from baize.asgi.staticfiles import (
     # Pages as StaticPages  # bad 404 fallback handling
 )
 from fastapi.staticfiles import StaticFiles as StaticPages
-from config import args
+from config import config
 from __version__ import __version__
-import auth
+from auth import auth_system as auth_dependency, get_origins as get_allowed_origins, router as auth_router
 from api import api as api_router
 from preview import (
     preview as preview_router,
@@ -24,13 +24,12 @@ from preview import (
 
 
 app = fastapi.FastAPI(
-    debug=args.development,
+    debug=config.development,
     title="miniserve",
     description=__doc__,
     version=__version__,
     docs_url=None,
     # redoc_url=None,
-    dependencies=[fastapi.Depends(auth.auth_dependency)],
     # root_path=args.root_path,
 )
 app.add_middleware(
@@ -38,24 +37,25 @@ app.add_middleware(
 )
 app.add_middleware(
     fastapi.middleware.cors.CORSMiddleware,
-    allow_origins=list(auth.get_origins()),
+    allow_origins=list(get_allowed_origins()),
     allow_credentials=True,
     allow_methods=["GET"],
     allow_headers=["*"],
 )
-app.include_router(api_router)
-app.include_router(preview_router)
-app.include_router(lowRes_router)
+app.include_router(auth_router)
+app.include_router(api_router, dependencies=[fastapi.Depends(auth_dependency)])
+app.include_router(preview_router, dependencies=[fastapi.Depends(auth_dependency)])
+app.include_router(lowRes_router, dependencies=[fastapi.Depends(auth_dependency)])
 app.mount(
     "/files",
     StaticFiles(
-        directory=args.root
+        directory=config.root
     )
 )
 app.mount(
     "/",
     StaticPages(
-        directory=Path(Path(args.web_ui) if args.web_ui else Path(__file__).parent.joinpath("web-ui")).resolve(),
+        directory=Path(Path(config.web_ui) if config.web_ui else Path(__file__).parent.joinpath("web-ui")).resolve(),
         html=True
     )
 )

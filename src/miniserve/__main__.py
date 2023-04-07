@@ -4,18 +4,18 @@ r"""
 
 """
 import os
-from config import args
+from config import config
 
 
 if __name__ == '__main__':
-    print(args)
+    print(config)
 
-    if not args.uds:
+    if not config.uds:
         from util import qr_code_printer
         qr_code_printer.print_qrcode()
 
     import uvicorn
-    uvicorn.run("main:app", host=args.host, port=args.port, app_dir=os.path.dirname(__file__),
-                root_path=args.root_path, uds=args.uds, reload=args.development,
-                workers=None if args.development else args.worker,
-                **({} if args.logs else {'log_config': None}))  # preserve default value
+    uvicorn.run("main:app", host=config.host, port=config.port, app_dir=os.path.dirname(__file__),
+                root_path=config.root_path, uds=config.uds, reload=config.development,
+                workers=None if config.development else config.worker,
+                **({} if config.logs else {'log_config': None}))  # preserve default value

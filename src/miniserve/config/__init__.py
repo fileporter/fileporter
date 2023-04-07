@@ -9,7 +9,7 @@ import functools
 import typing as t
 from pathlib import Path
 import pydantic
-from .commandconfig import args as command_args
+from .commandconfig import config as command_args
 from .fileconfig import parser as file_config
 
 
@@ -42,7 +42,7 @@ VARIABLES = dict(
     HOME=str(Path.home().resolve()),
 )
 try:
-    args = Configuration(**{
+    config = Configuration(**{
         **functools.reduce(
             lambda a, b: a | b,
             [{key: value for key, value in file_config.items(section, vars=VARIABLES)} for section in file_config.sections()]
