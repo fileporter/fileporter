@@ -4,6 +4,7 @@ r"""
 
 """
 import io
+import mimetypes
 import os
 import os.path as p
 import tempfile
@@ -103,6 +104,9 @@ async def low_resolution(fp: str = fastapi.Path()):
     try:
         image = await anyio.to_thread.run_sync(Image.open, fp)
     except UnidentifiedImageError:
+        mime = mimetypes.guess_type(raw_fp)[0]
+        if mime and mime.startswith("image/"):  # should be something like svg
+            return fastapi.responses.RedirectResponse(f"/files/{raw_fp}")
         raise fastapi.HTTPException(fastapi.status.HTTP_415_UNSUPPORTED_MEDIA_TYPE)
 
     if getattr(image, 'is_animated', False):
