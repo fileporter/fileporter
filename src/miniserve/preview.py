@@ -10,6 +10,7 @@ import tempfile
 import zlib
 import logging
 import fastapi
+import anyio
 from preview_generator.manager import PreviewManager
 from preview_generator.utils import LOGGER_NAME as PREVIEW_LOGGER_NAME
 from preview_generator.exception import UnsupportedMimeType
@@ -65,7 +66,7 @@ async def get_preview(request: fastapi.Request,
         raise fastapi.HTTPException(fastapi.status.HTTP_422_UNPROCESSABLE_ENTITY)
 
     try:
-        preview_fp = manager.get_jpeg_preview(fp)
+        preview_fp = await anyio.to_thread.run_sync(manager.get_jpeg_preview, fp)
     except MissingDelegateError:
         raise fastapi.HTTPException(fastapi.status.HTTP_422_UNPROCESSABLE_ENTITY)
 
@@ -100,13 +101,14 @@ async def low_resolution(fp: str = fastapi.Path()):
         return fastapi.responses.FileResponse(cache_name, filename=filename)
 
     try:
-        image = Image.open(fp)
+        image = await anyio.to_thread.run_sync(Image.open, fp)
     except UnidentifiedImageError:
         raise fastapi.HTTPException(fastapi.status.HTTP_415_UNSUPPORTED_MEDIA_TYPE)
 
     if getattr(image, 'is_animated', False):
         return fastapi.responses.RedirectResponse(f"/files/{raw_fp}")
 
+    # note: not threaded. should be fast enough!?
     optimized = io.BytesIO()
     image.thumbnail((2000, 2000))  # limit size
     image = image.convert('RGB')  # needed to save as jpg
@@ -116,9 +118,10 @@ async def low_resolution(fp: str = fastapi.Path()):
 
     content = optimized.read()
 
+    # note: maybe move to background-task
     if config.cache:
-        with open(cache_name, 'wb') as file:
-            file.write(content)
+        async with await anyio.open_file(cache_name, "wb") as file:
+            await file.write(content)
 
     # faster than to send now a FileResponse
     return fastapi.Response(content, media_type="image/jpeg")
