@@ -9,7 +9,7 @@ import functools
 import typing as t
 from pathlib import Path
 import pydantic
-from .commandconfig import args as command_args
+from .commandconfig import config as command_args
 from .fileconfig import parser as file_config
 
 

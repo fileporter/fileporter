@@ -4,16 +4,28 @@ r"""
 
 """
 import hmac
-import socket
 import hashlib
+import typing as t
 import fastapi.security
 from config import config
+from .util import CookieManager
 
 
 security = fastapi.security.HTTPBasic()
 
 
 USERNAME = config.username.lower()
+
+
+async def get_credentials(cookies: CookieManager = CookieManager.dependency) -> t.Tuple[str, str]:
+    try:
+        auth: str = cookies["auth"]
+    except KeyError:
+        raise fastapi.HTTPException(fastapi.status.HTTP_401_UNAUTHORIZED, detail="missing credentials")
+    username, sep, password = auth.partition(":")
+    if sep is None:
+        raise fastapi.HTTPException(fastapi.status.HTTP_401_UNAUTHORIZED)
+    return username, password
 
 
 if config.password is True:  # only --auth (use system password)
@@ -26,7 +38,7 @@ if config.password is True:  # only --auth (use system password)
     except PermissionError:
         raise PermissionError("unable to verify system password. please provide one with '--auth password'")
 
-    def auth_dependency(credentials: fastapi.security.HTTPBasicCredentials = fastapi.Depends(security)):
+    def auth_system(credentials: fastapi.security.HTTPBasicCredentials = fastapi.Depends(security)):
         username = credentials.username.lower()
         password = credentials.password
         if username != USERNAME:
@@ -44,7 +56,7 @@ elif isinstance(config.password, str):  # --auth [password]
     else:
         PASSWORD = hashlib.sha256(config.password.encode()).hexdigest()
 
-    def auth_dependency(credentials: fastapi.security.HTTPBasicCredentials = fastapi.Depends(security)):
+    def auth_system(credentials: fastapi.security.HTTPBasicCredentials = fastapi.Depends(security)):
         username = credentials.username.lower()
         if username != USERNAME:
             raise fastapi.HTTPException(fastapi.status.HTTP_401_UNAUTHORIZED)
@@ -53,26 +65,5 @@ elif isinstance(config.password, str):  # --auth [password]
         if not hmac.compare_digest(password, PASSWORD):
             raise fastapi.HTTPException(fastapi.status.HTTP_401_UNAUTHORIZED)
 else:  # no --auth used
-    def auth_dependency():
+    def auth_system():
         pass
-
-
-def get_network_ip():
-    # socket.gethostbyname(socket.gethostname()) is bad (returns sometimes 127.0.1.1 or so)
-    # `socket.gethostbyname(socket.gethostname())` doesn't work always
-    with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as client:
-        client.settimeout(0)
-        client.connect(("8.8.8.8", 80))
-        return client.getsockname()[0]
-
-
-def get_origins():
-    ips = ["localhost", "0.0.0.0", get_network_ip(), socket.getfqdn()]
-    for ip in ips:
-        yield f"http://{ip}"
-        yield f"https://{ip}"
-        yield f"http://{ip}:{config.port}"
-        yield f"https://{ip}:{config.port}"
-        if config.development:
-            yield f"http://{ip}:3000"
-            yield f"https://{ip}:3000"
