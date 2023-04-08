@@ -1,26 +1,12 @@
-import { QueryClient, QueryClientProvider } from "react-query";
-import { HashRouter, Routes, Route, Navigate } from "react-router-dom";
-import { HttpError } from "~/common";
+import { QueryClientProvider } from "react-query";
+import { HashRouter, Routes, Route } from "react-router-dom";
 import HookProviders from "~/hooks/HookProviders";
 import OfflineHeader from "~/components/OfflineHeader";
 import AppPage from "~/pages/app";
 import LoginPage from "./pages/login";
 import SettingsPage from "./pages/settings";
 import URLIndexPage from "./pages/slash";
-
-
-const queryClient = new QueryClient({
-    defaultOptions: {
-        queries: {
-            retry: (failureCount, error,) => {
-                if (error instanceof HttpError) {
-                    return false;
-                }
-                return failureCount > 3;
-            }
-        }
-    }
-});
+import { queryClient } from "./config";
 
 
 export default function ProviderCollection() {
