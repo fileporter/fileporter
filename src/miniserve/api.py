@@ -28,6 +28,11 @@ class ResponseModel(BasicMetaModel):
     contents: t.Optional[t.List[BasicMetaModel]]
 
 
+@api.head("/")
+async def check_access():
+    return {}
+
+
 @api.get("/{fp:path}", response_model=ResponseModel)
 async def get_meta(fp: str = fastapi.Path()):
     fp = os.path.join(config.root, fp.removeprefix("/"))

@@ -1,11 +1,12 @@
 import { QueryClient, QueryClientProvider } from "react-query";
-import { HashRouter, Routes, Route } from "react-router-dom";
+import { HashRouter, Routes, Route, Navigate } from "react-router-dom";
 import { HttpError } from "~/common";
-import ControlHeader from "~/components/ControlHeader";
-import ViewManager from "~/components/ViewManager";
 import HookProviders from "~/hooks/HookProviders";
-import OfflineHeader from "./components/OfflineHeader";
-import ScrollProgressFix from "./components/ScrollProgressFix";
+import OfflineHeader from "~/components/OfflineHeader";
+import AppPage from "~/pages/app";
+import LoginPage from "./pages/login";
+import SettingsPage from "./pages/settings";
+import URLIndexPage from "./pages/slash";
 
 
 const queryClient = new QueryClient({
@@ -27,20 +28,23 @@ export default function ProviderCollection() {
         <HookProviders>
             {/* <HashRouter basename={import.meta.env.BASE_URL}> */}
             <HashRouter>
-                <Routes>
-                    <Route path="*" element={<App />} />
-                </Routes>
+                <OfflineHeader />
+                <UIRoutes />
             </HashRouter>
         </HookProviders>
     </QueryClientProvider>
 }
 
 
-function App() {
+export function UIRoutes() {
     return <>
-        <ScrollProgressFix />
-        <OfflineHeader />
-        <ControlHeader />
-        <ViewManager />
-    </>
+        <Routes>
+            <Route path="/">
+                <Route index element={<URLIndexPage />} />
+                <Route path="login" element={<LoginPage />} />
+                <Route path="settings" element={<SettingsPage />} />
+                <Route path="~/*" element={<AppPage />} />
+            </Route>
+        </Routes>
+    </>;
 }

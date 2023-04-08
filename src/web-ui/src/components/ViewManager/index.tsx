@@ -6,11 +6,11 @@ import Loading from "~/elements/Loading";
 import ErrorMessageBox from "~/elements/ErrorMessageBox";
 import FileView from "./FileView";
 import DirectoryView from "./DirectoryView";
+import usePath from "~/hooks/usePath";
 
 
 export default function ViewManager() {
-    const location = useLocation();
-    const path = location.pathname;
+    const path = usePath();
     const query = useQuery<ApiResponse, Error>(path, ({ signal }) => apiQuery(path, { signal }));
 
     if (query.isLoading) return <Loading />;
