@@ -11,6 +11,7 @@ preview-generator = {extras = ["all"], version = "*"}
 pillow = "*"
 baize = "*"
 qrcode = "*"
+anyio = "*"
 
 [dev-packages]
 
