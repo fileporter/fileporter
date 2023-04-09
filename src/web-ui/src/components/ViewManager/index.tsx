@@ -1,5 +1,4 @@
 import { useQuery } from "react-query";
-import { useLocation } from "react-router-dom";
 import { apiQuery } from "~/common";
 import { ApiResponse, DirectoryRootTypeResponse, FileTypeResponse } from "~/types";
 import Loading from "~/elements/Loading";

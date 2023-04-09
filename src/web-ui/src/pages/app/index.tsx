@@ -1,12 +1,12 @@
-import ControlHeader from "~/components/ControlHeader";
-import ScrollProgressFix from "~/components/ScrollProgressFix";
-import ViewManager from "~/components/ViewManager";
+import ControlHeader from "./Header";
+import ScrollProgressFix from "./ScrollProgressFix";
+import ViewHandler from "./ViewHandler";
 
 
 export default function AppPage() {
     return <>
         <ScrollProgressFix />
         <ControlHeader />
-        <ViewManager />
+        <ViewHandler />
     </>;
 }
