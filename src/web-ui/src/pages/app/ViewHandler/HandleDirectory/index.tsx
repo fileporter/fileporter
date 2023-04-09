@@ -2,5 +2,5 @@ import { DirectoryRootTypeResponse } from "~/types";
 
 
 export default function HandleDirectory(directory: DirectoryRootTypeResponse) {
-    return null;
+    return <p>Hello World</p>;
 }

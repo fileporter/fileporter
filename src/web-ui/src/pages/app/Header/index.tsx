@@ -1,3 +1,5 @@
 export default function AppHeader() {
-    return null;
+    return <div className="bg-black">
+        Header
+    </div>;
 }

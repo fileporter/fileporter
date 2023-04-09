@@ -1,11 +1,12 @@
+import axios from "axios";
 import { useQuery } from "react-query";
 import { Navigate } from "react-router-dom";
-import { apiQuery } from "~/common";
+
 
 export default function URLIndexPage() {
     const query = useQuery(
         ["api-head"],
-        ({ signal }) => apiQuery("/api/", { signal, method: "HEAD" }),
+        ({ signal }) => axios.head("/api/", { signal }),
     );
 
     if (query.isLoading) {

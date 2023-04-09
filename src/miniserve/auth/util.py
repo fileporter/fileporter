@@ -34,7 +34,14 @@ def get_origins():
             yield f"https://{ip}:3000"
 
 
+@fastapi.Depends
+async def get_cookies(request: fastapi.Request, response: fastapi.Response) -> 'CookieManager':
+    return CookieManager(request=request, response=response)
+
+
 class CookieManager:
+    dependency = get_cookies
+
     class _DataType(t.TypedDict):
         path: str
         value: t.Any
@@ -42,12 +49,6 @@ class CookieManager:
     def __init__(self, request: fastapi.Request, response: fastapi.Response):
         self.request = request
         self.response = response
-
-    @classmethod
-    @fastapi.Depends
-    @functools.wraps(__init__)
-    async def dependency(cls, *args, **kwargs) -> 'CookieManager':
-        return cls(*args, **kwargs)
 
     def __setitem__(self, key: str, value: t.Any):
         data: CookieManager._DataType = dict(path=config.root_path, value=value)
