@@ -17,6 +17,6 @@ export default function URLIndexPage() {
     if (query.isError) {
         return <Navigate to="/login" />        ;
     } else {
-        return <Navigate to="/~/" />;
+        return <Navigate replace to="/~/" />;
     }
 }
