@@ -16,7 +16,7 @@ async def login(
         username: str = fastapi.Body(),
         password: str = fastapi.Body()
 ):
-    cookies["auth"] = f"{username}:{password}"
+    cookies["auth"] = [username, password]
 
 
 @auth.post("/logout")

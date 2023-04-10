@@ -6,26 +6,24 @@ r"""
 import hmac
 import hashlib
 import typing as t
-import fastapi.security
+from collections import namedtuple
+import fastapi
 from config import config
 from .util import CookieManager
-
-
-security = fastapi.security.HTTPBasic()
 
 
 USERNAME = config.username.lower()
 
 
-async def get_credentials(cookies: CookieManager = CookieManager.dependency) -> t.Tuple[str, str]:
+Credentials = namedtuple("Credentials", ["username", "password"])
+
+
+async def get_credentials(cookies: CookieManager = CookieManager.dependency) -> Credentials:
     try:
-        auth: str = cookies["auth"]
-    except KeyError:
+        username, password = cookies["auth"]
+    except (KeyError, ValueError):
         raise fastapi.HTTPException(fastapi.status.HTTP_401_UNAUTHORIZED, detail="missing credentials")
-    username, sep, password = auth.partition(":")
-    if sep is None:
-        raise fastapi.HTTPException(fastapi.status.HTTP_401_UNAUTHORIZED)
-    return username, password
+    return Credentials(username, password)
 
 
 if config.password is True:  # only --auth (use system password)
@@ -38,7 +36,7 @@ if config.password is True:  # only --auth (use system password)
     except PermissionError:
         raise PermissionError("unable to verify system password. please provide one with '--auth password'")
 
-    def auth_system(credentials: fastapi.security.HTTPBasicCredentials = fastapi.Depends(security)):
+    def auth_system(credentials: Credentials = fastapi.Depends(get_credentials)):
         username = credentials.username.lower()
         password = credentials.password
         if username != USERNAME:
@@ -56,7 +54,7 @@ elif isinstance(config.password, str):  # --auth [password]
     else:
         PASSWORD = hashlib.sha256(config.password.encode()).hexdigest()
 
-    def auth_system(credentials: fastapi.security.HTTPBasicCredentials = fastapi.Depends(security)):
+    def auth_system(credentials: Credentials = fastapi.Depends(get_credentials)):
         username = credentials.username.lower()
         if username != USERNAME:
             raise fastapi.HTTPException(fastapi.status.HTTP_401_UNAUTHORIZED)
