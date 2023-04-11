@@ -40,7 +40,7 @@ const MimeMap = {
 
 
 function getIconFromMimeType(mime: string | undefined): string {
-    if (mime === undefined) {
+    if (!mime) {
         return EmptyFileIcon;
     }
     for (const [pattern, icon] of Object.entries(MimeMap)) {
