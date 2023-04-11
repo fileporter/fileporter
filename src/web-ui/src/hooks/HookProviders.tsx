@@ -1,4 +1,4 @@
-import { PropsWithChildren } from "react";
+import type { PropsWithChildren } from "react";
 import { Provider as OpenModeProvider } from "./useOpenMode";
 import { Provider as SortModeProvider } from "./useSortMode";
 import { Provider as ViewModeProvider } from "./useViewMode";

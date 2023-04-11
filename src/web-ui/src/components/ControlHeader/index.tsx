@@ -4,7 +4,7 @@ import PathBar from "./PathBar";
 export default function ControlHeader() {
     const [isVisible, setVisible] = useState(true);
     const [lastScrollTop, setLastTop] = useState(0);
-    const isTopMost = window.scrollY <= 20;  // could also be 0
+    const isTopMost = window.scrollY <= 20; // could also be 0
 
     useEffect(() => {
         const controller = new AbortController();
@@ -15,7 +15,7 @@ export default function ControlHeader() {
             setVisible(scrollTop < lastScrollTop);
             setLastTop(scrollTop);
         }, { passive: true, signal: controller.signal });
-        
+
         return () => controller.abort();
     });
 
@@ -29,5 +29,5 @@ export default function ControlHeader() {
                 <PathBar />
             </div>
         }
-    </>
+    </>;
 }

@@ -6,6 +6,6 @@ export default function SettingsToggle() {
     const [,setHash] = useUrlHash();
 
     return <img className="block" src={SettingsIconSrc} onClick={() => {
-        setHash(old => old.length ? "" : "settings");
+        setHash(old => (old.length ? "" : "settings"));
     }} />;
 }

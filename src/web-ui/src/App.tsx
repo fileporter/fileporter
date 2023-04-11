@@ -11,14 +11,14 @@ import ScrollProgressFix from "./components/ScrollProgressFix";
 const queryClient = new QueryClient({
     defaultOptions: {
         queries: {
-            retry: (failureCount, error,) => {
+            retry: (failureCount, error) => {
                 if (error instanceof HttpError) {
                     return false;
                 }
                 return failureCount > 3;
-            }
-        }
-    }
+            },
+        },
+    },
 });
 
 
@@ -32,7 +32,7 @@ export default function ProviderCollection() {
                 </Routes>
             </HashRouter>
         </HookProviders>
-    </QueryClientProvider>
+    </QueryClientProvider>;
 }
 
 
@@ -42,5 +42,5 @@ function App() {
         <OfflineHeader />
         <ControlHeader />
         <ViewManager />
-    </>
+    </>;
 }

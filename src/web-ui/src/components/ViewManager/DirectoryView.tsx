@@ -1,5 +1,5 @@
 import { numberBasedSort, SortMode, textBasedSort, ViewMode } from "~/common";
-import { DirectoryRootTypeResponse } from "~/types";
+import type { DirectoryRootTypeResponse } from "~/types";
 import ViewToggleHeader from "../ControlHeader/ViewToggle";
 import OpenModeToggleHeader from "../ControlHeader/OpenModeToggle";
 import SortModeToggleHeader from "../ControlHeader/SortModeToggle";
@@ -9,18 +9,19 @@ import useSortMode from "~/hooks/useSortMode";
 import GalleryView from "~/components/DirectoryViews/Gallery";
 import IconView from "~/components/DirectoryViews/Icon";
 import ListView from "~/components/DirectoryViews/List";
+import { type ViewProps } from "../DirectoryViews";
 
 
-const viewMap = {
+const viewMap: Record<ViewMode, undefined | ((p: ViewProps) => JSX.Element)> = {
     [ViewMode.icon]: IconView,
     [ViewMode.list]: ListView,
     [ViewMode.gallery]: GalleryView,
-}
+};
 
 export default function DirectoryView(directory: DirectoryRootTypeResponse) {
     const [viewMode] = useViewMode();
     const [sortMode] = useSortMode();
-    
+
     const contents = (!directory.basename.length ? directory.contents : directory.contents.concat({
         type: "directory",
         basename: "..",

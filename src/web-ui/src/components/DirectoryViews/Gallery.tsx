@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { apiUrl, OpenMode } from "~/common";
-import { FileOrDirectory } from "~/types";
-import { ViewProps } from ".";
+import type { FileOrDirectory } from "~/types";
+import type { ViewProps } from ".";
 import FileIcon from "~/elements/FileIcon";
 import useIsFullScreen from "~/hooks/useIsFullScreen";
 import useOpenMode from "~/hooks/useOpenMode";
@@ -37,15 +37,15 @@ function GridRenderItem(item: FileOrDirectory) {
             <span className="text-center break-words group-hover:underline">
                 {item.basename}
             </span>
-        </Link>
+        </Link>;
     } else {
         const LinkComp = OpenModeLinkMap[openMode];
         return <LinkComp to={item.path} className="flex flex-col gap-1 group">
-            <FileIcon className="object-cover w-full h-auto mx-auto rounded-lg aspect-square" imgSrc={apiUrl(`/preview/${item.path}`)} mime={item.mime} /> 
+            <FileIcon className="object-cover w-full h-auto mx-auto rounded-lg aspect-square" imgSrc={apiUrl(`/preview/${item.path}`)} mime={item.mime} />
             <span className="w-full text-center break-words group-hover:underline">
                 {item.basename}
             </span>
-        </LinkComp>
+        </LinkComp>;
     }
 }
 
@@ -61,28 +61,28 @@ function ListRenderItem(item: FileOrDirectory) {
             <span className="break-words group-hover:underline">
                 {item.basename}
             </span>
-        </Link>
+        </Link>;
     } else if (item.mime?.startsWith("image/")) {
         const imgSrc = apiUrl(`/low-resolution/${item.path}`);
 
         const onError: React.ReactEventHandler<HTMLImageElement> = ({ currentTarget }) => {
             currentTarget.onerror = null;
             currentTarget.src = DownloadFailedIcon;
-        }
+        };
 
         return <img width={item.size?.[0] ?? 500} height={item.size?.[1] ?? 375} className={`w-full mx-auto ${isFullScreen ? "" : "max-w-5xl"}`}
             src={imgSrc} onError={onError} onClick={({ currentTarget }) => {
                 if (currentTarget.onerror === null) {
                     const url = new URL(imgSrc);
-                    url.searchParams.set("ts", Date.now().toString())
+                    url.searchParams.set("ts", Date.now().toString());
                     currentTarget.src = url.toString();
                     currentTarget.onerror = onError as never;
                 }
             }} onDoubleClick={() => {
                 const url = openMode === OpenMode.intern ? href : apiUrl(`/files/${item.path}`);
-                window.open(url, '_blank')?.focus();
+                window.open(url, "_blank")?.focus();
             }} alt="" loading="lazy"
-        />
+        />;
     } else {
         const LinkComp = OpenModeLinkMap[openMode];
         return <LinkComp to={item.path} className="flex gap-1 px-2 group">
@@ -90,6 +90,6 @@ function ListRenderItem(item: FileOrDirectory) {
             <span className="break-words group-hover:underline">
                 {item.basename}
             </span>
-        </LinkComp>
+        </LinkComp>;
     }
 }

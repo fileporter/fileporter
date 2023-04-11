@@ -15,11 +15,11 @@ export default function ScrollProgressFix() {
             const percentageScrolled = startOffsetY / startPageHeight;
             setTimeout(() => {
                 const pageHeight = Math.max(document.body.scrollHeight, document.body.offsetHeight,
-                    document.documentElement.clientHeight, document.documentElement.scrollHeight, document.documentElement.offsetHeight);    
+                    document.documentElement.clientHeight, document.documentElement.scrollHeight, document.documentElement.offsetHeight);
                 const scrollPos = percentageScrolled * pageHeight;
-                document.documentElement.scrollTo({ left: 0, top: scrollPos })
+                document.documentElement.scrollTo({ left: 0, top: scrollPos });
             }, 100);
-        })
+        });
 
         return () => controller.abort();
     }, []);

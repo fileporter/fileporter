@@ -10,24 +10,26 @@ const imgMap = {
     [ViewMode.icon]: IconViewIcon,
     [ViewMode.list]: ListViewIcon,
     [ViewMode.gallery]: GalleryViewIcon,
-}
+};
 
 
 export default function ViewToggle() {
     const [viewMode, setViewMode] = useViewMode();
 
     const header = document.getElementById("control-header");
-    if (!header) return null;
+    if (!header) {
+        return null;
+    }
 
     function getNextMode() {
-        switch(viewMode) {
-            case ViewMode.icon:
-                return ViewMode.list;
-            case ViewMode.list:
-                return ViewMode.gallery;
-            case ViewMode.gallery:
-            default:
-                return ViewMode.icon;
+        switch (viewMode) {
+        case ViewMode.icon:
+            return ViewMode.list;
+        case ViewMode.list:
+            return ViewMode.gallery;
+        case ViewMode.gallery:
+        default:
+            return ViewMode.icon;
         }
     }
 
@@ -36,5 +38,5 @@ export default function ViewToggle() {
             onClick={() => setViewMode(getNextMode())}
             src={imgMap[viewMode]}
         />
-    </>, header)
+    </>, header);
 }

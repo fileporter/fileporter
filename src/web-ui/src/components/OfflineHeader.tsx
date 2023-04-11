@@ -10,7 +10,7 @@ export default function OfflineHeader() {
             capture: true,
             passive: true,
             signal: controller.signal,
-        }
+        };
 
         window.addEventListener("offline", () => setOnLine(false), options);
         window.addEventListener("online", () => setOnLine(true), options);
@@ -18,7 +18,9 @@ export default function OfflineHeader() {
         return () => controller.abort();
     }, [setOnLine]);
 
-    if (onLine) return null;
+    if (onLine) {
+        return null;
+    }
 
     return <div className="text-sm text-center bg-red-600 animate-pulse">
         Your are Offline

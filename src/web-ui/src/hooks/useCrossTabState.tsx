@@ -1,37 +1,35 @@
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useRef, useState } from "react";
 
 export default function useCrossTabState<T>(stateKey: string, defaultValue: T): [T, (n: T) => void] {
-    const [state, setState] = useState(defaultValue)
-    const isNewSession = useRef(true)
+    const [state, setState] = useState(defaultValue);
+    const isNewSession = useRef(true);
 
     useEffect(() => {
         if (isNewSession.current) {
-            const currentState = localStorage.getItem(stateKey)
+            const currentState = localStorage.getItem(stateKey);
             if (currentState) {
-                setState(JSON.parse(currentState))
+                setState(JSON.parse(currentState));
             } else {
-                setState(defaultValue)
+                setState(defaultValue);
             }
-            isNewSession.current = false
-            return
+            isNewSession.current = false;
+            return;
         }
-        try {
-            localStorage.setItem(stateKey, JSON.stringify(state))
-        } catch (error) { }
-    }, [state, stateKey, defaultValue])
+        localStorage.setItem(stateKey, JSON.stringify(state));
+    }, [state, stateKey, defaultValue]);
 
     useEffect(() => {
-        const onReceiveMessage = (e: any) => {
-            const { key, newValue } = e
+        const controller = new AbortController();
+        window.addEventListener("storage", (e) => {
+            const { key, newValue } = e;
             if (key === stateKey) {
-                setState(JSON.parse(newValue))
+                setState(JSON.parse(newValue!));
             }
-        }
-        window.addEventListener('storage', onReceiveMessage)
-        return () => window.removeEventListener('storage', onReceiveMessage)
-    }, [stateKey, setState])
+        }, { signal: controller.signal });
+        return () => controller.abort();
+    }, [stateKey, setState]);
 
-    return [state, setState]
+    return [state, setState];
 }
 
 

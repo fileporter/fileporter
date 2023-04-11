@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { apiUrl, OpenMode } from "~/common";
-import { FileTypeResponse } from "~/types";
+import type { FileTypeResponse } from "~/types";
 import { MediaSupportIndex } from "~/components/SupportedMediaViews";
 import FullScreenToggle from "~/components/ControlHeader/FullScreenToggle";
 import useOpenMode from "~/hooks/useOpenMode";
@@ -12,14 +12,14 @@ export default function FileView(file: FileTypeResponse) {
 
     if (openMode === OpenMode.intern) {
         const MediaView = MediaSupportIndex[file.mime?.split("/")[0] ?? ""];
-        if (MediaView) {
+        if (MediaView !== undefined) {
             return <>
                 <FullScreenToggle />
                 <MediaView {...file} />
             </>;
         }
     }
-    return <OpenInNewTab {...file} />
+    return <OpenInNewTab {...file} />;
 }
 function OpenInNewTab(file: FileTypeResponse) {
     const openNewTabRef = useRef(false);

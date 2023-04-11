@@ -1,15 +1,16 @@
 import { OpenMode } from "~/common";
 import useCrossTabState from "./useCrossTabState";
-import { PropsWithChildren, createContext, useContext } from "react";
+import type { PropsWithChildren} from "react";
+import { createContext, useContext } from "react";
 
 
 const OpenContext = createContext<{
     openMode: OpenMode
     setOpenMode: (m: OpenMode) => void
-}>({
-    openMode: OpenMode.intern,
-    setOpenMode: () => undefined
-});
+        }>({
+            openMode: OpenMode.intern,
+            setOpenMode: () => undefined,
+        });
 
 
 export function Provider(props: PropsWithChildren) {

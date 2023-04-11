@@ -17,10 +17,10 @@ export function apiUrl(location: string): string {
     }
     let url;
     if (import.meta.env.DEV) {
-        url = new URL(location, window.location.origin)
+        url = new URL(location, window.location.origin);
         url.port = "8000";
     } else {
-        url = new URL(import.meta.env.BASE_URL + location.slice(1), window.location.origin)
+        url = new URL(import.meta.env.BASE_URL + location.slice(1), window.location.origin);
     }
     return url.toString();
 }
@@ -34,5 +34,5 @@ export function apiQuery(location: string, init: RequestInit) {
                 throw new HttpError(response.status);
             }
             return response.json();
-        })
+        });
 }

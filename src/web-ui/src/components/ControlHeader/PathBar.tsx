@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, useLocation } from "react-router-dom"
+import { Link, useLocation } from "react-router-dom";
 
 
 export default function PathBar() {
@@ -16,5 +16,5 @@ export default function PathBar() {
             </Link>
             <span className="select-none">/</span>
         </React.Fragment>)}
-    </div>
+    </div>;
 }

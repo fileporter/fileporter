@@ -7,4 +7,4 @@ export const OpenModeLinkMap = {
     [OpenMode.intern]: Link,
     [OpenMode.browser]: ApiFileLink,
     [OpenMode.download]: ApiFileDownloadLink,
-}
+};
