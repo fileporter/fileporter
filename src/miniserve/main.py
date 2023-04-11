@@ -3,6 +3,7 @@
 r"""
 
 """
+import util.register_additional_mimetypes  # noqa
 from pathlib import Path
 import fastapi.middleware.cors
 import fastapi.middleware.gzip

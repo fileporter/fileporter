@@ -15,13 +15,19 @@ from util.image_size import get_image_size, UnknownImageFormat
 api = fastapi.APIRouter(prefix="/api")
 
 
+class ImageSize(BaseModel):
+    width: int
+    height: int
+
+
 class BasicMetaModel(BaseModel):
     type: t.Literal["file", "directory"]
     basename: str
     path: str
-    directory: str
+    parent: str
     mime: t.Optional[str]
-    size: t.Optional[t.Tuple[int, int]]
+    size: t.Optional[ImageSize]
+    extension: t.Optional[str]
 
 
 class ResponseModel(BasicMetaModel):
@@ -46,28 +52,32 @@ async def get_meta(fp: str = fastapi.Path()):
 def meta(fp: str) -> dict:
     basename = os.path.basename(fp)
     path = os.path.relpath(fp, config.root)
-    directory = os.path.split(path)[0]
+    parent = os.path.split(path)[0]
     if os.path.isfile(fp):
         mime = mimetypes.guess_type(fp)[0]
+        extension = os.path.splitext(fp)[1] or None
         data = dict(
             type="file",
             basename=basename,
             path=path,
-            directory=directory,
+            parent=parent,
             mime=mime,
+            extension=extension,
         )
         if mime and mime.startswith("image/"):
             try:
-                data['size'] = get_image_size(fp)
+                width, height = get_image_size(fp)
             except UnknownImageFormat:
                 pass
+            else:
+                data['size'] = dict(width=width, height=height)
         return data
     elif os.path.isdir(fp):
         return dict(
             type="directory",
             basename=basename,
             path=path,
-            directory=directory,
+            parent=parent,
         )
     else:
         raise fastapi.HTTPException(fastapi.status.HTTP_404_NOT_FOUND)

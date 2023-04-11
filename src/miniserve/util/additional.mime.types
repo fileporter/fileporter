@@ -1,0 +1,7 @@
+text/x-javascript    js
+text/x-javascript+xml    jsx
+text/x-typescript   ts
+text/x-typescript+xml   tsx
+text/x-sass sass
+text/x-scss sass
+text/x-yaml yaml    yml
