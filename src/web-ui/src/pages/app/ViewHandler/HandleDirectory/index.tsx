@@ -1,24 +1,22 @@
 import { SortMode, ViewMode, numberBasedSort, textBasedSort } from "~/common";
 import useSortMode from "~/hooks/useSortMode";
 import useViewMode from "~/hooks/useViewMode";
-import { DirectoryRootTypeResponse } from "~/types";
+import type { DirectoryRootTypeResponse } from "~/types";
 import IconView from "./Icon";
 import ListView from "./List";
 import GalleryView from "./Gallery";
 
 
-const viewMap = {
+const viewMap: Record<ViewMode, undefined | ((props: { contents: DirectoryRootTypeResponse["contents"] }) => JSX.Element) > = {
     [ViewMode.icon]: IconView,
     [ViewMode.list]: ListView,
     [ViewMode.gallery]: GalleryView,
-}
+};
 
 
 export default function HandleDirectory(directory: DirectoryRootTypeResponse) {
     const [viewMode] = useViewMode();
     const [sortMode] = useSortMode();
-
-    console.log(directory);
 
     const contents = (
         !directory.basename.length ?
@@ -28,11 +26,11 @@ export default function HandleDirectory(directory: DirectoryRootTypeResponse) {
                 type: "directory",
                 basename: "..",
                 path: directory.parent,
-                parent: `${directory.parent}/..`
+                parent: `${directory.parent}/..`,
             })
-        ).sort(sortMode === SortMode.alphabetic ? textBasedSort : numberBasedSort);
+    ).sort(sortMode === SortMode.alphabetic ? textBasedSort : numberBasedSort);
 
-    const View = viewMap[viewMode] ?? GalleryView; 
+    const View = viewMap[viewMode] ?? GalleryView;
 
     return <View contents={contents} />;
 }

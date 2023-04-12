@@ -32,7 +32,7 @@ export default function LoginPage() {
         }}>
             <input
                 className="px-2 py-px bg-black bg-opacity-50 rounded-md" type="text"
-                required autoFocus placeholder="Username" 
+                required autoFocus placeholder="Username"
                 onChange={(event) => setUsername(event.target.value)}
             />
             <input

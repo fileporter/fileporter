@@ -1,8 +1,10 @@
 interface Props {
-    
+    children: JSX.Element[]
 }
 
 
 export default function OptionSwitch(props: Props) {
-    return null;
+    return <>
+        {props.children}
+    </>;
 }

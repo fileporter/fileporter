@@ -5,17 +5,17 @@ import axios, { AxiosError } from "axios";
 export function serverUrl(location: string): string {
     let url;
     if (import.meta.env.DEV) {
-        url = new URL(location, window.location.origin)
+        url = new URL(location, window.location.origin);
         url.port = "8000";
     } else {
-        url = new URL(import.meta.env.BASE_URL + location.slice(1), window.location.origin)
+        url = new URL(import.meta.env.BASE_URL + location.slice(1), window.location.origin);
     }
     return url.toString();
 }
 
 
-axios.defaults.baseURL = serverUrl("/")
-// axios.defaults.baseURL = import.meta.env.PROD ? 
+axios.defaults.baseURL = serverUrl("/");
+// axios.defaults.baseURL = import.meta.env.PROD ?
 //     import.meta.env.BASE_URL : (() => {
 //         const url = new URL(import.meta.env.BASE_URL, window.location.origin);
 //         url.port = "8000";
@@ -33,7 +33,7 @@ export const queryClient = new QueryClient({
                     return false;
                 }
                 return failureCount > 3;
-            }
-        }
-    }
+            },
+        },
+    },
 });

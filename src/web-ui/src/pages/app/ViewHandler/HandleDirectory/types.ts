@@ -1,4 +1,4 @@
-import { FileOrDirectory } from "~/types";
+import type { FileOrDirectory } from "~/types";
 
 
 export interface DirectoryHandlerProps {

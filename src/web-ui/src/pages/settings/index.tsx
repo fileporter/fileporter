@@ -9,6 +9,6 @@ export default function SettingsPage() {
         <HeadPart />
         <ViewModePart />
         <OpenModePart />
-        <SortModePart />    
+        <SortModePart />
     </>;
 }

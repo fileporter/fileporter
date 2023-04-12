@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { apiUrl, OpenMode } from "~/common";
+import { OpenMode } from "~/common";
 import type { FileOrDirectory } from "~/types";
 import type { ViewProps } from ".";
 import FileIcon from "~/elements/FileIcon";
@@ -9,6 +9,7 @@ import { OpenModeLinkMap } from "~/common/maps";
 import FolderIcon from "~/elements/FolderIcon";
 import DownloadFailedIcon from "@assets/icons/download-fail.png";
 import { useHref } from "react-router-dom";
+import { serverUrl } from "~/config";
 
 
 export default function GalleryView({ contents }: ViewProps) {
@@ -33,7 +34,7 @@ function GridRenderItem(item: FileOrDirectory) {
 
     if (item.type === "directory") {
         return <Link to={item.path} className="flex flex-col gap-1 group">
-            <FolderIcon previewSrc={apiUrl(`/preview/${item.path}?directories=true`)} />
+            <FolderIcon previewSrc={serverUrl(`/preview/${item.path}?directories=true`)} />
             <span className="text-center break-words group-hover:underline">
                 {item.basename}
             </span>
@@ -41,7 +42,7 @@ function GridRenderItem(item: FileOrDirectory) {
     } else {
         const LinkComp = OpenModeLinkMap[openMode];
         return <LinkComp to={item.path} className="flex flex-col gap-1 group">
-            <FileIcon className="object-cover w-full h-auto mx-auto rounded-lg aspect-square" imgSrc={apiUrl(`/preview/${item.path}`)} mime={item.mime} />
+            <FileIcon className="object-cover w-full h-auto mx-auto rounded-lg aspect-square" imgSrc={serverUrl(`/preview/${item.path}`)} mime={item.mime} />
             <span className="w-full text-center break-words group-hover:underline">
                 {item.basename}
             </span>
@@ -63,7 +64,7 @@ function ListRenderItem(item: FileOrDirectory) {
             </span>
         </Link>;
     } else if (item.mime?.startsWith("image/")) {
-        const imgSrc = apiUrl(`/low-resolution/${item.path}`);
+        const imgSrc = serverUrl(`/low-resolution/${item.path}`);
 
         const onError: React.ReactEventHandler<HTMLImageElement> = ({ currentTarget }) => {
             currentTarget.onerror = null;
@@ -79,7 +80,7 @@ function ListRenderItem(item: FileOrDirectory) {
                     currentTarget.onerror = onError as never;
                 }
             }} onDoubleClick={() => {
-                const url = openMode === OpenMode.intern ? href : apiUrl(`/files/${item.path}`);
+                const url = openMode === OpenMode.intern ? href : serverUrl(`/files/${item.path}`);
                 window.open(url, "_blank")?.focus();
             }} alt="" loading="lazy"
         />;

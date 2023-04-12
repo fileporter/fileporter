@@ -5,7 +5,7 @@ import { useQuery } from "react-query";
 import ErrorMessageBox from "~/elements/ErrorMessageBox";
 import Loading from "~/elements/Loading";
 import usePath from "~/hooks/usePath";
-import { FileTypeResponse } from "~/types";
+import type { FileTypeResponse } from "~/types";
 
 
 export default function TextSupport(file: FileTypeResponse) {
@@ -14,13 +14,17 @@ export default function TextSupport(file: FileTypeResponse) {
         ["file", path],
         ({ signal }) => axios.get<string>(`/files/${path}`, { signal }).then(r => r.data),
     );
-    if (query.isLoading) return <Loading />;
-    if (query.isError) return <ErrorMessageBox error={query.error} />;
+    if (query.isLoading) {
+        return <Loading />;
+    }
+    if (query.isError) {
+        return <ErrorMessageBox error={query.error} />;
+    }
 
     if (file.mime?.startsWith("text/x-")) {
         const hl = hljs.highlightAuto(query.data!);
         if (hl.language) {
-            return <pre className="px-2 leading-5 break-words whitespace-break-spaces" dangerouslySetInnerHTML={{__html: hl.value}}></pre>
+            return <pre className="px-2 leading-5 break-words whitespace-break-spaces" dangerouslySetInnerHTML={{__html: hl.value}}></pre>;
         }
     }
     return <pre className="px-2 leading-5 break-words whitespace-break-spaces">

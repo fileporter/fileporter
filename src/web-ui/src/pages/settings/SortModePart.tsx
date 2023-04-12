@@ -1,6 +1,6 @@
 
 export function SortModePart() {
     return <>
-    
+
     </>;
 }

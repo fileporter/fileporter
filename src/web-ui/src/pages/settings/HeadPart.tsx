@@ -1,5 +1,5 @@
 export function HeadPart() {
     return <>
-    
+
     </>;
 }

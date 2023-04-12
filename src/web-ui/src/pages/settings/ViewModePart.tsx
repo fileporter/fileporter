@@ -1,6 +1,6 @@
 
 export function ViewModePart() {
     return <>
-    
+
     </>;
 }
