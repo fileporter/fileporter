@@ -8,6 +8,10 @@ import mimetypes
 import typing as t
 import fastapi
 from pydantic import BaseModel
+try:
+    import magic
+except (ModuleNotFoundError, ImportError):
+    magic = None
 from config import config
 from util.image_size import get_image_size, UnknownImageFormat
 
@@ -55,6 +59,8 @@ def meta(fp: str) -> dict:
     parent = os.path.split(path)[0]
     if os.path.isfile(fp):
         mime = mimetypes.guess_type(fp)[0]
+        if mime is None:
+            mime = magic.from_file(fp, mime=True)
         extension = os.path.splitext(fp)[1] or None
         data = dict(
             type="file",
