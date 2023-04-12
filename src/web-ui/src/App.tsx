@@ -19,7 +19,7 @@ export default function ProviderCollection() {
                 <UIRoutes />
             </HashRouter>
         </HookProviders>
-    </QueryClientProvider>
+    </QueryClientProvider>;
 }
 
 

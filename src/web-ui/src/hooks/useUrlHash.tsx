@@ -1,4 +1,5 @@
-import { NavigateOptions, useLocation, useNavigate } from "react-router-dom";
+import type { NavigateOptions} from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 type UpdateValue = string | ((old: string) => string)
 type setHashFunction = (update: UpdateValue, options?: NavigateOptions) => void
@@ -17,7 +18,7 @@ export default function useUrlHash(): [string, setHashFunction] {
             pathname: location.pathname,
             search: location.search,
             hash: `#${update}`,
-        }, options)
+        }, options);
     }
 
     return [hash, setHash];

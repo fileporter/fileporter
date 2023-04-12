@@ -1,4 +1,4 @@
-import { DirectoryRootTypeResponse } from "~/types"
+import type { DirectoryRootTypeResponse } from "~/types";
 
 
 export interface ViewProps {

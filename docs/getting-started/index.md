@@ -16,12 +16,12 @@ nav_order: 0
 ## Installation
 
 ```bash
-cat https://github.com/PlayerG9/miniserve/raw/main/scripts/installer.sh | bash
+cat https://github.com/PlayerG9/miniserve/raw/main/scripts/installer | bash
 ```
 
 it is also possible to pass some arguments
 ```bash
-cat https://github.com/PlayerG9/miniserve/raw/main/scripts/installer.sh | bash -s -- {directory-name}
+cat https://github.com/PlayerG9/miniserve/raw/main/scripts/installer | bash -s -- {directory-name}
 ```
 
 ## Adding miniserve to the path

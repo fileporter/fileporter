@@ -16,5 +16,5 @@ export default function PathBar() {
             </Link>
             <span className="select-none">/</span>
         </React.Fragment>)}
-    </div>
+    </div>;
 }

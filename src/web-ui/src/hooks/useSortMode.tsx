@@ -1,15 +1,16 @@
 import { SortMode } from "~/common";
 import useCrossTabState from "./useCrossTabState";
-import { PropsWithChildren, createContext, useContext } from "react";
+import type { PropsWithChildren} from "react";
+import { createContext, useContext } from "react";
 
 
 const SortContext = createContext<{
     sortMode: SortMode
     setSortMode: (m: SortMode) => void
-}>({
-    sortMode: SortMode.alphabetic,
-    setSortMode: () => undefined
-});
+        }>({
+            sortMode: SortMode.alphabetic,
+            setSortMode: () => undefined,
+        });
 
 
 export function Provider(props: PropsWithChildren) {

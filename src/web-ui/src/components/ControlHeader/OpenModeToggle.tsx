@@ -10,24 +10,26 @@ const imgMap = {
     [OpenMode.intern]: FileModeIcon,
     [OpenMode.browser]: BrowserModeIcon,
     [OpenMode.download]: DownloadModeIcon,
-}
+};
 
 
 export default function ViewToggle() {
     const [openMode, setOpenMode] = useOpenMode();
 
     const header = document.getElementById("control-header");
-    if (!header) return null;
+    if (!header) {
+        return null;
+    }
 
     function getNextMode() {
-        switch(openMode) {
-            case OpenMode.intern:
-                return OpenMode.browser;
-            case OpenMode.browser:
-                return OpenMode.download;
-            case OpenMode.download:
-            default:
-                return OpenMode.intern;
+        switch (openMode) {
+        case OpenMode.intern:
+            return OpenMode.browser;
+        case OpenMode.browser:
+            return OpenMode.download;
+        case OpenMode.download:
+        default:
+            return OpenMode.intern;
         }
     }
 
@@ -36,5 +38,5 @@ export default function ViewToggle() {
             onClick={() => setOpenMode(getNextMode())}
             src={imgMap[openMode]}
         />
-    </>, header)
+    </>, header);
 }

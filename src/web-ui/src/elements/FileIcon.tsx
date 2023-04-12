@@ -22,7 +22,7 @@ export default function FileIcon(props: Props) {
     const failed = imgSrc !== props.imgSrc;
 
     return <img className={`${failed ? "hue-rotate-color" : ""} ${props.className}`} src={imgSrc} onError={failed ? undefined : () => {
-        setSrc(getIconFromMimeType(props.mime))
+        setSrc(getIconFromMimeType(props.mime));
     }} alt="" loading="lazy" />;
 }
 
@@ -36,13 +36,15 @@ const MimeMap = {
     "text/x-": CodeIcon,
     "text/markdown": HotArticle,
     "text/": DocumentIcon,
-}
+};
 
 
 function getIconFromMimeType(mime: string | undefined): string {
-    if (mime === undefined) return EmptyFileIcon;
+    if (!mime) {
+        return EmptyFileIcon;
+    }
     for (const [pattern, icon] of Object.entries(MimeMap)) {
-        if (mime?.startsWith(pattern)) {
+        if (mime.startsWith(pattern)) {
             return icon;
         }
     }

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { apiUrl } from "~/common/";
-import { FileTypeResponse } from "~/types";
+import type { FileTypeResponse } from "~/types";
 
 
 export default function ImageSupport(file: FileTypeResponse) {
@@ -16,7 +16,7 @@ export default function ImageSupport(file: FileTypeResponse) {
     if (useFullView) {
         return <div className="fixed inset-0 w-screen h-screen bg-black">
             <img {...size} className="object-contain w-full h-full" onClick={toggleView} src={srcUrl} alt="" />
-        </div>
+        </div>;
     } else {
         return <img {...size} className="w-full h-full" onClick={toggleView} src={srcUrl} alt="" />;
     }

@@ -1,15 +1,16 @@
 import { ViewMode } from "~/common";
 import useCrossTabState from "./useCrossTabState";
-import { PropsWithChildren, createContext, useContext } from "react";
+import type { PropsWithChildren} from "react";
+import { createContext, useContext } from "react";
 
 
 const ViewContext = createContext<{
     viewMode: ViewMode
     setViewMode: (m: ViewMode) => void
-}>({
-    viewMode: ViewMode.gallery,
-    setViewMode: () => undefined
-});
+        }>({
+            viewMode: ViewMode.gallery,
+            setViewMode: () => undefined,
+        });
 
 
 export function Provider(props: PropsWithChildren) {
