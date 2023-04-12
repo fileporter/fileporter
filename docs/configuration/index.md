@@ -10,8 +10,9 @@ layout: default
 
 ## host
 where to bind to
-- `0.0.0.0` means globally (can be access over the local internet)
-- `127.0.0.1` means locally (only the host-machine can access the site)
+
+* `0.0.0.0` means globally (can be access over the local internet)
+* `127.0.0.1` means locally (only the host-machine can access the site)
 
 default: `0.0.0.0`
 
@@ -19,11 +20,12 @@ default: `0.0.0.0`
 which port to bind to
 
 recommended ports:
-- 80 (often times blocked)
-- 3000
-- 5000
-- 8000
-- 8080 (sometimes blocked by other software)
+
+* 80 (often times blocked)
+* 3000
+* 5000
+* 8000
+* 8080 (sometimes blocked by other software)
 
 <sup>note: 80 is the default port to allow url's without port (eg `http://10.20.30.40/` instead of `http://10.20.30.40:8000/`) but is often blocked</sup>
 
@@ -65,8 +67,9 @@ default: `true`
 this options are helpful if miniserve should run behind a reverse-proxy like nginx
 
 links for more information:
-- [uvicorn: running-behind-nginx](https://www.uvicorn.org/deployment/#running-behind-nginx){:target="_blank"}
-- [fastapi: behind a proxy](https://fastapi.tiangolo.com/advanced/behind-a-proxy/#behind-a-proxy){:target="_blank"}
+
+* [uvicorn: running-behind-nginx](https://www.uvicorn.org/deployment/#running-behind-nginx){:target="_blank"}
+* [fastapi: behind a proxy](https://fastapi.tiangolo.com/advanced/behind-a-proxy/#behind-a-proxy){:target="_blank"}
 
 default: not used
 
@@ -99,10 +102,11 @@ see `miniserve --help` for more information
 {. note }
 > you can specify a path a `config.ini` file with the `--config` CLI options
 
-- `~/.config/miniserve/config.ini`
-- `/etc/miniserve/config.ini`
+* `~/.config/miniserve/config.ini`
+* `/etc/miniserve/config.ini`
 
 ## Example Configuration File
+
 ```ini
 [SERVER]
 ;host: 0.0.0.0
@@ -127,7 +131,7 @@ see `miniserve --help` for more information
 
 ### .ini specification
 
-```
+```ini
 ; Comment like this
 # or like this
 
