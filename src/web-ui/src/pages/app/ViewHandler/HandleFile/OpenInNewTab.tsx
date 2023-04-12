@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import { apiUrl } from "~/common";
+import { serverUrl } from "~/config";
 import { FileTypeResponse } from "~/types";
 
 
@@ -12,7 +12,7 @@ export default function OpenInNewTab(file: FileTypeResponse) {
     useEffect(() => {
         if (!openNewTabRef.current) {
             openNewTabRef.current = true;
-            window.open(apiUrl(`/files/${file.path}`), "_blank")?.focus();
+            window.open(serverUrl(`/files/${file.path}`), "_blank")?.focus();
             navigate(-1);
         }
     }, []);

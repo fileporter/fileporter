@@ -1,11 +1,12 @@
 import { useState } from "react";
-import { apiUrl } from "~/common/";
 import { FileTypeResponse } from "~/types";
-import ApiFileLink from "~/elements/ApiFileLink";
+import { serverUrl } from "~/config";
+import ApiFileLink from "~/elements/OpenModeLink/ApiFileLink";
+
 
 export default function VideoSupport(file: FileTypeResponse) {
     const [videoFailed, setFailed] = useState(false);
-    const srcUrl = apiUrl(`/files/${file.path}`);
+    const srcUrl = serverUrl(`/files/${file.path}`);
 
     return <div className="fixed inset-0 w-screen h-screen">
         {videoFailed ? 

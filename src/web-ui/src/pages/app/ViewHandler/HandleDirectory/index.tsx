@@ -18,15 +18,17 @@ export default function HandleDirectory(directory: DirectoryRootTypeResponse) {
     const [viewMode] = useViewMode();
     const [sortMode] = useSortMode();
 
+    console.log(directory);
+
     const contents = (
-        directory.basename.length ?
+        !directory.basename.length ?
             directory.contents
             :
             directory.contents.concat({
                 type: "directory",
                 basename: "..",
-                path: directory.path,
-                directory: `${directory.path}/..`
+                path: directory.parent,
+                parent: `${directory.parent}/..`
             })
         ).sort(sortMode === SortMode.alphabetic ? textBasedSort : numberBasedSort);
 

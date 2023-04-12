@@ -24,8 +24,8 @@ export default function DirectoryView(directory: DirectoryRootTypeResponse) {
     const contents = (!directory.basename.length ? directory.contents : directory.contents.concat({
         type: "directory",
         basename: "..",
-        path: directory.directory,
-        directory: directory.directory + "/..",
+        path: directory.parent,
+        parent: directory.parent + "/..",
     })).sort(sortMode === SortMode.alphabetic ? textBasedSort : numberBasedSort);
 
     const View = viewMap[viewMode] ?? IconView;
