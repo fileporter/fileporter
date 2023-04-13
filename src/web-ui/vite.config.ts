@@ -1,4 +1,5 @@
 import { defineConfig } from 'vite';
+import { join, parse, resolve } from "path";
 import react from '@vitejs/plugin-react-swc';
 import tsconfigpaths from "vite-tsconfig-paths";
 import eslint from "vite-plugin-eslint";
@@ -10,5 +11,23 @@ export default defineConfig({
   build: {
     emptyOutDir: true,
     outDir: "../miniserve/web-ui/",
+    rollupOptions: {
+      input: entryPoints(
+        "index.html",
+        "404.html",
+      ),
+    },
   }
 })
+
+function entryPoints(...paths) {
+  const entries = paths.map(parse).map(entry => {
+    const { dir, base, name, ext } = entry;
+    const key = join(dir, name);
+    const path = resolve(__dirname, dir, base);
+    return [key, path];
+  });
+  
+  const config = Object.fromEntries(entries);
+  return config;
+}
