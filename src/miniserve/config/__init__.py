@@ -18,7 +18,7 @@ class Configuration(pydantic.BaseModel):
     port: t.Optional[int] = 8000
     root: t.Optional[pydantic.DirectoryPath] = "."
     username: t.Optional[str] = getpass.getuser()
-    password: t.Optional[bool | str]
+    password: t.Optional[str]
     worker: t.Optional[int] = min(8, os.cpu_count())
     root_path: t.Optional[pydantic.constr(regex=r"^/(.+/)*$")] = "/"
     uds: t.Optional[str]

@@ -63,4 +63,5 @@ class CookieManager:
         return data["value"]
 
     def __delitem__(self, key: str):
-        self.response.delete_cookie(key, path=config.root_path, httponly=True, samesite="strict")
+        if key in self.request.cookies:
+            self.response.delete_cookie(key, path=config.root_path, httponly=True, samesite="strict")

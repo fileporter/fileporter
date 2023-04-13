@@ -3,8 +3,10 @@
 r"""
 
 """
+import hashlib
 import fastapi
 from .util import CookieManager
+from .deps import Credentials, auth_system
 
 
 auth = fastapi.APIRouter(prefix="/auth")
@@ -16,7 +18,12 @@ async def login(
         username: str = fastapi.Body(),
         password: str = fastapi.Body()
 ):
-    cookies["auth"] = [username, password]
+    phash = hashlib.sha256(password.encode()).hexdigest()
+    auth_system(Credentials(username=username, phash=phash))
+    cookies["auth"] = [
+        username,
+        phash,
+    ]
 
 
 @auth.post("/logout")
