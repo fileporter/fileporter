@@ -4,7 +4,7 @@ r"""
 
 """
 import socket
-import functools
+import urllib.parse as urlparse
 import typing as t
 import json
 
@@ -41,7 +41,7 @@ async def get_cookies(request: fastapi.Request, response: fastapi.Response) -> '
 
 class CookieManager:
     r"""
-    note: special cookies-keys in the format 'ms-{key}-{abs(hash(root))}' to prevent mixing cookies when multiple
+    note: special cookies-keys in the format 'ms-{key}-{quote(root-path)}' to prevent mixing cookies when multiple
         instances are running simultaneously on the same machine with different root-paths
     """
     dependency = get_cookies
@@ -56,7 +56,7 @@ class CookieManager:
 
     @staticmethod
     def _formatKey(key: str) -> str:
-        return f"ms-{key}-{abs(hash(config.root_path))}"
+        return f"ms-{key}-{urlparse.quote(config.root_path, safe='')}"
 
     def __setitem__(self, key: str, value: t.Any):
         data: CookieManager._DataType = dict(path=config.root_path, value=value)
