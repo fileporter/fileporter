@@ -121,14 +121,14 @@ async def low_resolution(
         mime = mimetypes.guess_type(raw_fp)[0]
         if mime and mime.startswith("image/"):  # should be something like svg
             return fastapi.responses.RedirectResponse(
-                request.url_for("files", fp=raw_fp),
+                request.url_for("files", path=raw_fp),
                 fastapi.status.HTTP_303_SEE_OTHER,
             )
         raise fastapi.HTTPException(fastapi.status.HTTP_415_UNSUPPORTED_MEDIA_TYPE)
 
     if getattr(image, 'is_animated', False):
         return fastapi.responses.RedirectResponse(
-            request.url_for("files", fp=raw_fp),
+            request.url_for("files", path=raw_fp),
             fastapi.status.HTTP_303_SEE_OTHER,
         )
 
