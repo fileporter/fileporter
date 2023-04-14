@@ -5,10 +5,10 @@ import { ViewModePart } from "./ViewModePart";
 
 
 export default function SettingsPage() {
-    return <>
+    return <div className="flex flex-col gap-2">
         <HeadPart />
         <ViewModePart />
         <OpenModePart />
         <SortModePart />
-    </>;
+    </div>;
 }
