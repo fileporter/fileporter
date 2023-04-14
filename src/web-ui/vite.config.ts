@@ -11,6 +11,8 @@ export default defineConfig({
   build: {
     emptyOutDir: true,
     outDir: "../miniserve/web-ui/",
+    assetsInlineLimit: 8192, // 2x the original
+    chunkSizeWarningLimit: 1024,
     rollupOptions: {
       input: entryPoints(
         "index.html",
@@ -19,6 +21,7 @@ export default defineConfig({
     },
   }
 })
+
 
 function entryPoints(...paths) {
   const entries = paths.map(parse).map(entry => {

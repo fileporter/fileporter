@@ -2,7 +2,7 @@ import axios from "axios";
 import { useQuery, useQueryClient } from "react-query";
 import { useNavigate } from "react-router-dom";
 import ErrorMessageBox from "~/elements/ErrorMessageBox";
-import MiniserveIconSrc from "@assets/miniserve.png?inline";
+import MiniserveIconSrc from "@assets/miniserve.png";
 
 
 export default function LogoutPage() {

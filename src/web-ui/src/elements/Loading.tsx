@@ -1,4 +1,4 @@
-import MiniserveIconSrc from "@assets/miniserve.png?inline"; // inline to make instantaneously available
+import MiniserveIconSrc from "@assets/miniserve.png";
 
 
 export default function Loading() {
