@@ -51,12 +51,14 @@ app.mount(
     "/files",
     StaticFiles(
         directory=config.root
-    )
+    ),
+    name="files",
 )
 app.mount(
     "/",
     StaticPages(
         directory=Path(Path(config.web_ui) if config.web_ui else Path(__file__).parent.joinpath("web-ui")).resolve(),
         html=True
-    )
+    ),
+    "web-ui",
 )

@@ -96,9 +96,12 @@ lowRes = fastapi.APIRouter()
     },
     response_class=fastapi.responses.FileResponse,
 )
-async def low_resolution(fp: str = fastapi.Path()):
+async def low_resolution(
+        request: fastapi.Request,
+        fp: str = fastapi.Path()
+):
     r"""
-    returns a low-resolution version of the given image. (jpeg format + may be reduced in size [max 2000x2000])
+    returns a low-resolution version of the given image. (jpeg format + may be reduced in size [max w/h: 2000])
     if the image is animated then it is redirected to the original version.
     """
     raw_fp = fp.removeprefix("/")
@@ -117,14 +120,21 @@ async def low_resolution(fp: str = fastapi.Path()):
     except UnidentifiedImageError:
         mime = mimetypes.guess_type(raw_fp)[0]
         if mime and mime.startswith("image/"):  # should be something like svg
-            return fastapi.responses.RedirectResponse(f"/files/{raw_fp}")
+            return fastapi.responses.RedirectResponse(
+                request.url_for("files", fp=raw_fp),
+                fastapi.status.HTTP_303_SEE_OTHER,
+            )
         raise fastapi.HTTPException(fastapi.status.HTTP_415_UNSUPPORTED_MEDIA_TYPE)
 
     if getattr(image, 'is_animated', False):
-        return fastapi.responses.RedirectResponse(f"/files/{raw_fp}")
+        return fastapi.responses.RedirectResponse(
+            request.url_for("files", fp=raw_fp),
+            fastapi.status.HTTP_303_SEE_OTHER,
+        )
 
     # note: not threaded. should be fast enough!?
     optimized = io.BytesIO()
+    optimized.name = filename
     image.thumbnail((2000, 2000))  # limit size (but keep aspect)
     image = image.convert('RGB')  # needed to save as jpg
     image.save(optimized, format='JPEG')
