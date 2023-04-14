@@ -1,13 +1,13 @@
 import { useState } from "react";
-import ArchiveIcon from "@assets/icons/files/archive.png";
-import AudioIcon from "@assets/icons/files/audio-file.png";
-// import CloudIcon from "@assets/icons/files/cloud-file.png";
-import CodeIcon from "@assets/icons/files/code-file.png";
-import DocumentIcon from "@assets/icons/files/document.png";
-import HotArticle from "@assets/icons/files/hot-article.png";
-import ImageIcon from "@assets/icons/files/image-file.png";
-import VideoIcon from "@assets/icons/files/video-file.png";
-import EmptyFileIcon from "@assets/icons/files/default-file.png";
+import ArchiveIcon from "@assets/icons/files/archive.png?inline";
+import AudioIcon from "@assets/icons/files/audio-file.png?inline";
+// import CloudIcon from "@assets/icons/files/cloud-file.png?inline";
+import CodeIcon from "@assets/icons/files/code-file.png?inline";
+import DocumentIcon from "@assets/icons/files/document.png?inline";
+import HotArticle from "@assets/icons/files/hot-article.png?inline";
+import ImageIcon from "@assets/icons/files/image-file.png?inline";
+import VideoIcon from "@assets/icons/files/video-file.png?inline";
+import EmptyFileIcon from "@assets/icons/files/default-file.png?inline";
 
 
 interface Props {
