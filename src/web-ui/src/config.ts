@@ -20,7 +20,7 @@ axios.defaults.timeout = 15_000;
 axios.defaults.withCredentials = true;
 axios.interceptors.response.use(null, (error) => {
     if (error.response?.status === HTTP_401_UNAUTHORIZED) {
-        // important: change with different provider
+        // important: change with different router-provider
         window.location.assign(`${import.meta.env.BASE_URL}#/login`);
     }
     return Promise.reject(error);
