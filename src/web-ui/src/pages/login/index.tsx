@@ -57,10 +57,10 @@ export default function LoginPage() {
         </form>
         <div className="grow" />
         <div className="flex gap-2 px-5 py-1 opacity-50 hover:opacity-100">
-            <Link className="group" to="https://github.com/PlayerG9/miniserve">
+            <Link className="group" to="https://github.com/PlayerG9/miniserve#readme" target="_blank">
                 <img className="inline-block h-[1rem]" src={GithubIconSrc} alt="" /> <span className="group-hover:underline">miniserve</span>
             </Link>
-            <Link className="group" to="https://playerg9.github.io/miniserve">
+            <Link className="group" to="https://playerg9.github.io/miniserve" target="_blank">
                 <img className="inline-block h-[1rem]" src={DocsIconSrc} alt="" /> <span className="group-hover:underline">docs</span>
             </Link>
         </div>
