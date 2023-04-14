@@ -1,9 +1,9 @@
 import ReactDOM from "react-dom";
 import { ViewMode } from "~/common/";
+import useViewMode from "~/hooks/useViewMode";
 import ListViewIcon from "@assets/icons/list-view.png";
 import IconViewIcon from "@assets/icons/grid-view.png";
 import GalleryViewIcon from "@assets/icons/gallery-view.png";
-import useViewMode from "~/hooks/useViewMode";
 
 
 const imgMap = {

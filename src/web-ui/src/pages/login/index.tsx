@@ -3,9 +3,9 @@ import { useRef, useState } from "react";
 import { useMutation } from "react-query";
 import axios, { type AxiosError, type AxiosResponse } from "axios";
 import { HTTP_401_UNAUTHORIZED } from "~/common/httpStatusIndex";
-import MiniserveIconSrc from "@assets/images/miniserve.png";
-import GithubIconSrc from "@assets/images/github.png";
-import DocsIconSrc from "@assets/images/documentation.svg";
+import MiniserveIconSrc from "@assets/miniserve.png";
+import GithubIconSrc from "@assets/icons/github.png";
+import DocsIconSrc from "@assets/icons/documentation.svg";
 
 
 const errorMessageIndex: Record<number, undefined | string> = {
