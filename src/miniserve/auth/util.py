@@ -57,7 +57,9 @@ class CookieManager:
     def __setitem__(self, key: str, value: t.Any):
         data: CookieManager._DataType = dict(path=config.root_path, value=value)
         dumped = json.dumps(data)
-        self.response.set_cookie(f"ms-{key}-{hash(config.root_path)}", dumped, path=config.root_path, httponly=True, samesite="strict")
+        self.response.set_cookie(f"ms-{key}-{hash(config.root_path)}", dumped,
+                                 max_age=2592000,  # dunno, one month or so
+                                 path=config.root_path, httponly=True, samesite="strict")
 
     def __getitem__(self, key: str):
         dumped = self.request.cookies.get(f"ms-{key}-{hash(config.root_path)}")
