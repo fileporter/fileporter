@@ -40,6 +40,10 @@ async def get_cookies(request: fastapi.Request, response: fastapi.Response) -> '
 
 
 class CookieManager:
+    r"""
+    note: special cookies-keys in the format 'ms-{key}-{hash(root)}' to prevent mixing cookies when multiple
+        instances are running simultaneously on the same machine with different root-paths
+    """
     dependency = get_cookies
 
     class _DataType(t.TypedDict):
@@ -53,15 +57,18 @@ class CookieManager:
     def __setitem__(self, key: str, value: t.Any):
         data: CookieManager._DataType = dict(path=config.root_path, value=value)
         dumped = json.dumps(data)
-        self.response.set_cookie(key, dumped, path=config.root_path, httponly=True, samesite="strict")
+        self.response.set_cookie(f"ms-{key}-{hash(config.root_path)}", dumped, path=config.root_path, httponly=True, samesite="strict")
 
     def __getitem__(self, key: str):
-        dumped = self.request.cookies[key]
+        dumped = self.request.cookies.get(f"ms-{key}-{hash(config.root_path)}")
+        if dumped is None:  # over get to print the right key in es exception
+            raise KeyError(key)
         data: CookieManager._DataType = json.loads(dumped)
         if data["path"] != config.root_path:
             raise KeyError(key)
         return data["value"]
 
     def __delitem__(self, key: str):
+        key = f"ms-{key}-{hash(config.root_path)}"
         if key in self.request.cookies:
             self.response.delete_cookie(key, path=config.root_path, httponly=True, samesite="strict")
