@@ -2,12 +2,13 @@
 interface ResponseBase {
     basename: string,
     path: string,
-    directory: string
+    parent: string
 }
 export interface FileTypeResponse extends ResponseBase {
     type: "file",
     mime?: string,
     size?: [number, number]
+    extension?: string
 }
 export interface DirectoryTypeResponse extends ResponseBase {
     type: "directory",

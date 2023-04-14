@@ -9,7 +9,6 @@ has_children: true
 
 # How to Deploy on a server
 
-
 ## Custom starting URL
 
 If miniserve should run on a server under longer url.

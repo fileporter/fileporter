@@ -25,9 +25,9 @@ parser.add_argument('--global', action="store_const", const="0.0.0.0", dest="hos
                     help=argparse.SUPPRESS)
 parser.add_argument('-p', '--port', type=int,
                     help="port to serve on")
-parser.add_argument('--user', dest="username",
+parser.add_argument('--user', '--username', dest="username",
                     help=argparse.SUPPRESS)
-parser.add_argument('--password', '--pw', nargs='?', const=True,
+parser.add_argument('--pw', '--password', dest="password",
                     help="requires user-login")
 parser.add_argument('-w', '--worker', type=ranged(1, 8),
                     help=argparse.SUPPRESS)

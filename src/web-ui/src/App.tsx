@@ -1,25 +1,14 @@
-import { QueryClient, QueryClientProvider } from "react-query";
+import { QueryClientProvider } from "react-query";
 import { HashRouter, Routes, Route } from "react-router-dom";
-import { HttpError } from "~/common";
-import ControlHeader from "~/components/ControlHeader";
-import ViewManager from "~/components/ViewManager";
 import HookProviders from "~/hooks/HookProviders";
-import OfflineHeader from "./components/OfflineHeader";
-import ScrollProgressFix from "./components/ScrollProgressFix";
-
-
-const queryClient = new QueryClient({
-    defaultOptions: {
-        queries: {
-            retry: (failureCount, error) => {
-                if (error instanceof HttpError) {
-                    return false;
-                }
-                return failureCount > 3;
-            },
-        },
-    },
-});
+import OfflineHeader from "~/components/OfflineHeader";
+import { queryClient } from "./config";
+import AppPage from "~/pages/app";
+import LoginPage from "~/pages/login";
+import SettingsPage from "~/pages/settings";
+import URLIndexPage from "~/pages/slash";
+import Page404NotFound from "~/pages/Page404NotFound";
+import LogoutPage from "./pages/logout";
 
 
 export default function ProviderCollection() {
@@ -27,20 +16,25 @@ export default function ProviderCollection() {
         <HookProviders>
             {/* <HashRouter basename={import.meta.env.BASE_URL}> */}
             <HashRouter>
-                <Routes>
-                    <Route path="*" element={<App />} />
-                </Routes>
+                <OfflineHeader />
+                <UIRoutes />
             </HashRouter>
         </HookProviders>
     </QueryClientProvider>;
 }
 
 
-function App() {
+export function UIRoutes() {
     return <>
-        <ScrollProgressFix />
-        <OfflineHeader />
-        <ControlHeader />
-        <ViewManager />
+        <Routes>
+            <Route path="/">
+                <Route index element={<URLIndexPage />} />
+                <Route path="login" element={<LoginPage />} />
+                <Route path="logout" element={<LogoutPage />} />
+                <Route path="settings" element={<SettingsPage />} />
+                <Route path="~/*" element={<AppPage />} />
+                <Route path="*" element={<Page404NotFound />} />
+            </Route>
+        </Routes>
     </>;
 }

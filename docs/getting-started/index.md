@@ -28,6 +28,7 @@ cat https://github.com/PlayerG9/miniserve/raw/main/scripts/installer | bash -s -
 
 in case you want to add miniserve to the path (executing everywhere)
 you have to add the following line to `.bash_aliases`
+
 ```bash
 alias miniserve='~/.commands/miniserve/miniserve'
 ```
