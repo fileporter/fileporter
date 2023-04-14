@@ -18,6 +18,9 @@ async def login(
         username: str = fastapi.Body(),
         password: str = fastapi.Body()
 ):
+    r"""
+    verifies the login credentials and sets corresponding cookies
+    """
     phash = hashlib.sha256(password.encode()).hexdigest()
     auth_system(Credentials(username=username, phash=phash))
     cookies["auth"] = [
@@ -30,4 +33,7 @@ async def login(
 async def logout(
         cookies: CookieManager = CookieManager.dependency,
 ):
+    r"""
+    logs the current user out
+    """
     del cookies["auth"]

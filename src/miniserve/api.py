@@ -40,11 +40,17 @@ class ResponseModel(BasicMetaModel):
 
 @api.head("/")
 async def check_access():
+    r"""
+    this endpoint is used to verify if one has access (/is logged in)
+    """
     return {}
 
 
 @api.get("/{fp:path}", response_model=ResponseModel)
 async def get_meta(fp: str = fastapi.Path()):
+    r"""
+    return the meta information about the given path
+    """
     fp = os.path.join(config.root, fp.removeprefix("/"))
     response = meta(fp)
     if os.path.isdir(fp):
