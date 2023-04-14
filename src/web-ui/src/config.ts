@@ -16,12 +16,6 @@ export function serverUrl(location: string): string {
 
 
 axios.defaults.baseURL = serverUrl("/");
-// axios.defaults.baseURL = import.meta.env.PROD ?
-//     import.meta.env.BASE_URL : (() => {
-//         const url = new URL(import.meta.env.BASE_URL, window.location.origin);
-//         url.port = "8000";
-//         return url.toString();
-//     })();
 axios.defaults.timeout = 15_000;
 axios.defaults.withCredentials = true;
 axios.interceptors.response.use(null, (error) => {
