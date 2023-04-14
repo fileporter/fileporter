@@ -24,11 +24,10 @@ function RenderItem(item: FileOrDirectory) {
     } else {
         return <OpenModeLink to={item.path} className="flex gap-1 group">
             <FileIcon className="w-auto h-6 my-auto aspect-square" mime={item.mime} />
-            <span className="flex break-words group-hover:underline">
+            <span className="flex break-words group-hover:underline grow">
                 {item.basename}
             </span>
-            <div className="inline-block grow" />
-            <span className="my-auto text-xs opacity-50 group-hover:opacity-100 h-fit">{item.mime}</span>
+            <span className="my-auto text-xs text-right opacity-50 group-hover:opacity-100 h-fit max-sm:hidden">{item.mime}</span>
         </OpenModeLink>;
     }
 }
