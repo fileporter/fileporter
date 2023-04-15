@@ -3,7 +3,8 @@ import AudioSupport from "./Audio";
 import ImageSupport from "./Image";
 import TextSupport from "./Text";
 import VideoSupport from "./Video";
-import OpenInNewTab from "./OpenInNewTab";
+import ApiFileDownloadLink from "~/elements/OpenModeLink/ApiFileDownloadLink";
+// import OpenInNewTab from "./OpenInNewTab";
 
 
 export const MediaSupportIndex: Record<string, undefined | ((p: FileTypeResponse) => JSX.Element)> = {
@@ -20,5 +21,13 @@ export default function HandleFile(file: FileTypeResponse) {
     if (MediaView) {
         return <MediaView {...file} />;
     }
-    return <OpenInNewTab {...file} />;
+    // return <OpenInNewTab {...file} />;
+    return <UnsupportedMessage {...file} />;
+}
+
+function UnsupportedMessage(file: FileTypeResponse) {
+    return <div className="grid h-screen gap-1 text-center place-content-center">
+        <p className="text-xl">Files of type &apos;{file.extension}&apos; are not supported</p>
+        <p>You may <ApiFileDownloadLink className="text-blue-500 hover:underline" to={file.path}>download the file</ApiFileDownloadLink> if this helps</p>
+    </div>;
 }
