@@ -1,4 +1,4 @@
-# <img width=auto height="30" src="https://raw.githubusercontent.com/PlayerG9/miniserve/master/README.assets/repo-icon.png" alt="" /> miniserve
+# <img width=auto height="30" src="https://raw.githubusercontent.com/PlayerG9/miniserve/master/README.assets/repo-icon.png" alt="" style="display: inline-block; height: 30px;" /> miniserve
 Serve a directory in your local network for view over the browser
 
 See [the documentation](https://PlayerG9.github.io/miniserve/) for more information.
