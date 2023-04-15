@@ -5,6 +5,7 @@ import ImageSupport from "./type/Image";
 import TextSupport from "./type/Text";
 import VideoSupport from "./type/Video";
 import DotJsonSupport from "./subtype/json";
+import DotMarkdownSupport from "./subtype/md";
 
 
 type Index = Record<string, undefined | ((p: FileTypeResponse) => JSX.Element)>
@@ -13,6 +14,7 @@ export const MimeSubtypeSupportIndex: Index = {
     "application/json": DotJsonSupport,
     "application/xml": TextSupport,
     "text/xml": TextSupport, // still used sometimes but deprecated
+    "text/markdown": DotMarkdownSupport,
 };
 export const MimeTypeSupportIndex: Index = {
     audio: AudioSupport,
