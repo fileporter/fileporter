@@ -1,16 +1,16 @@
 import type { FileTypeResponse } from "~/types";
+import ApiFileDownloadLink from "~/elements/OpenModeLink/ApiFileDownloadLink";
 import AudioSupport from "./type/Audio";
 import ImageSupport from "./type/Image";
 import TextSupport from "./type/Text";
 import VideoSupport from "./type/Video";
-import ApiFileDownloadLink from "~/elements/OpenModeLink/ApiFileDownloadLink";
-// import OpenInNewTab from "./OpenInNewTab";
+import DotJsonSupport from "./subtype/json";
 
 
 type Index = Record<string, undefined | ((p: FileTypeResponse) => JSX.Element)>
 
 export const MimeSubtypeSupportIndex: Index = {
-
+    "application/json": DotJsonSupport,
 };
 export const MimeTypeSupportIndex: Index = {
     audio: AudioSupport,
@@ -33,7 +33,6 @@ export default function HandleFile(file: FileTypeResponse) {
     if (TypeView) {
         return <TypeView {...file} />;
     }
-    // return <OpenInNewTab {...file} />;
     return <UnsupportedMessage {...file} />;
 }
 
