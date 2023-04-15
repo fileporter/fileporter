@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useQuery } from "react-query";
+import ScrollProgressFix from "~/components/ScrollProgressFix";
 import ErrorMessageBox from "~/elements/ErrorMessageBox";
 import Loading from "~/elements/Loading";
 import usePath from "~/hooks/usePath";
@@ -20,12 +21,14 @@ export default function DotJsonSupport() {
 
     try { // maybe rethink this parsing-stringify thing for performance reasons.
         const loaded = JSON.parse(query.data!);
-        return <pre>
+        return <pre className="px-2 overflow-x-scroll leading-5">
+            <ScrollProgressFix />
             {JSON.stringify(loaded, null, 2)}
         </pre>;
     } catch (Error) {
         return <>
-            <pre className="relative">
+            <pre className="relative px-2 overflow-x-scroll leading-5">
+                <ScrollProgressFix />
                 <p className="absolute inset-x-0 top-0 text-xs text-center opacity-50 pointer-events-none">Warning: Bad JSON Format</p>
                 {query.data}
             </pre>

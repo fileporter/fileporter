@@ -5,6 +5,7 @@ import hljs from "highlight.js";
 import * as marked from "marked";
 import { useMemo } from "react";
 import { useQuery } from "react-query";
+import ScrollProgressFix from "~/components/ScrollProgressFix";
 import { serverUrl } from "~/config";
 import ErrorMessageBox from "~/elements/ErrorMessageBox";
 import Loading from "~/elements/Loading";
@@ -28,7 +29,10 @@ export default function DotMarkdownSupport(file: FileTypeResponse) {
         return <ErrorMessageBox error={query.error} />;
     }
 
-    return <div className="px-2 mx-auto max-w-7xl markdown-body" dangerouslySetInnerHTML={{__html: rendered}} />;
+    return <>
+        <ScrollProgressFix />
+        <div className="px-2 mx-auto max-w-7xl markdown-body" dangerouslySetInnerHTML={{__html: rendered}} />;
+    </>;
 }
 
 function renderMarkdown(markdown: undefined | string, baseUrl?: string): string {
