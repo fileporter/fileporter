@@ -6,7 +6,6 @@ export enum ViewMode {
 }
 export enum OpenMode {
     intern,
-    browser,
     download,
 }
 export enum SortMode {
