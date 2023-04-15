@@ -16,7 +16,7 @@ export default function ListView({ contents }: DirectoryHandlerProps) {
 function RenderItem(item: FileOrDirectory) {
     if (item.type === "directory") {
         return <Link to={item.path} className="flex gap-1 group">
-            <FolderIcon className="w-auto h-6 aspect-square" />
+            <FolderIcon className="grid w-auto h-6 aspect-square place-content-center" />
             <span className="break-words group-hover:underline">
                 {item.basename}
             </span>

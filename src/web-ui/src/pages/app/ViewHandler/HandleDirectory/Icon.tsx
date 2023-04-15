@@ -17,7 +17,7 @@ export default function IconView({ contents }: DirectoryHandlerProps) {
 function RenderItem(item: FileOrDirectory) {
     if (item.type === "directory") {
         return <Link to={item.path} className="flex flex-col gap-1 group">
-            <FolderIcon />
+            <FolderIcon className="grid aspect-square place-content-center" />
             <span className="text-center break-words group-hover:underline">
                 {item.basename}
             </span>

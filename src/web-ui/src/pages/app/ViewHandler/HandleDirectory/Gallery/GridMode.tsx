@@ -9,7 +9,7 @@ import type { FileOrDirectory } from "~/types";
 export default function GridModeRenderItem(item: FileOrDirectory) {
     if (item.type === "directory") {
         return <Link to={item.path} className="flex flex-col gap-1 group">
-            <FolderIcon previewSrc={serverUrl(`/preview/${item.path}?directories=true`)} />
+            <FolderIcon className="grid aspect-square place-content-center" previewSrc={serverUrl(`/preview/${item.path}?directories=true`)} />
             <span className="text-center break-words group-hover:underline">
                 {item.basename}
             </span>
