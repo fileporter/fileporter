@@ -19,7 +19,7 @@ export default function HandleDirectory(directory: DirectoryRootTypeResponse) {
     const [sortMode] = useSortMode();
 
     const contents = (
-        !directory.basename.length ?
+        directory.basename === "." ?
             directory.contents
             :
             directory.contents.concat({
