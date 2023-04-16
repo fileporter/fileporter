@@ -1,6 +1,6 @@
 import { QueryClient } from "react-query";
 import axios, { AxiosError } from "axios";
-import { HTTP_401_UNAUTHORIZED, HTTP_408_REQUEST_TIMEOUT, HTTP_429_TOO_MANY_REQUESTS, HTTP_503_SERVICE_UNAVAILABLE } from "./common/httpStatusIndex";
+import { HTTP_401_UNAUTHORIZED, HTTP_408_REQUEST_TIMEOUT, HTTP_429_TOO_MANY_REQUESTS, HTTP_502_BAD_GATEWAY, HTTP_503_SERVICE_UNAVAILABLE } from "./common/httpStatusIndex";
 
 
 export function serverUrl(location: string): string {
@@ -33,9 +33,10 @@ export const queryClient = new QueryClient({
             retry: (failureCount, error) => {
                 if (error instanceof AxiosError) {
                     const status = error.response!.status;
-                    return [
+                    return failureCount > 10 || [
                         HTTP_408_REQUEST_TIMEOUT,
                         HTTP_429_TOO_MANY_REQUESTS,
+                        HTTP_502_BAD_GATEWAY,
                         HTTP_503_SERVICE_UNAVAILABLE,
                     ].includes(status);
                 }
