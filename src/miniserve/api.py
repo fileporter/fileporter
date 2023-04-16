@@ -60,9 +60,8 @@ async def get_meta(fp: str = fastapi.Path()):
 
 
 def meta(fp: str) -> dict:
-    basename = os.path.basename(fp)
     path = os.path.relpath(fp, config.root)
-    parent, filename = os.path.split(path)
+    parent, basename = os.path.split(path)
     if os.path.isfile(fp):
         mime = mimetypes.guess_type(fp)[0]
         if mime is None:
