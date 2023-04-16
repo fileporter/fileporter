@@ -27,6 +27,7 @@ class ImageSize(BaseModel):
 class BasicMetaModel(BaseModel):
     type: t.Literal["file", "directory"]
     basename: str
+    filename: str
     path: str
     parent: str
     mime: t.Optional[str]
@@ -62,7 +63,7 @@ async def get_meta(fp: str = fastapi.Path()):
 def meta(fp: str) -> dict:
     basename = os.path.basename(fp)
     path = os.path.relpath(fp, config.root)
-    parent = os.path.split(path)[0]
+    parent, filename = os.path.split(path)
     if os.path.isfile(fp):
         mime = mimetypes.guess_type(fp)[0]
         if mime is None:
@@ -71,6 +72,7 @@ def meta(fp: str) -> dict:
         data = dict(
             type="file",
             basename=basename,
+            filename=filename,
             path=path,
             parent=parent,
             mime=mime,
@@ -88,6 +90,7 @@ def meta(fp: str) -> dict:
         return dict(
             type="directory",
             basename=basename,
+            filename=filename,
             path=path,
             parent=parent,
         )

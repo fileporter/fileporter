@@ -45,7 +45,7 @@ export default function ImageModeRenderItem(item: FileOrDirectory) {
         />;
     } else {
         return <OpenModeLink to={item.path} className="flex gap-1 px-2 group">
-            <FileIcon className="w-auto h-6 my-auto aspect-square" mime={item.mime} />
+            <FileIcon className="w-auto h-6 my-auto aspect-square" mime={item.mime} filename={item.filename} />
             <span className="break-words group-hover:underline">
                 {item.basename}
             </span>

@@ -5,3 +5,4 @@ text/x-typescript+xml   tsx
 text/x-sass sass
 text/x-scss sass
 text/x-yaml yaml    yml
+text/uri    url
