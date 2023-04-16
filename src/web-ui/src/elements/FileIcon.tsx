@@ -30,6 +30,7 @@ export default function FileIcon(props: Props) {
 }
 
 
+// XXX: maybe NameMap over props.imgSrc
 const NameMap: Record<string, string> = {
     "LICENSE": PolicyIcon,
 };
