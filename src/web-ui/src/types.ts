@@ -1,7 +1,6 @@
 
 interface ResponseBase {
     basename: string
-    filename: string
     path: string
     parent: string
 }

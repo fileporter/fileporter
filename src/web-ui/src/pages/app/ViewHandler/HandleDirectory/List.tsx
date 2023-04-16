@@ -23,7 +23,7 @@ function RenderItem(item: FileOrDirectory) {
         </Link>;
     } else {
         return <OpenModeLink to={item.path} className="flex gap-1 group">
-            <FileIcon className="w-auto h-6 my-auto aspect-square" mime={item.mime} filename={item.filename} />
+            <FileIcon className="w-auto h-6 my-auto aspect-square" mime={item.mime} filename={item.basename} />
             <span className="flex break-words group-hover:underline grow">
                 {item.basename}
             </span>

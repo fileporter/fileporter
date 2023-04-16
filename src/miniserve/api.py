@@ -27,7 +27,6 @@ class ImageSize(BaseModel):
 class BasicMetaModel(BaseModel):
     type: t.Literal["file", "directory"]
     basename: str
-    filename: str
     path: str
     parent: str
     mime: t.Optional[str]
@@ -72,7 +71,6 @@ def meta(fp: str) -> dict:
         data = dict(
             type="file",
             basename=basename,
-            filename=filename,
             path=path,
             parent=parent,
             mime=mime,
@@ -90,7 +88,6 @@ def meta(fp: str) -> dict:
         return dict(
             type="directory",
             basename=basename,
-            filename=filename,
             path=path,
             parent=parent,
         )
