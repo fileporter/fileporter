@@ -27,7 +27,7 @@ export default function TextSupport(file: FileTypeResponse) {
         if (hl.language) {
             return <>
                 <ScrollProgressFix />
-                <pre className="px-2 leading-5 break-words whitespace-break-spaces" dangerouslySetInnerHTML={{__html: hl.value}}></pre>;
+                <pre className="px-2 leading-5 break-words whitespace-break-spaces" dangerouslySetInnerHTML={{__html: hl.value}}></pre>
             </>;
         }
     }

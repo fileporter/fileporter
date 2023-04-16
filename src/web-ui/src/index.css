@@ -4,5 +4,6 @@
 
 :root {
     /* used to adjust the color of icon etc */
-    --color-rotation: 0deg;
+    /* currently deprecated and not used */
+    --color-rotation: 180deg;
 }

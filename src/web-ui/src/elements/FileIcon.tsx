@@ -21,7 +21,7 @@ export default function FileIcon(props: Props) {
     const [imgSrc, setSrc] = useState(props.imgSrc ?? getIconFromMimeType(props.mime));
     const failed = imgSrc !== props.imgSrc;
 
-    return <img className={`${failed ? "hue-rotate-color" : ""} ${props.className}`} src={imgSrc} onError={failed ? undefined : () => {
+    return <img className={props.className} src={imgSrc} onError={failed ? undefined : () => {
         setSrc(getIconFromMimeType(props.mime));
     }} alt="" loading="lazy" />;
 }
