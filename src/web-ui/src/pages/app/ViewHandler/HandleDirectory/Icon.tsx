@@ -3,7 +3,6 @@ import type { DirectoryHandlerProps } from "./types";
 import { Link } from "react-router-dom";
 import FolderIcon from "~/elements/FolderIcon";
 import FileIcon from "~/elements/FileIcon";
-import { serverUrl } from "~/config";
 import OpenModeLink from "~/elements/OpenModeLink";
 
 
@@ -24,7 +23,7 @@ function RenderItem(item: FileOrDirectory) {
         </Link>;
     } else {
         return <OpenModeLink to={item.path} className="flex flex-col gap-1 group">
-            <FileIcon className="object-cover w-full h-auto mx-auto rounded-lg aspect-square" imgSrc={serverUrl(`/preview/${item.path}`)} mime={item.mime} filename={item.basename} />
+            <FileIcon className="object-cover w-full h-auto mx-auto rounded-lg aspect-square" file={item} />
             <span className="w-full text-center break-words group-hover:underline">
                 {item.basename}
             </span>

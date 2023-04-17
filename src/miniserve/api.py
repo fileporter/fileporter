@@ -14,6 +14,7 @@ except (ModuleNotFoundError, ImportError):
     magic = None
 from config import config
 from util.image_size import get_image_size, UnknownImageFormat
+from util.video_duration import get_video_meta, UnknownVideoFormat
 
 
 api = fastapi.APIRouter(prefix="/api")
@@ -29,9 +30,10 @@ class BasicMetaModel(BaseModel):
     basename: str
     path: str
     parent: str
-    mime: t.Optional[str]
-    size: t.Optional[ImageSize]
     extension: t.Optional[str]
+    mime: t.Optional[str]
+    size: t.Optional[ImageSize]  # image-dimensions
+    duration: t.Optional[float]  # video-duration
 
 
 class ResponseModel(BasicMetaModel):
@@ -82,6 +84,15 @@ def meta(fp: str) -> dict:
                 pass
             else:
                 data['size'] = dict(width=width, height=height)
+        if mime and mime.startswith("video/"):
+            try:
+                video_meta = get_video_meta(fp)
+            except UnknownVideoFormat:
+                pass
+            else:
+                data['duration'] = video_meta.movie.duration / video_meta.movie.timescale
+                if len(video_meta.tracks):
+                    data['size'] = dict(width=video_meta.tracks[0].width, height=video_meta.tracks[0].height)
         return data
     elif os.path.isdir(fp):
         return dict(

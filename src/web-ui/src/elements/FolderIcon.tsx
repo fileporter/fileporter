@@ -1,23 +1,26 @@
 import { useRef, useState } from "react";
 import FolderIconSrc from "@assets/icons/files/directory.png";
+import { serverUrl } from "~/config";
+import type { DirectoryTypeResponse } from "~/types";
 
 
 interface Props {
-    previewSrc?: string
+    directory?: DirectoryTypeResponse
     className?: string
 }
 
 // not animated (preview on directory pinned)
-export default function FolderIcon(props: Props) {
+export default function FolderIcon({ directory, className }: Props) {
+    const previewSrc = directory ? serverUrl(`/preview/${directory.path}?directories=true`) : undefined;
     const [success, setSuccess] = useState(false);
     const imgRef = useRef<HTMLImageElement>(null);
     // aspect > 1 == landscape | aspect < 1 == portrait
     const aspect = imgRef.current ? imgRef.current.naturalWidth / imgRef.current.naturalHeight : 1;
 
-    return <div className={props.className}>
+    return <div className={className}>
         <div className="relative group">
             <img className="w-full" src={FolderIconSrc} alt="<folder>" />
-            {props.previewSrc ? <img ref={imgRef} className="absolute object-cover h-3/5 border border-black rounded-md bottom-[10%] right-[10%] aspect-square rotate-6" src={props.previewSrc} alt="<preview>"
+            {previewSrc ? <img ref={imgRef} className="absolute object-cover h-3/5 border border-black rounded-md bottom-[10%] right-[10%] aspect-square rotate-6" src={previewSrc} alt="<preview>"
                 style={{display: success ? "block" : "none", aspectRatio: aspect <= 1 ? "1 / 1" : "5 / 4"}}
                 onLoad={() => setSuccess(true)} loading="lazy" /> : null
             }

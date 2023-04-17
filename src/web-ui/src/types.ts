@@ -7,8 +7,12 @@ interface ResponseBase {
 export interface FileTypeResponse extends ResponseBase {
     type: "file"
     mime?: string
-    size?: [number, number]
     extension?: string
+    size?: {
+        width: number
+        height: number
+    }
+    duration?: number
 }
 export interface DirectoryTypeResponse extends ResponseBase {
     type: "directory"

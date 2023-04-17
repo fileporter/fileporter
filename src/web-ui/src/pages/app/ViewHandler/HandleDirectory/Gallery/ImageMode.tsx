@@ -30,7 +30,7 @@ export default function ImageModeRenderItem(item: FileOrDirectory) {
             currentTarget.src = DownloadFailedIcon;
         };
 
-        return <img width={item.size?.[0] ?? 500} height={item.size?.[1] ?? 375} className={`w-full mx-auto ${isFullScreen ? "" : "max-w-5xl"}`}
+        return <img width={item.size?.width ?? 500} height={item.size?.height ?? 375} className={`w-full mx-auto ${isFullScreen ? "" : "max-w-5xl"}`}
             src={imgSrc} onError={onError} onClick={({ currentTarget }) => {
                 if (currentTarget.onerror === null) {
                     const url = new URL(imgSrc);
@@ -45,7 +45,7 @@ export default function ImageModeRenderItem(item: FileOrDirectory) {
         />;
     } else {
         return <OpenModeLink to={item.path} className="flex gap-1 px-2 group">
-            <FileIcon className="w-auto h-6 my-auto aspect-square" mime={item.mime} filename={item.basename} />
+            <FileIcon className="w-auto h-6 my-auto aspect-square" file={item} />
             <span className="break-words group-hover:underline">
                 {item.basename}
             </span>
