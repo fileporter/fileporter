@@ -1,15 +1,17 @@
+import React, { Suspense } from "react";
 import type { FileTypeResponse } from "~/types";
 import ApiFileDownloadLink from "~/elements/OpenModeLink/ApiFileDownloadLink";
-import AudioSupport from "./type/Audio";
-import ImageSupport from "./type/Image";
-import TextSupport from "./type/Text";
-import VideoSupport from "./type/Video";
-import DotJsonSupport from "./subtype/json";
-import DotMarkdownSupport from "./subtype/md";
-import DotUrlSupport from "./subtype/url";
+import Loading from "~/elements/Loading";
+const AudioSupport = React.lazy(() => import("./type/Audio"));
+const ImageSupport = React.lazy(() => import("./type/Image"));
+const TextSupport = React.lazy(() => import("./type/Text"));
+const VideoSupport = React.lazy(() => import("./type/Video"));
+const DotJsonSupport = React.lazy(() => import("./subtype/json"));
+const DotMarkdownSupport = React.lazy(() => import("./subtype/md"));
+const DotUrlSupport = React.lazy(() => import("./subtype/url"));
 
 
-type Index = Record<string, undefined | ((p: FileTypeResponse) => JSX.Element)>
+type Index = Record<string, undefined | React.LazyExoticComponent<((p: FileTypeResponse) => JSX.Element)>>
 
 export const MimeSubtypeSupportIndex: Index = {
     "application/json": DotJsonSupport,
@@ -30,16 +32,11 @@ export default function HandleFile(file: FileTypeResponse) {
     if (!file.mime) {
         return <UnsupportedMessage {...file} />;
     }
-    const SubtypeView = MimeSubtypeSupportIndex[file.mime];
-    if (SubtypeView) {
-        return <SubtypeView {...file} />;
-    }
     const mimeStart = file.mime.split("/", 1)[0];
-    const TypeView = MimeTypeSupportIndex[mimeStart];
-    if (TypeView) {
-        return <TypeView {...file} />;
-    }
-    return <UnsupportedMessage {...file} />;
+    const ViewComponent = MimeSubtypeSupportIndex[file.mime] ?? MimeTypeSupportIndex[mimeStart] ?? UnsupportedMessage;
+    return <Suspense fallback={<Loading />}>
+        <ViewComponent {...file} />;
+    </Suspense>;
 }
 
 function UnsupportedMessage(file: FileTypeResponse) {
