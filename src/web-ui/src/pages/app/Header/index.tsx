@@ -7,7 +7,7 @@ import ToggleFullScreen from "./ToggleFullScreen";
 export default function AppHeader() {
     const [isVisible, setVisible] = useState(true);
     const lastScrollTop = useRef<number>(0);
-    const isTopMost = window.scrollY <= 25;
+    const [isTopMost, setTopMost] = useState(true);
 
     useEffect(() => {
         const controller = new AbortController();
@@ -16,6 +16,7 @@ export default function AppHeader() {
             const scrollTop = window.scrollY;
             setVisible(scrollTop < lastScrollTop.current);
             lastScrollTop.current = scrollTop;
+            setTopMost(window.scrollY <= 25);
         }, { passive: true, signal: controller.signal });
 
         return () => controller.abort();
