@@ -7,7 +7,7 @@ import ToggleFullScreen from "./ToggleFullScreen";
 export default function AppHeader() {
     const [isVisible, setVisible] = useState(true);
     const lastScrollTop = useRef<number>(0);
-    const isTopMost = window.scrollY <= 0;
+    const isTopMost = window.scrollY <= 25;
 
     useEffect(() => {
         const controller = new AbortController();
@@ -21,9 +21,9 @@ export default function AppHeader() {
         return () => controller.abort();
     });
 
-    return <div className="sticky inset-x-0 z-50 flex gap-3 px-2 py-px transition-[top] duration-300 bg-black bg-opacity-80" style={{top: (isTopMost || isVisible) ? "0px" : "-100%"}}>
+    return <nav className="sticky inset-x-0 z-50 flex gap-3 px-2 py-px transition-[top] duration-300 bg-black bg-opacity-80" style={{top: (isTopMost || isVisible) ? "0px" : "-100%"}}>
         <PathBar />
         <ToggleFullScreen />
         <ShowSettings />
-    </div>;
+    </nav>;
 }

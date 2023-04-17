@@ -16,8 +16,8 @@ export default function FolderIcon(props: Props) {
 
     return <div className={props.className}>
         <div className="relative group">
-            <img className="w-full" src={FolderIconSrc} />
-            {props.previewSrc ? <img ref={imgRef} className="absolute object-cover h-3/5 border border-black rounded-md bottom-[10%] right-[10%] aspect-square rotate-6" src={props.previewSrc}
+            <img className="w-full" src={FolderIconSrc} alt="<folder>" />
+            {props.previewSrc ? <img ref={imgRef} className="absolute object-cover h-3/5 border border-black rounded-md bottom-[10%] right-[10%] aspect-square rotate-6" src={props.previewSrc} alt="<preview>"
                 style={{display: success ? "block" : "none", aspectRatio: aspect <= 1 ? "1 / 1" : "5 / 4"}}
                 onLoad={() => setSuccess(true)} loading="lazy" /> : null
             }
