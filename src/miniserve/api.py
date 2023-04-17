@@ -90,9 +90,9 @@ def meta(fp: str) -> dict:
             except UnknownVideoFormat:
                 pass
             else:
-                data['duration'] = video_meta.movie.duration / video_meta.movie.timescale
-                if len(video_meta.tracks):
-                    data['size'] = dict(width=video_meta.tracks[0].width, height=video_meta.tracks[0].height)
+                data['duration'] = video_meta.duration
+                if video_meta.size:
+                    data['size'] = dict(width=video_meta.size[0], height=video_meta.size[1])
         return data
     elif os.path.isdir(fp):
         return dict(
