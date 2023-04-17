@@ -6,7 +6,7 @@ import MinimizeIcon from "@assets/icons/header/minimize.png";
 export default function ToggleFullScreen() {
     const isFullScreen = useIsFullScreen();
 
-    return <button onClick={() => {
+    return <button className="my-auto h-fit" onClick={() => {
         if (isFullScreen) {
             document.exitFullscreen();
         } else {
@@ -18,6 +18,6 @@ export default function ToggleFullScreen() {
                 });
         }
     }}>
-        <img className="inline-block h-5 my-auto cursor-pointer" alt="⬜" title="request fullscreen for better experience" src={isFullScreen ? MinimizeIcon : FullScreenIcon} />
+        <img className="h-5 cursor-pointer" src={isFullScreen ? MinimizeIcon : FullScreenIcon} alt="⬜" title="request fullscreen for better experience" />
     </button>;
 }

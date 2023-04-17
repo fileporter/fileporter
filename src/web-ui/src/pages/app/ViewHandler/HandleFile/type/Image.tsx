@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useEffect, useMemo, useState, useRef } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import { useQuery } from "react-query";
 import { useNavigate } from "react-router-dom";
 import { SortMode, numberBasedSort, textBasedSort } from "~/common";
@@ -12,7 +12,7 @@ import type { DirectoryRootTypeResponse } from "~/types";
 export default function ImageSupport(file: FileTypeResponse) {
     const navigate = useNavigate();
     const [sortMode] = useSortMode();
-    const [useFullView, setFullView] = useState(true);
+    const prog = useRef<null | HTMLProgressElement>();
     const query = useQuery<DirectoryRootTypeResponse>(
         ["meta", file.parent],
         ({ signal }) => axios.get<DirectoryRootTypeResponse>(`/api/${file.parent}`, { signal }).then(r => r.data),
@@ -66,18 +66,31 @@ export default function ImageSupport(file: FileTypeResponse) {
 
     const srcUrl = serverUrl(`/files/${file.path}`);
 
-    return <div className={useFullView ? "fixed inset-0 w-screen h-screen bg-black" : "my-auto"}>
+    return <div className="fixed inset-0 w-screen h-screen bg-black">
         {file.has_video ?
-            <video className="w-full h-full"
-                autoPlay loop
-            >
-                <source src={srcUrl} type={file.mime} />
-            </video>
+            <>
+                <video className="w-full h-full"
+                    autoPlay loop
+                    onTimeUpdate={(event) => {
+                        const vid = event.currentTarget;
+                        if (prog.current) {
+                            prog.current.max = vid.duration;
+                            prog.current.value = vid.currentTime;
+                        }
+                    }}
+                    onDoubleClick={(event) => {
+                        const vid = event.currentTarget;
+                        vid.paused ? vid.play() : vid.pause();
+                    }}
+                >
+                    <source src={srcUrl} type={file.mime} />
+                </video>
+                <progress className="fixed inset-x-0 bottom-0 w-full h-1 transition-[width]" ref={el => prog.current = el} />
+            </>
             :
             <img className="object-contain w-full h-full"
                 width={file.size?.width} height={file.size?.height}
                 src={srcUrl} alt={file.basename}
-                onDoubleClick={() => setFullView(!useFullView)}
             />
         }
     </div>;
@@ -116,7 +129,8 @@ function useTouchControl(onPrevious: () => void, onNext: () => void) {
         window.addEventListener("touchend", (event) => {
             const endPos = event.changedTouches[0].screenX;
             const delta = endPos - startPos.current!;
-            if (Math.abs(delta) > 50) { // 50px minimum
+            const screenWidth = window.screen.width;
+            if (Math.abs(delta) > (screenWidth / 3)) {
                 if (delta > 0) {
                     onPrevious();
                 } else {

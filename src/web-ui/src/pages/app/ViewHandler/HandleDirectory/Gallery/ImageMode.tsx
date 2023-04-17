@@ -1,19 +1,16 @@
-import { Link, useHref } from "react-router-dom";
+import { Link, useHref, useNavigate } from "react-router-dom";
 import { serverUrl } from "~/config";
 import FolderIcon from "~/elements/FolderIcon";
 import useIsFullScreen from "~/hooks/useIsFullScreen";
-import useOpenMode from "~/hooks/useOpenMode";
 import type { FileOrDirectory } from "~/types";
-import DownloadFailedIcon from "@assets/icons/download-fail.png";
-import { OpenMode } from "~/common";
 import OpenModeLink from "~/elements/OpenModeLink";
 import FileIcon from "~/elements/FileIcon";
+import DownloadFailedIcon from "@assets/icons/download-fail.png";
 
 
 export default function ImageModeRenderItem(item: FileOrDirectory) {
-    const [openMode] = useOpenMode();
     const isFullScreen = useIsFullScreen();
-    const href = useHref(item.path);
+    const navigate = useNavigate();
 
     if (item.type === "directory") {
         return <Link to={item.path} className="flex gap-1 px-2 group">
@@ -39,8 +36,9 @@ export default function ImageModeRenderItem(item: FileOrDirectory) {
                     currentTarget.onerror = onError as never;
                 }
             }} onDoubleClick={() => {
-                const url = openMode === OpenMode.intern ? href : serverUrl(`/files/${item.path}`);
-                window.open(url, "_blank")?.focus();
+                // const url = openMode === OpenMode.intern ? href : serverUrl(`/files/${item.path}`);
+                // window.open(url, "_blank")?.focus();
+                navigate(`/~/${item.path}`);
             }} alt="" loading="lazy"
         />;
     } else {
