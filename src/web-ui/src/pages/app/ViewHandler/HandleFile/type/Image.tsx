@@ -63,7 +63,7 @@ export default function ImageSupport(file: FileTypeResponse) {
 
     return <div className={useFullView ? "fixed inset-0 w-screen h-screen bg-black" : "my-auto"}>
         <img className="object-contain w-full h-full"
-            width={file.size?.[0]} height={file.size?.[1]}
+            width={file.size?.width} height={file.size?.height}
             src={serverUrl(`/files/${file.path}`)} alt={file.basename}
             onDoubleClick={() => setFullView(!useFullView)}
         />
