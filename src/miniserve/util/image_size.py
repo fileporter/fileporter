@@ -91,6 +91,24 @@ def get_image_size(file: t.Union[str, io.BytesIO]) -> t.Tuple[int, int]:
                 raise UnknownImageFormat("ValueError" + msg)
             except Exception as e:
                 raise UnknownImageFormat(e.__class__.__name__ + msg)
+        elif (size >= 4) and data.startswith(b'RIFF'):  # WEBP
+            r"""
+            https://datatracker.ietf.org/doc/html/rfc6386 (search for 'width' and the first describes this)
+            
+           Start code byte 0     0x9d
+           Start code byte 1     0x01
+           Start code byte 2     0x2a
+        
+           16 bits      :     (2 bits Horizontal Scale << 14) | Width (14 bits)
+           16 bits      :     (2 bits Vertical Scale << 14) | Height (14 bits)
+            """
+            file.seek(0)
+            head = file.read(64)  # dunno with size
+            start = head.find(b'\x9d\x01\x2a')
+            if start == -1:
+                raise UnknownImageFormat("size-bytes for .webp not found")
+            fmt = "<HH"
+            width, height = struct.unpack(fmt, head[start + 3:start + 3 + struct.calcsize(fmt)])
         else:
             raise UnknownImageFormat(
                 "Sorry, don't know how to get information from this file."
