@@ -32,13 +32,13 @@ export const queryClient = new QueryClient({
         queries: {
             retry: (failureCount, error) => {
                 if (error instanceof AxiosError) {
-                    const status = error.response!.status;
-                    return failureCount > 10 || [
+                    const status = error.response?.status;
+                    return failureCount > 10 || (!!status && [
                         HTTP_408_REQUEST_TIMEOUT,
                         HTTP_429_TOO_MANY_REQUESTS,
                         HTTP_502_BAD_GATEWAY,
                         HTTP_503_SERVICE_UNAVAILABLE,
-                    ].includes(status);
+                    ].includes(status));
                 }
                 return failureCount > 3;
             },

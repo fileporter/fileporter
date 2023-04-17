@@ -12,6 +12,7 @@ pillow = "*"
 baize = "*"
 qrcode = "*"
 anyio = "*"
+pymediainfo = "*"
 
 [dev-packages]
 

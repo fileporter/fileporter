@@ -1,4 +1,7 @@
 import { useRef, useState } from "react";
+import type { FileTypeResponse } from "~/types";
+import { serverUrl } from "~/config";
+import { formatDuration } from "~/common";
 import ArchiveIcon from "@assets/icons/files/archive.png?inline";
 import AudioIcon from "@assets/icons/files/audio-file.png?inline";
 // import CloudIcon from "@assets/icons/files/cloud-file.png?inline";
@@ -10,9 +13,7 @@ import PolicyIcon from "@assets/icons/files/policy-document.png?inline";
 import SymlinkIcon from "@assets/icons/files/symlink-file.png?inline";
 import VideoIcon from "@assets/icons/files/video-file.png?inline";
 import EmptyFileIcon from "@assets/icons/files/default-file.png?inline";
-import type { FileTypeResponse } from "~/types";
-import { serverUrl } from "~/config";
-import { formatDuration } from "~/common";
+import NoAudioIconSrc from "@assets/icons/no-sound.png?inline";
 
 
 interface Props {
@@ -30,6 +31,7 @@ export default function FileIcon({ file, className }: Props) {
             setSrc(getIconForFile(file));
             failed.current = true;
         }} alt="" loading="lazy" />
+        {(!!file?.has_video && !file.has_audio) && <img className="absolute top-0 left-0 h-4 bg-white bg-opacity-40 rounded-br-md invert" src={NoAudioIconSrc} alt="🔇" />}
         {!!file?.size && <span className="absolute top-0 right-0 px-1 text-xs bg-black bg-opacity-40 rounded-bl-md">{file.size.width}x{file.size.height}</span>}
         {!!file?.duration && <span className="absolute bottom-0 right-0 px-1 text-xs bg-black bg-opacity-40 rounded-tl-md">{formatDuration(file.duration)}</span>}
     </div>;

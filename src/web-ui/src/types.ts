@@ -13,6 +13,8 @@ export interface FileTypeResponse extends ResponseBase {
         height: number
     }
     duration?: number
+    has_video: boolean
+    has_audio: boolean
 }
 export interface DirectoryTypeResponse extends ResponseBase {
     type: "directory"
