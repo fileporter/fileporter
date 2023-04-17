@@ -14,7 +14,7 @@ export default function ViewHandler() {
     const path = usePath();
     const query = useQuery<ApiResponse>(
         ["meta", path],
-        ({ signal }) => axios.get<ApiResponse>(`/ap/${path}`, { signal }).then(r => r.data),
+        ({ signal }) => axios.get<ApiResponse>(`/api/${path}`, { signal }).then(r => r.data),
     );
 
     if (query.isLoading) {
