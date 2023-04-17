@@ -4,14 +4,22 @@ r"""
 
 """
 import os
+import logging
 import mimetypes
 import typing as t
 import fastapi
 from pydantic import BaseModel
-import pymediainfo as pmi
+try:
+    import pymediainfo as pmi
+    if not pmi.MediaInfo.can_parse():
+        raise ImportError("libmediainfo.so.0 not found. please run 'sudo apt install -y libmediainfo-dev'")
+except (ModuleNotFoundError, ImportError) as exc:
+    logging.error("pymediainfo could not be imported", exc_info=exc)
+    pmi = None
 try:
     import magic
-except (ModuleNotFoundError, ImportError):
+except (ModuleNotFoundError, ImportError) as exc:
+    logging.error("magic could not be imported", exc_info=exc)
     magic = None
 from config import config
 
@@ -77,7 +85,7 @@ def meta(fp: str) -> dict:
             parent=parent,
             mime=mime,
             extension=extension,
-            **get_media_info(fp)
+            **(get_media_info(fp) if pmi else {})
         )
         return data
     elif os.path.isdir(fp):
