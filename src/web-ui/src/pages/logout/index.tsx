@@ -8,7 +8,7 @@ import MiniserveIconSrc from "@assets/miniserve.png";
 export default function LogoutPage() {
     const queryClient = useQueryClient();
     const navigate = useNavigate();
-    const query = useQuery<object, Error>(
+    const query = useQuery<object>(
         ["logout"],
         ({ signal }) => axios.post("/auth/logout", { signal }),
         { cacheTime: 0, onSuccess: () => {

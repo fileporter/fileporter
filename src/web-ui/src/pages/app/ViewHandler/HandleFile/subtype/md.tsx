@@ -15,7 +15,7 @@ import type { FileTypeResponse } from "~/types";
 
 export default function DotMarkdownSupport(file: FileTypeResponse) {
     const path = usePath();
-    const query = useQuery<string, Error>(
+    const query = useQuery<string>(
         ["file", path],
         ({ signal }) => axios.get<string>(`/files/${path}`, { signal, responseType: "text" }).then(r => r.data),
     );

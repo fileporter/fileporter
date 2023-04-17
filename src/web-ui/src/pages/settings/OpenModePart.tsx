@@ -17,7 +17,7 @@ export function OpenModePart() {
 
     return <>
         <OptionSwitch current={openMode} options={[
-            {key: OpenMode.intern, imgSrc: InternModeIcon, text: "Intern"},
+            {key: OpenMode.intern, imgSrc: InternModeIcon, text: "Internal"},
             {key: OpenMode.download, imgSrc: DownloadModeIcon, text: "Download"},
         ]} onSwitch={setOpenMode} />
         <Description>{descriptions[openMode]}</Description>

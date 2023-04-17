@@ -1,6 +1,6 @@
 import usePath from "~/hooks/usePath";
-import SettingsIconSrc from "@assets/icons/header/settings.png";
 import { Link } from "react-router-dom";
+import SettingsIconSrc from "@assets/icons/header/settings.png";
 
 
 export default function ShowSettings() {

@@ -8,7 +8,7 @@ import usePath from "~/hooks/usePath";
 
 export default function DotUrlSupport() {
     const path = usePath();
-    const query = useQuery<string, Error>(
+    const query = useQuery<string>(
         ["file", path],
         ({ signal }) => axios.get<string>(`/files/${path}`, { signal, responseType: "text" }).then(r => r.data),
     );

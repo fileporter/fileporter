@@ -35,7 +35,7 @@ export default function LoginPage() {
             event.preventDefault();
             login.mutate();
         }}>
-            <div className="px-2 py-px text-center text-white bg-red-500 border border-red-800 rounded-md" style={{visibility: login.isError ? "visible" : "hidden"}}>
+            <div className="px-2 py-px text-center text-white border rounded-md border-red bg-error" style={{visibility: login.isError ? "visible" : "hidden"}}>
                 {login.error?.response ?
                     ( errorMessageIndex[login.error.response.status] ?? login.error.response.statusText)
                     :

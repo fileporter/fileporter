@@ -11,7 +11,7 @@ import ScrollProgressFix from "~/components/ScrollProgressFix";
 
 export default function TextSupport(file: FileTypeResponse) {
     const path = usePath();
-    const query = useQuery<string, Error>(
+    const query = useQuery<string>(
         ["file", path],
         ({ signal }) => axios.get<string>(`/files/${path}`, { signal, responseType: "text" }).then(r => r.data),
     );

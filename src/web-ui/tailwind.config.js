@@ -6,13 +6,22 @@ module.exports = {
   ],
   theme: {
     extend: {
-      colors: {
-        gray: "#22272e",
-      },
       hueRotate: {
         color: "var(--color-rotation)",
       },
     },
+    colors: {
+      black: "rgb(0 0 0 / <alpha-value>)",
+      white: "rgb(255 255 255 / <alpha-value>)",
+      dark: "rgb(34 39 46 / <alpha-value>)",
+      darker: "rgb(25 25 25 / <alpha-value>)",
+      error: "rgb(150 0 0 / <alpha-value>)",
+      link: "rgb(0 0 200 / <alpha-value>)",
+      accent: "rgb(79 195 247 / <alpha-value>)",
+      red: "rgb(255 0 0 / <alpha-value>)",
+      green: "rgb(255 0 0 / <alpha-value>)",
+      blue: "rgb(255 0 0 / <alpha-value>)",
+    }
   },
   plugins: [],
 }
