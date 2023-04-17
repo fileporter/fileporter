@@ -100,7 +100,7 @@ def get_media_info(fp: str):
         size = dict(width=media_info.video_tracks[0].width, height=media_info.video_tracks[0].height)
     else:
         size = None
-    if size is not None and size["width"] is None or size["height"] is None:
+    if size is not None and (size["width"] is None or size["height"] is None):
         size = None
 
     if media_info.video_tracks:

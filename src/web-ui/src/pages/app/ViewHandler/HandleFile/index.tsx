@@ -32,10 +32,14 @@ export default function HandleFile(file: FileTypeResponse) {
     if (!file.mime) {
         return <UnsupportedMessage {...file} />;
     }
+    // this is a special case
+    if (file.has_video && !file.has_audio && file.duration && file.duration <= 60) {
+        return <ImageSupport key={file.path} {...file} />; // this video is handled like a gif
+    }
     const mimeStart = file.mime.split("/", 1)[0];
     const ViewComponent = MimeSubtypeSupportIndex[file.mime] ?? MimeTypeSupportIndex[mimeStart] ?? UnsupportedMessage;
     return <Suspense fallback={<Loading />}>
-        <ViewComponent {...file} />
+        <ViewComponent key={file.path} {...file} />
     </Suspense>;
 }
 

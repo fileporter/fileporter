@@ -19,7 +19,10 @@ export default function ImageSupport(file: FileTypeResponse) {
         { staleTime: 60_000 },
     );
     const imageList = useMemo(() => query.data?.contents
-        .filter(el => el.type === "file" && el.mime?.startsWith("image/"))
+        .filter(el => el.type === "file" && (
+            el.mime?.startsWith("image/")
+            || (el.has_video && !el.has_audio && el.duration && el.duration <= 60)
+        ))
         .sort(sortMode === SortMode.alphabetic ? textBasedSort : numberBasedSort)
     , [query.data]);
 
@@ -61,12 +64,22 @@ export default function ImageSupport(file: FileTypeResponse) {
         }
     }, [imageList]);
 
+    const srcUrl = serverUrl(`/files/${file.path}`);
+
     return <div className={useFullView ? "fixed inset-0 w-screen h-screen bg-black" : "my-auto"}>
-        <img className="object-contain w-full h-full"
-            width={file.size?.width} height={file.size?.height}
-            src={serverUrl(`/files/${file.path}`)} alt={file.basename}
-            onDoubleClick={() => setFullView(!useFullView)}
-        />
+        {file.has_video ?
+            <video className="w-full h-full"
+                autoPlay loop
+            >
+                <source src={srcUrl} type={file.mime} />
+            </video>
+            :
+            <img className="object-contain w-full h-full"
+                width={file.size?.width} height={file.size?.height}
+                src={srcUrl} alt={file.basename}
+                onDoubleClick={() => setFullView(!useFullView)}
+            />
+        }
     </div>;
 }
 
