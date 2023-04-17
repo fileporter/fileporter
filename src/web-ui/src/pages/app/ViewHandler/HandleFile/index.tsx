@@ -35,7 +35,7 @@ export default function HandleFile(file: FileTypeResponse) {
     const mimeStart = file.mime.split("/", 1)[0];
     const ViewComponent = MimeSubtypeSupportIndex[file.mime] ?? MimeTypeSupportIndex[mimeStart] ?? UnsupportedMessage;
     return <Suspense fallback={<Loading />}>
-        <ViewComponent {...file} />;
+        <ViewComponent {...file} />
     </Suspense>;
 }
 
