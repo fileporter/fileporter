@@ -11,6 +11,7 @@ module.exports = {
       },
     },
     colors: {
+      transparent: 'transparent',
       black: "rgb(0 0 0 / <alpha-value>)",
       white: "rgb(255 255 255 / <alpha-value>)",
       dark: "rgb(34 39 46 / <alpha-value>)",
