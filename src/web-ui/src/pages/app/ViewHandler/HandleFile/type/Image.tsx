@@ -13,7 +13,6 @@ export default function ImageSupport(file: FileTypeResponse) {
     const navigate = useNavigate();
     const [sortMode] = useSortMode();
     const [useFullView, setFullView] = useState(true);
-    const srcUrl = serverUrl(`/files/${file.path}`);
     const query = useQuery<DirectoryRootTypeResponse>(
         ["meta", file.parent],
         ({ signal }) => axios.get<DirectoryRootTypeResponse>(`/api/${file.parent}`, { signal }).then(r => r.data),
@@ -47,10 +46,25 @@ export default function ImageSupport(file: FileTypeResponse) {
     useKeyControl(setPrevious, setNext);
     useTouchControl(setPrevious, setNext);
 
+    // image-preloading for faster swiping
+    useEffect(() => {
+        const current = getCurrentIndex();
+        const previousImage = current <= 0 ? undefined : imageList?.at(current - 1);
+        if (previousImage) {
+            const img = new Image();
+            img.src = serverUrl(`/files/${previousImage.path}`);
+        }
+        const nextImage = current < 0 ? undefined : imageList?.at(current + 1);
+        if (nextImage) {
+            const img = new Image();
+            img.src = serverUrl(`/files/${nextImage.path}`);
+        }
+    }, [imageList]);
+
     return <div className={useFullView ? "fixed inset-0 w-screen h-screen bg-black" : "my-auto"}>
         <img className="object-contain w-full h-full"
             width={file.size?.[0]} height={file.size?.[1]}
-            src={srcUrl} alt={file.basename}
+            src={serverUrl(`/files/${file.path}`)} alt={file.basename}
             onDoubleClick={() => setFullView(!useFullView)}
         />
     </div>;
