@@ -1,4 +1,4 @@
-import { Link, useHref, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { serverUrl } from "~/config";
 import FolderIcon from "~/elements/FolderIcon";
 import useIsFullScreen from "~/hooks/useIsFullScreen";
