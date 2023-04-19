@@ -7,7 +7,7 @@ export default function VideoSupport(file: FileTypeResponse) {
 
     return <div className="fixed inset-0 w-screen h-screen">
         <video className="object-contain w-full h-full my-auto" controls autoPlay disablePictureInPicture autoFocus preload="metadata">
-            <source src={srcUrl} type={file.mime} />
+            <source src={srcUrl} type={file.mime ?? undefined} />
         </video>
     </div>;
 }
