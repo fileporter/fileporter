@@ -54,10 +54,10 @@ async def check_access():
     r"""
     this endpoint is used to verify if one has access (/is logged in)
     """
-    return {}
+    pass
 
 
-@api.get("/{fp:path}", response_model=ResponseModel)
+@api.get("/meta/{fp:path}", response_model=ResponseModel)
 async def get_meta(fp: str = fastapi.Path()):
     r"""
     return the meta information about the given path

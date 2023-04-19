@@ -1,5 +1,5 @@
 import { serverUrl } from "~/config";
-import type { FileTypeResponse } from "~/types";
+import type { FileTypeResponse } from "~/api/types";
 
 
 export default function AudioSupport(file: FileTypeResponse) {

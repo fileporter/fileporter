@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import FileIcon from "~/elements/FileIcon";
 import FolderIcon from "~/elements/FolderIcon";
 import OpenModeLink from "~/elements/OpenModeLink";
-import type { FileOrDirectory } from "~/types";
+import type { FileOrDirectory } from "~/api/types";
 
 
 export default function GridModeRenderItem(item: FileOrDirectory) {

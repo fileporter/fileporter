@@ -1,30 +1,32 @@
-import axios from "axios";
 import { useEffect, useMemo, useRef } from "react";
 import { useQuery } from "react-query";
 import { useNavigate } from "react-router-dom";
 import { SortMode, numberBasedSort, textBasedSort } from "~/common";
 import { serverUrl } from "~/config";
 import useSortMode from "~/hooks/useSortMode";
-import type { FileTypeResponse } from "~/types";
-import type { DirectoryRootTypeResponse } from "~/types";
+import type { FileTypeResponse } from "~/api/types";
+import api from "~/api";
 
 
 export default function ImageSupport(file: FileTypeResponse) {
     const navigate = useNavigate();
     const [sortMode] = useSortMode();
     const prog = useRef<null | HTMLProgressElement>();
-    const query = useQuery<DirectoryRootTypeResponse>(
+    const query = useQuery(
         ["meta", file.parent],
-        ({ signal }) => axios.get<DirectoryRootTypeResponse>(`/api/${file.parent}`, { signal }).then(r => r.data),
+        ({ signal }) => api.getFileMeta({ params: { path: file.parent }, signal }),
         { staleTime: 60_000 },
     );
-    const imageList = useMemo(() => query.data?.contents
-        .filter(el => el.type === "file" && (
-            el.mime?.startsWith("image/")
-            || (el.has_video && !el.has_audio && el.duration && el.duration <= 60)
-        ))
-        .sort(sortMode === SortMode.alphabetic ? textBasedSort : numberBasedSort)
-    , [query.data]);
+    const imageList = useMemo(() => (
+        query.data?.type !== "directory"
+            ? undefined
+            : query.data.contents
+                .filter(el => el.type === "file" && (
+                    el.mime?.startsWith("image/")
+                    || (el.has_video && !el.has_audio && el.duration && el.duration <= 60)
+                ))
+                .sort(sortMode === SortMode.alphabetic ? textBasedSort : numberBasedSort)
+    ), [query.data]);
 
     function getCurrentIndex() {
         return imageList?.findIndex(el => el.path === file.path) ?? -1;

@@ -1,7 +1,7 @@
 import { useRef, useState } from "react";
 import FolderIconSrc from "@assets/icons/files/directory.png";
 import { serverUrl } from "~/config";
-import type { DirectoryTypeResponse } from "~/types";
+import type { DirectoryTypeResponse } from "~/api/types";
 
 
 interface Props {

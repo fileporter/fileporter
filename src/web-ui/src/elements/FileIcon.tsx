@@ -1,5 +1,5 @@
 import { useRef, useState } from "react";
-import type { FileTypeResponse } from "~/types";
+import type { FileTypeResponse } from "~/api/types";
 import { serverUrl } from "~/config";
 import { formatDuration } from "~/common";
 import ArchiveIcon from "@assets/icons/files/archive.png?inline";

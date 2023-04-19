@@ -1,7 +1,7 @@
 import { SortMode, ViewMode, numberBasedSort, textBasedSort } from "~/common";
 import useSortMode from "~/hooks/useSortMode";
 import useViewMode from "~/hooks/useViewMode";
-import type { DirectoryRootTypeResponse } from "~/types";
+import type { DirectoryRootTypeResponse } from "~/api/types";
 import IconView from "./Icon";
 import ListView from "./List";
 import GalleryView from "./Gallery";

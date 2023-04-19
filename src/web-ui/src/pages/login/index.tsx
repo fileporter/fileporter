@@ -1,15 +1,15 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useRef, useState } from "react";
 import { useMutation } from "react-query";
-import axios, { type AxiosError, type AxiosResponse } from "axios";
-import { HTTP_401_UNAUTHORIZED } from "~/common/httpStatusIndex";
 import MiniserveIconSrc from "@assets/miniserve.png";
 import GithubIconSrc from "@assets/icons/github.png";
 import DocsIconSrc from "@assets/icons/documentation.svg";
+import api from "~/api";
+import { AxiosError, HttpStatusCode } from "axios";
 
 
 const errorMessageIndex: Record<number, undefined | string> = {
-    [HTTP_401_UNAUTHORIZED]: "Invalid username or password",
+    [HttpStatusCode.Unauthorized]: "Invalid username or password",
 };
 
 
@@ -19,8 +19,8 @@ export default function LoginPage() {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
 
-    const login = useMutation<AxiosResponse, AxiosError>(
-        () => axios.post("/auth/login", { username, password }),
+    const login = useMutation(
+        () => api.login({ username, password }),
         { onSuccess: () => {
             navigate("/", { replace: true });
         }, onError: () => {
@@ -36,7 +36,7 @@ export default function LoginPage() {
             login.mutate();
         }}>
             <div className="px-2 py-px text-center text-white border rounded-md border-red bg-error" style={{visibility: login.isError ? "visible" : "hidden"}}>
-                {login.error?.response ?
+                {login.error instanceof AxiosError && login.error.response ?
                     ( errorMessageIndex[login.error.response.status] ?? login.error.response.statusText)
                     :
                     "Login Failed for unknown reasons"

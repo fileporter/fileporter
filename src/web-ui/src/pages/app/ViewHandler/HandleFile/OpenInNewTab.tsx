@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { serverUrl } from "~/config";
-import type { FileTypeResponse } from "~/types";
+import type { FileTypeResponse } from "~/api/types";
 
 
 export default function OpenInNewTab(file: FileTypeResponse) {

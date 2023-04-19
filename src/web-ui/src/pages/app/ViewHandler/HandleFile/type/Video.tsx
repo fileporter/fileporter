@@ -1,4 +1,4 @@
-import type { FileTypeResponse } from "~/types";
+import type { FileTypeResponse } from "~/api/types";
 import { serverUrl } from "~/config";
 
 

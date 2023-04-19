@@ -1,5 +1,4 @@
 import "./gfm.css"; // use github-flavoured-markdown
-import axios from "axios";
 import DOMPurify from "dompurify";
 import hljs from "highlight.js";
 import * as marked from "marked";
@@ -10,14 +9,15 @@ import { serverUrl } from "~/config";
 import ErrorMessageBox from "~/elements/ErrorMessageBox";
 import Loading from "~/elements/Loading";
 import usePath from "~/hooks/usePath";
-import type { FileTypeResponse } from "~/types";
+import type { FileTypeResponse } from "~/api/types";
+import api from "~/api";
 
 
 export default function DotMarkdownSupport(file: FileTypeResponse) {
     const path = usePath();
     const query = useQuery<string>(
         ["file", path],
-        ({ signal }) => axios.get<string>(`/files/${path}`, { signal, responseType: "text" }).then(r => r.data),
+        ({ signal }) => api.rawFile({ params: { path }, signal }),
     );
 
     const rendered = useMemo(() => renderMarkdown(query.data, serverUrl(`/files/${file.parent}/`)), [query.data]);

@@ -1,5 +1,5 @@
 import React, { Suspense } from "react";
-import type { FileTypeResponse } from "~/types";
+import type { FileTypeResponse } from "~/api/types";
 import ApiFileDownloadLink from "~/elements/OpenModeLink/ApiFileDownloadLink";
 import Loading from "~/elements/Loading";
 const AudioSupport = React.lazy(() => import("./type/Audio"));

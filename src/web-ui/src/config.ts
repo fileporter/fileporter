@@ -1,6 +1,5 @@
 import { QueryClient } from "react-query";
-import axios, { AxiosError } from "axios";
-import { HTTP_401_UNAUTHORIZED, HTTP_408_REQUEST_TIMEOUT, HTTP_429_TOO_MANY_REQUESTS, HTTP_502_BAD_GATEWAY, HTTP_503_SERVICE_UNAVAILABLE } from "./common/httpStatusIndex";
+import { AxiosError, HttpStatusCode } from "axios";
 
 
 export function serverUrl(location: string): string {
@@ -15,32 +14,21 @@ export function serverUrl(location: string): string {
 }
 
 
-axios.defaults.baseURL = serverUrl("/");
-axios.defaults.timeout = 15_000;
-axios.defaults.withCredentials = true;
-axios.interceptors.response.use(null, (error) => {
-    if (error.response?.status === HTTP_401_UNAUTHORIZED) {
-        // important: change with different router-provider
-        window.location.assign(`${import.meta.env.BASE_URL}#/login`);
-    }
-    return Promise.reject(error);
-});
-
-
 export const queryClient = new QueryClient({
     defaultOptions: {
         queries: {
             retry: (failureCount, error) => {
                 if (error instanceof AxiosError) {
                     const status = error.response?.status;
-                    return failureCount > 10 || (!!status && [
-                        HTTP_408_REQUEST_TIMEOUT,
-                        HTTP_429_TOO_MANY_REQUESTS,
-                        HTTP_502_BAD_GATEWAY,
-                        HTTP_503_SERVICE_UNAVAILABLE,
+                    return failureCount < 5 || (!!status && [
+                        HttpStatusCode.TooEarly,
+                        HttpStatusCode.RequestTimeout,
+                        HttpStatusCode.TooManyRequests,
+                        HttpStatusCode.BadGateway,
+                        HttpStatusCode.ServiceUnavailable,
                     ].includes(status));
                 }
-                return failureCount > 3;
+                return failureCount < 3;
             },
         },
     },

@@ -5,6 +5,7 @@ r"""
 """
 import hashlib
 import fastapi
+
 from .util import CookieManager
 from .deps import Credentials, auth_system
 
@@ -12,7 +13,7 @@ from .deps import Credentials, auth_system
 auth = fastapi.APIRouter(prefix="/auth")
 
 
-@auth.post("/login")
+@auth.post("/login", response_model=dict)
 async def login(
         cookies: CookieManager = CookieManager.dependency,
         username: str = fastapi.Body(),
@@ -27,9 +28,10 @@ async def login(
         username,
         phash,
     ]
+    return {}
 
 
-@auth.post("/logout")
+@auth.post("/logout", response_model=dict)
 async def logout(
         cookies: CookieManager = CookieManager.dependency,
 ):
@@ -37,3 +39,4 @@ async def logout(
     logs the current user out
     """
     del cookies["auth"]
+    return {}

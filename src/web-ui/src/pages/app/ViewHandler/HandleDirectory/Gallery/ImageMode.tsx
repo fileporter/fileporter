@@ -2,7 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { serverUrl } from "~/config";
 import FolderIcon from "~/elements/FolderIcon";
 import useIsFullScreen from "~/hooks/useIsFullScreen";
-import type { FileOrDirectory } from "~/types";
+import type { FileOrDirectory } from "~/api/types";
 import OpenModeLink from "~/elements/OpenModeLink";
 import FileIcon from "~/elements/FileIcon";
 import DownloadFailedIcon from "@assets/icons/download-fail.png";

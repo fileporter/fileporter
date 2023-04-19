@@ -1,6 +1,6 @@
-import axios from "axios";
 import { useQuery } from "react-query";
 import { Link } from "react-router-dom";
+import api from "~/api";
 import ErrorMessageBox from "~/elements/ErrorMessageBox";
 import Loading from "~/elements/Loading";
 import usePath from "~/hooks/usePath";
@@ -10,7 +10,7 @@ export default function DotUrlSupport() {
     const path = usePath();
     const query = useQuery<string>(
         ["file", path],
-        ({ signal }) => axios.get<string>(`/files/${path}`, { signal, responseType: "text" }).then(r => r.data),
+        ({ signal }) => api.rawFile({ params: { path }, signal }),
     );
     if (query.isLoading) {
         return <Loading />;

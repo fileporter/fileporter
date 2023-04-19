@@ -1,4 +1,4 @@
-import type { FileOrDirectory } from "~/types";
+import type { FileOrDirectory } from "~/api/types";
 import type { DirectoryHandlerProps } from "./types";
 import { Link } from "react-router-dom";
 import FolderIcon from "~/elements/FolderIcon";

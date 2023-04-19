@@ -1,19 +1,19 @@
 import hljs from "highlight.js";
 import "highlight.js/styles/github-dark.css";
-import axios from "axios";
 import { useQuery } from "react-query";
 import ErrorMessageBox from "~/elements/ErrorMessageBox";
 import Loading from "~/elements/Loading";
 import usePath from "~/hooks/usePath";
-import type { FileTypeResponse } from "~/types";
+import type { FileTypeResponse } from "~/api/types";
 import ScrollProgressFix from "~/components/ScrollProgressFix";
+import api from "~/api";
 
 
 export default function TextSupport(file: FileTypeResponse) {
     const path = usePath();
     const query = useQuery<string>(
         ["file", path],
-        ({ signal }) => axios.get<string>(`/files/${path}`, { signal, responseType: "text" }).then(r => r.data),
+        ({ signal }) => api.rawFile({ params: { path }, signal }),
     );
     if (query.isLoading) {
         return <Loading />;

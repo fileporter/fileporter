@@ -1,8 +1,8 @@
-import axios from "axios";
 import { useQuery, useQueryClient } from "react-query";
 import { useNavigate } from "react-router-dom";
 import ErrorMessageBox from "~/elements/ErrorMessageBox";
 import MiniserveIconSrc from "@assets/miniserve.png";
+import api from "~/api";
 
 
 export default function LogoutPage() {
@@ -10,7 +10,7 @@ export default function LogoutPage() {
     const navigate = useNavigate();
     const query = useQuery<object>(
         ["logout"],
-        ({ signal }) => axios.post("/auth/logout", { signal }),
+        ({ signal }) => api.logout(undefined, { signal }),
         { cacheTime: 0, onSuccess: () => {
             queryClient.clear();
             navigate("/", { replace: true });

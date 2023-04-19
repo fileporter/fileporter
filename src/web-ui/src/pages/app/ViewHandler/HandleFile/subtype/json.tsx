@@ -1,5 +1,5 @@
-import axios from "axios";
 import { useQuery } from "react-query";
+import api from "~/api";
 import ScrollProgressFix from "~/components/ScrollProgressFix";
 import ErrorMessageBox from "~/elements/ErrorMessageBox";
 import Loading from "~/elements/Loading";
@@ -10,7 +10,7 @@ export default function DotJsonSupport() {
     const path = usePath();
     const query = useQuery<string>(
         ["file", path],
-        ({ signal }) => axios.get<string>(`/files/${path}`, { signal, responseType: "text" }).then(r => r.data),
+        ({ signal }) => api.rawFile({ params: { path }, signal }),
     );
     if (query.isLoading) {
         return <Loading />;

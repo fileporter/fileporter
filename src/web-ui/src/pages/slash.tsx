@@ -1,22 +1,25 @@
-import axios from "axios";
+import { AxiosError, HttpStatusCode } from "axios";
 import { useQuery } from "react-query";
 import { Navigate } from "react-router-dom";
+import api from "~/api";
+import ErrorMessageBox from "~/elements/ErrorMessageBox";
+import Loading from "~/elements/Loading";
 
 
 export default function URLIndexPage() {
     const query = useQuery(
-        ["api-head"],
-        ({ signal }) => axios.head("/api/", { signal }),
+        ["check-access"],
+        ({ signal }) => api.checkAccess({ signal }),
     );
 
     if (query.isLoading) {
-        return <h1 className="text-center">
-            Please wait a bit...
-        </h1>;
+        return <Loading />;
     }
     if (query.isError) {
-        return <Navigate to="/login" /> ;
-    } else {
-        return <Navigate replace to="/~/" />;
+        if (query.error instanceof AxiosError && query.error.response?.status === HttpStatusCode.Unauthorized ) {
+            return <Navigate to="/login" /> ;
+        }
+        return <ErrorMessageBox error={query.error} />;
     }
+    return <Navigate replace to="/~/" />;
 }
