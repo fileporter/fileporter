@@ -11,7 +11,7 @@ export default function ErrorMessageBox({ error }: Props) {
     if (error instanceof AxiosError && error.response) {
         errorMessage = `${error.response.status}: ${error.response.statusText}`;
     }
-    if (error instanceof ZodError) {
+    if (error instanceof ZodError || (error instanceof Error && error.cause instanceof ZodError)) {
         errorMessage = "The server responded weirdly.";
     }
     return <div className="grid h-full p-5 place-content-center">

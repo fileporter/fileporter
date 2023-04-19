@@ -15,11 +15,11 @@ export default function TextSupport(file: FileTypeResponse) {
         ["file", path],
         ({ signal }) => api.rawFile({ params: { path }, signal }),
     );
-    if (query.isLoading) {
-        return <Loading />;
-    }
     if (query.isError) {
         return <ErrorMessageBox error={query.error} />;
+    }
+    if (query.isLoading) {
+        return <Loading />;
     }
 
     if (file.mime?.startsWith("text/x-")) {

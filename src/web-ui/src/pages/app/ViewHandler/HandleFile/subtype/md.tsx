@@ -22,11 +22,11 @@ export default function DotMarkdownSupport(file: FileTypeResponse) {
 
     const rendered = useMemo(() => renderMarkdown(query.data, serverUrl(`/files/${file.parent}/`)), [query.data]);
 
-    if (query.isLoading) {
-        return <Loading />;
-    }
     if (query.isError) {
         return <ErrorMessageBox error={query.error} />;
+    }
+    if (query.isLoading) {
+        return <Loading />;
     }
 
     return <>

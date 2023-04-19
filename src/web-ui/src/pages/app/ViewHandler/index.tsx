@@ -17,14 +17,14 @@ export default function ViewHandler() {
         ({ signal }) => api.getFileMeta({ params: { path }, signal }),
     );
 
-    if (query.isLoading) {
-        return <Loading />;
-    }
     if (query.error instanceof AxiosError && query.error.response?.status === HttpStatusCode.NotFound) {
         return <PageNotFound />;
     }
     if (query.isError) {
         return <ErrorMessageBox error={query.error} />;
+    }
+    if (query.isLoading) {
+        return <Loading />;
     }
 
     if (query.data!.type === "file") {

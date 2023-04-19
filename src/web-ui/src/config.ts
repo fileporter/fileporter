@@ -1,5 +1,6 @@
 import { QueryClient } from "react-query";
 import { AxiosError, HttpStatusCode } from "axios";
+import { ZodError } from "zod";
 
 
 export function serverUrl(location: string): string {
@@ -27,6 +28,9 @@ export const queryClient = new QueryClient({
                         HttpStatusCode.BadGateway,
                         HttpStatusCode.ServiceUnavailable,
                     ].includes(status));
+                }
+                if (error instanceof ZodError || (error instanceof Error && error.cause instanceof ZodError)) {
+                    return false;
                 }
                 return failureCount < 3;
             },

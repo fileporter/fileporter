@@ -12,11 +12,11 @@ export default function DotUrlSupport() {
         ["file", path],
         ({ signal }) => api.rawFile({ params: { path }, signal }),
     );
-    if (query.isLoading) {
-        return <Loading />;
-    }
     if (query.isError) {
         return <ErrorMessageBox error={query.error} />;
+    }
+    if (query.isLoading) {
+        return <Loading />;
     }
 
     const url = parseDotUrlFileContent(query.data!);
