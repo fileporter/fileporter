@@ -11,13 +11,13 @@ export type ResponseBase = z.infer<typeof ResponseBase>
 
 export const FileTypeResponse = ResponseBase.extend({
     type: z.literal("file"),
-    mime: z.string().includes("/").optional(),
-    extension: z.string().startsWith(".").optional(),
+    mime: z.string().includes("/").nullable(),
+    extension: z.string().startsWith(".").nullable(),
     size: z.object({
         width: z.number().min(1),
         height: z.number().min(1),
-    }).optional(),
-    duration: z.number().min(1).optional(),
+    }).nullable(),
+    duration: z.number().min(1).nullable(),
     has_video: z.boolean(),
     has_audio: z.boolean(),
 });

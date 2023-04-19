@@ -39,7 +39,7 @@ const api = new Zodios([
         parameters: [{
             name: "path",
             type: "Path",
-            schema: z.string().nonempty(),
+            schema: z.string(),
         }],
         response: FileMeta,
     },
@@ -50,7 +50,7 @@ const api = new Zodios([
         parameters: [{
             name: "path",
             type: "Path",
-            schema: z.string().nonempty(),
+            schema: z.string(),
         }],
         response: z.string(),
     },
