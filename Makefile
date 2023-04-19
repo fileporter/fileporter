@@ -2,10 +2,10 @@ usage:
 	echo "usage: make <command>"
 
 BASE ?= /
-OUT ?= ../miniserve/web-ui/
+OUT ?= src/miniserve/web-ui/
 
 new-frontend:
-	cd src/web-ui/; npm install; npm run build -- --base $(BASE) --outDir $(OUT)
+	./scripts/make-new-frontend $(BASE) $(OUT)
 
 install:
 	./scripts/make-install

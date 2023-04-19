@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+set -e
+
+BASE="$1"
+OUT=$(realpath $2)
+
+if [ ! -d "$OUT" ]; then
+    echo "Missing Build-Directory"
+    exit 1
+fi
+
+cd src/web-ui/
+
+echo "Build for $BASE in $OUT"
+
+npm install
+npm run build -- --base "$BASE" --outDir "$OUT"
