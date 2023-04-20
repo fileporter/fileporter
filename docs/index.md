@@ -14,7 +14,7 @@ nav_order: -1
 
 ## Example usage
 
-```text
+```shell
 user@pc:~/path/to/folder$ miniserve
 <args {'host': '0.0.0.0', 'port': 8000, 'root': '.', 'username': 'user', 'auth': None, 'worker': 8, 'root_path': '/', 'uds': None, 'logs': None, 'dotall': False, 'dependencies': False, 'cache': True}>
 
@@ -38,6 +38,10 @@ user@pc:~/path/to/folder$ miniserve
 {: .lh-0 }
 
 ![eg. fresh start](assets/eg-start.png)
+
+![eg. settings](assets/eg-settings.png)
+
+![eg. code file](assets/eg-code-file.png)
 
 [use it now](getting-started/index.md){: .btn .btn-blue .mx-auto .fs-5 }
 {: .d-flex .flex-justify-around }

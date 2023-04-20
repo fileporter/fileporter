@@ -5,7 +5,7 @@ See [the documentation](https://PlayerG9.github.io/miniserve/) for more informat
 
 # Example usage
 
-```commandline
+```shell
 user@pc:~/path/to/folder$ miniserve
 <args {'host': '0.0.0.0', 'port': 8000, 'root': '.', 'username': 'user', 'auth': None, 'worker': 8, 'root_path': '/', 'uds': None, 'logs': None, 'dotall': False, 'dependencies': False, 'cache': True}>
 
@@ -29,15 +29,11 @@ user@pc:~/path/to/folder$ miniserve
 
 ![eg. fresh start](README.assets/eg-start.png)
 
-## example screenshots
-### list-view
-![list-view](README.assets/eg-list-view.png)
+![eg. settings](README.assets/eg-settings.png)
 
-### gallery-view
-![gallery-view](README.assets/gallery-view.png)
+![eg. code file](README.assets/eg-code-file.png)
 
-
-# Development Notes
+# ~~Development Notes~~
 
 <!--
 after the clone to complete the setup
