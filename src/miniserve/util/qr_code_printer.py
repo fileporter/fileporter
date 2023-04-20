@@ -29,7 +29,7 @@ def get_info():
             client.connect(("8.8.8.8", 80))
             ip = client.getsockname()[0]
 
-    return f"http://{ip}:{config.port}"
+    return f"http://{ip}:{config.port}{config.root_path}"
 
 
 def print_qrcode():
