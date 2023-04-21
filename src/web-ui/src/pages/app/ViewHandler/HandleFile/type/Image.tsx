@@ -85,7 +85,7 @@ export default function ImageSupport(file: FileTypeResponse) {
                         vid.paused ? vid.play() : vid.pause();
                     }}
                 >
-                    <source src={srcUrl} type={file.mime ?? undefined} />
+                    <source src={srcUrl} type={file.mime} />
                 </video>
                 <progress className="fixed inset-x-0 bottom-0 w-full h-1 transition-[width]" ref={el => prog.current = el} />
             </>

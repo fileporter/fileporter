@@ -6,9 +6,6 @@ r"""
 import os
 import logging
 import mimetypes
-import typing as t
-import fastapi
-from pydantic import BaseModel
 try:
     import pymediainfo as pmi
     if not pmi.MediaInfo.can_parse():
@@ -16,61 +13,17 @@ try:
 except (ModuleNotFoundError, ImportError) as exc:
     logging.error("pymediainfo could not be imported", exc_info=exc)
     pmi = None
-try:
+try:  # system-installed package for support
     import magic
 except (ModuleNotFoundError, ImportError) as exc:
     logging.error("magic could not be imported", exc_info=exc)
     magic = None
+from fastapi import HTTPException, status
 from config import config
+from . import models as m
 
 
-api = fastapi.APIRouter(prefix="/api")
-
-
-class ImageSize(BaseModel):
-    width: int
-    height: int
-
-
-class BasicMetaModel(BaseModel):
-    type: t.Literal["file", "directory"]
-    basename: str
-    path: str
-    parent: str
-    extension: t.Optional[str]
-    mime: t.Optional[str]
-    size: t.Optional[ImageSize]
-    duration: t.Optional[float]
-    has_audio: t.Optional[bool]
-    has_video: t.Optional[bool]
-
-
-class ResponseModel(BasicMetaModel):
-    contents: t.Optional[t.List[BasicMetaModel]]
-
-
-@api.head("/")
-async def check_access():
-    r"""
-    this endpoint is used to verify if one has access (/is logged in)
-    """
-    pass
-
-
-@api.get("/meta/{fp:path}", response_model=ResponseModel)
-async def get_meta(fp: str = fastapi.Path()):
-    r"""
-    return the meta information about the given path
-    """
-    fp = os.path.join(config.root, fp.removeprefix("/"))
-    response = meta(fp)
-    if os.path.isdir(fp):
-        response['contents'] = [meta(os.path.join(fp, _)) for _ in os.listdir(fp)
-                                if config.dotall or not _.startswith(".")]
-    return response
-
-
-def meta(fp: str) -> dict:
+def get_fp_meta(fp: str) -> dict:
     path = os.path.relpath(fp, config.root)
     parent, basename = os.path.split(path)
     if os.path.isfile(fp):
@@ -78,7 +31,7 @@ def meta(fp: str) -> dict:
         if mime is None:
             mime = magic.from_file(fp, mime=True)
         extension = os.path.splitext(fp)[1] or None
-        data = dict(
+        return m.FileResponse(
             type="file",
             basename=basename,
             path=path,
@@ -86,17 +39,16 @@ def meta(fp: str) -> dict:
             mime=mime,
             extension=extension,
             **(get_media_info(fp) if pmi else {})
-        )
-        return data
+        ).dict()
     elif os.path.isdir(fp):
-        return dict(
+        return m.DirectoryResponse(
             type="directory",
             basename=basename,
             path=path,
             parent=parent,
-        )
+        ).dict()
     else:
-        raise fastapi.HTTPException(fastapi.status.HTTP_404_NOT_FOUND)
+        raise HTTPException(status.HTTP_404_NOT_FOUND)
 
 
 def get_media_info(fp: str):
