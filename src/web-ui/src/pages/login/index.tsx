@@ -1,9 +1,11 @@
+import "./index.css";
 import { Link, useNavigate } from "react-router-dom";
 import { useRef, useState } from "react";
 import { useMutation } from "react-query";
 import MiniserveIconSrc from "@assets/miniserve.png";
 import GithubIconSrc from "@assets/icons/github.png";
 import DocsIconSrc from "@assets/icons/documentation.svg";
+import MazeBackgroundSrc from "@assets/maze-background.png";
 import api from "~/api";
 import { AxiosError, HttpStatusCode } from "axios";
 
@@ -28,7 +30,8 @@ export default function LoginPage() {
         } },
     );
 
-    return <div className="flex flex-col items-center justify-center h-screen">
+    return <div className="relative flex flex-col items-center justify-center h-screen pulse-background isolate">
+        <img className="absolute inset-0 object-cover -z-10" src={MazeBackgroundSrc} alt="" />
         <div className="grow" />
         <img className={`w-auto h-1/3 ${login.isLoading ? "animate-pulse" : ""}`} src={MiniserveIconSrc} alt="" draggable={false} />
         <form className="flex flex-col w-full max-w-sm gap-1" onSubmit={(event) => {
@@ -43,17 +46,17 @@ export default function LoginPage() {
                 }
             </div>
             <input
-                className="px-2 py-px bg-black bg-opacity-50 rounded-md" type="text"
+                className="px-2 py-px bg-black rounded-md bg-opacity-60" type="text"
                 required autoFocus placeholder="Username"
                 onChange={(event) => setUsername(event.target.value)}
             />
             <input
-                className="px-2 py-px bg-black bg-opacity-50 rounded-md" type="password" ref={el => (pwInput.current = el)}
+                className="px-2 py-px bg-black rounded-md bg-opacity-60" type="password" ref={el => (pwInput.current = el)}
                 required placeholder="Password"
                 onChange={(event) => setPassword(event.target.value)}
             />
             <img />
-            <input className="px-5 py-px mx-auto bg-black bg-opacity-50 rounded-md cursor-pointer w-fit" type="submit" value="Login" />
+            <input className="px-5 py-px mx-auto bg-black rounded-md cursor-pointer bg-opacity-60 w-fit" type="submit" value="Login" />
         </form>
         <div className="grow" />
         <div className="flex gap-2 px-5 py-1 opacity-50 hover:opacity-100">
