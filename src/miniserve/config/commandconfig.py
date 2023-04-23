@@ -11,7 +11,7 @@ from __version__ import __version__
 
 parser = argparse.ArgumentParser(
     prog="miniserve",
-    description=own web-ui build__doc__,
+    description=__doc__,
     add_help=True,
     allow_abbrev=False,
 )
