@@ -11,7 +11,7 @@ from __version__ import __version__
 
 parser = argparse.ArgumentParser(
     prog="miniserve",
-    description=__doc__,
+    description=own web-ui build__doc__,
     add_help=True,
     allow_abbrev=False,
 )
@@ -20,7 +20,7 @@ parser.add_argument('-v', '--version', action="version", version=__version__)
 parser.add_argument('--config', type=existing_path,
                     help="configuration file to use")
 parser.add_argument('--local', action="store_const", const="127.0.0.1", dest="host",
-                    help="serve only locally")
+                    help=argparse.SUPPRESS)
 parser.add_argument('--global', action="store_const", const="0.0.0.0", dest="host",
                     help=argparse.SUPPRESS)
 parser.add_argument('-p', '--port', type=int,
@@ -34,7 +34,7 @@ parser.add_argument('-w', '--worker', type=ranged(1, 8),
 parser.add_argument('--root-path',
                     help=argparse.SUPPRESS)
 parser.add_argument('--uds',
-                    help="serve also dot-files")
+                    help=argparse.SUPPRESS)
 parser.add_argument('--logs', action=argparse.BooleanOptionalAction,
                     help=argparse.SUPPRESS)
 parser.add_argument('--dotall', action=argparse.BooleanOptionalAction,

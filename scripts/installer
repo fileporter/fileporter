@@ -8,3 +8,9 @@ git clone https://github.com/PlayerG9/miniserve.git "${TARGET}"
 cd "${TARGET}"
 
 ./scripts/make-install.sh
+
+echo "
+Please add the following line to your ~/.bashrc
+
+source \"$PWD/$TARGET/scripts/bashrc\"
+"

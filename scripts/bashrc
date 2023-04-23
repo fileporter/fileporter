@@ -1,0 +1,39 @@
+#!/usr/bin/env bash
+
+# add executable to path
+# TODO: replace somehow with symlink
+export PATH="${PATH}:$(realpath "$(dirname "${PWD}/${BASH_SOURCE[0]}")/..")"
+
+# adding manpage
+#   If  there  is  no  MANPATH_MAP  line in the configuration file for a given path_element, then it adds all of
+#   path_element/../man, path_element/man, path_element/../share/man, and path_element/share/man that  exist  as
+#   directories to the search path.
+export PATH="${PATH}:$(dirname "${PWD}/${BASH_SOURCE[0]}")/path"
+
+
+# autocompletion
+
+_miniserve_completions()
+{
+    local CURRENT_WORD=${COMP_WORDS[$COMP_CWORD]}
+    local LAST_WORD=${COMP_WORDS[$(($COMP_CWORD - 1))]}
+
+    # echo "'$LAST_WORD' '$CURRENT_WORD'"
+
+    if [[ "$LAST_WORD" = "--user" || "$LAST_WORD" = "--username" ]]; then
+        COMPREPLY=($(compgen -W "$USER miniserve guest user" "${CURRENT_WORD}"))
+    elif [[ "$LAST_WORD" = "--pw" || "$LAST_WORD" = "--password" ]]; then
+        COMPREPLY=()
+    elif [[ "$LAST_WORD" = "-p" || "$LAST_WORD" = "--port" ]]; then
+        COMPREPLY=($(compgen -W "3000 5000 5050 8000 8080" "${CURRENT_WORD}"))
+    elif [[ "$LAST_WORD" = "--config" ]]; then
+        COMPREPLY=($(compgen -f -- "${CURRENT_WORD}"))
+    else
+        COMPREPLY=($(compgen -W ". .. --help --version --config --port --username --password --dotall --no-dotall --local" -- "${CURRENT_WORD}"))
+        if [[ $(($COMP_CWORD + 1)) = ${#COMP_WORDS[@]} ]]; then
+            COMPREPLY+=($(compgen -d -- "${CURRENT_WORD}"))
+        fi
+    fi
+}
+
+complete -F _miniserve_completions miniserve

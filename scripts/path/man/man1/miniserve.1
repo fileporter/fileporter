@@ -1,0 +1,77 @@
+.\" generated with Ronn-NG/v0.9.1
+.\" http://github.com/apjanke/ronn-ng/tree/0.9.1
+.TH "MINISERVE" "1" "April 2023" ""
+.SH "NAME"
+\fBminiserve\fR \- small readonly fileserver
+.SH "SYNOPSIS"
+\fBminiserve [\-h] [\-v] [\-\-config CONFIG] [\-\-local] [\-p PORT] [\-\-pw PASSWORD] [\-\-dotall | \-\-no\-dotall] [root]\fR
+.SH "DESCRIPTION"
+Serve a directory in your local network for view over the browser
+.SH "OPTIONS"
+.TP
+root
+the directory which should be served (default: current directory)
+.TP
+\-h, \-\-help
+show the help message and exit
+.TP
+\-v, \-\-version
+show program's version number and exit
+.TP
+\-\-config
+configuration file to use
+.TP
+\-p, \-\-port
+port to serve on (default: 8000)
+.TP
+\-\-pw, \-\-password
+requires the user to login
+.TP
+\-\-dotall, \-\-no\-dotall
+serve also dot\-files (default: false)
+.SH "HIDDEN OPTIONS"
+(some options are hidden in the \fB\-\-help\fR message but are still useable)
+.TP
+\-\-user, \-\-username
+specify the username to use
+.TP
+\-\-local, \-\-global
+only host the directory locally (default: global)
+.TP
+\-w, \-\-worker
+number of workers (default: a calculated number based on your pc)
+.TP
+\-\-root\-path
+is used with a custom base\-url (see https://playerg9\.github\.io/miniserve/configuration#root\-path\-and\-uds)
+.TP
+\-\-uds
+UNIX\-Domain\-Socket (see https://playerg9\.github\.io/miniserve/configuration#root\-path\-and\-uds)
+.TP
+\-\-logs, \-\-no\-logs
+give access output into the console (default: false)
+.TP
+\-\-dependencies, \-\-no\-dependencies
+print at startup what dependencies are missing for a better browser experience (default: false)
+.TP
+\-\-cache, \-\-no\-cache
+whether or not previews and low\-resolution versions of files should be cached in a \fB/tmp\fR directory\. (can be disabled for private data) (default: true)
+.TP
+\-\-web\-ui
+custom web\-ui build\. see the \fB\-\-root\-path\fR option
+.SH "EXAMPLES"
+.nf
+$ miniserve
+
+$ miniserve \-\-dotall ~
+
+$ miniserve \-\-user hello \-\-password world \./prvt
+.fi
+.SH "AUTHOR"
+PlayerG9 \- https://github\.com/PlayerG9/
+.SH "COPYRIGHT"
+Copyright \(co 2023 PlayerG9\.
+.SH "SEE ALSO"
+.SS "Repository"
+https://github\.com/PlayerG9/miniserve
+.SS "Documentation"
+https://playerg9\.github\.io/miniserve/

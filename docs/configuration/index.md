@@ -8,6 +8,8 @@ layout: default
 
 # Options to configure
 
+note: your can also use `man miniserve` <small>(after installation)</small>
+
 ## host
 where to bind to
 
@@ -20,14 +22,14 @@ default: `0.0.0.0`
 which port to bind to
 
 recommended ports:
-
-* 80 (often times blocked)
+* 80 (often times blocked by some software or the system)
 * 3000
 * 5000
+* 5050 (sometimes blocked by other software)
 * 8000
 * 8080 (sometimes blocked by other software)
 
-<sup>note: 80 is the default port to allow url's without port (eg `http://10.20.30.40/` instead of `http://10.20.30.40:8000/`) but is often blocked</sup>
+<small>note: 80 is the default port to allow url's without port (eg `http://10.20.30.40/` instead of `http://10.20.30.40:8000/`) but is often blocked by some software or the system. That's why it's recommended to use 3000, 5000 or 8000</small>
 
 default: `8000`
 
@@ -39,7 +41,7 @@ default: `.` (current working directory)
 ## username
 which username the authentication process requires
 
-<sup>note: only works if password is supplied</sup>
+<small>note: only works if password is supplied</small>
 
 default: default to currently logged in user
 
@@ -50,7 +52,7 @@ it is possible to provide the `sha256`-hexdigest hashed version of the password.
 This password-version has to begin with `hash:` and can be generated with `make password-encryption PW="[YOUR PASSWORD]"`.
 This is meant for you to not store/use your plain password and is recommended to use.
 
-<sup>note: if password is `yes`|`true` it falls back to the system-password of the current user</sup>
+<small>note: if password is `yes`|`true` it falls back to the system-password of the current user</small>
 
 default: no authentication
 
@@ -59,15 +61,19 @@ miniserve cached previews or low-resolution versions of files in a cache directo
 (This gets cleared every system-start)
 
 If your don't want the cache because of security or other reasons you can disable this option.<br/>
-<sup>note: this requires more system-resources</sup>
+<small>note: this requires more system-resources</small>
 
 default: `true`
 
 ## root-path and uds
 this options are helpful if miniserve should run behind a reverse-proxy like nginx
 
-links for more information:
+this option must start and end with an `/` (eg `/miniserve/` or `/served/miniserve/`)
 
+{ .important }
+> <small>note: your need to make your [own web-ui build](../deploy/index.md#custom-starting-url)</small>
+
+links for more information:
 * [uvicorn: running-behind-nginx](https://www.uvicorn.org/deployment/#running-behind-nginx){:target="_blank"}
 * [fastapi: behind a proxy](https://fastapi.tiangolo.com/advanced/behind-a-proxy/#behind-a-proxy){:target="_blank"}
 

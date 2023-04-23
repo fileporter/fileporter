@@ -9,7 +9,9 @@ nav_order: 0
 
 # Getting Started
 
-**requirements:** python (>3.8), cat, bash, git
+**requirements:** python (≥3.8), cat, bash, git
+
+<sup>(An earlier version (≥3.5) of Python might also work but no guaranty)</sup>
 
 # Setup
 
@@ -19,42 +21,24 @@ nav_order: 0
 cat https://github.com/PlayerG9/miniserve/raw/main/scripts/installer | bash
 ```
 
-it is also possible to pass some arguments
+it is also possible to specify the directory name
 ```bash
 cat https://github.com/PlayerG9/miniserve/raw/main/scripts/installer | bash -s -- {directory-name}
 ```
 
-## Adding miniserve to the path
-
-in case you want to add miniserve to the path (executing everywhere)
-you have to add the following line to `.bash_aliases`
-
+after that you have to add the following line to `~/.bashrc`.
+(the correct line is printed by the installer)
 ```bash
-alias miniserve='~/.commands/miniserve/miniserve'
+source /path/to/the/repo/miniserve/scripts/bashrc
 ```
+
+this adds the miniserve-executable to the path, adds autocompletion and adds a `man miniserve` page.
 
 ## Configuration
 
 [see here for configuration](../configuration/index.md)
 
-## Autocompletion
-
-Copy `scripts/miniserve-completion.sh` into `~/.bash_completion.d/`
-```bash
-mkdir -p ~/.bash_completion.d/ && cp scripts/miniserve-completion.sh ~/.bash_completion.d/
-```
-and add
-```bash
-source ~/.bash_completion.d/miniserve-completion.sh
-```
-to `.bashrc` or `.bash_aliases`.
-
 # Running
 
-```bash
-miniserve [ARGS]
-```
-or (if not added to the path)
-```bash
-/path/to/miniserve/miniserve [ARGS] 
-```
+To start miniserve you can simply run the `miniserve` command anywhere your want
+(`miniserve [ARGS]`)

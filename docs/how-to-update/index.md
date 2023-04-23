@@ -10,12 +10,14 @@ layout: default
 
 ## Normal upgrade
 
+under normal circumstances it should be enough to call
 ```bash
 make update
 ```
 
 ## With custom starting url
 
+if you have a custom base-url the following commands are needed
 ```bash
 make clean
 make update
