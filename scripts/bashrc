@@ -1,14 +1,14 @@
 #!/usr/bin/env bash
 
 # add executable to path
-# TODO: replace somehow with symlink
-export PATH="${PATH}:$(realpath "$(dirname "${PWD}/${BASH_SOURCE[0]}")/..")"
+# TODO: replace somehow with symlink in ./path
+export PATH="${PATH}:$(realpath "$(dirname "${BASH_SOURCE[0]}")/..")"
 
 # adding manpage
 #   If  there  is  no  MANPATH_MAP  line in the configuration file for a given path_element, then it adds all of
 #   path_element/../man, path_element/man, path_element/../share/man, and path_element/share/man that  exist  as
 #   directories to the search path.
-export PATH="${PATH}:$(dirname "${PWD}/${BASH_SOURCE[0]}")/path"
+export PATH="${PATH}:$(realpath "$(dirname "${BASH_SOURCE[0]}")/path")"
 
 
 # autocompletion
