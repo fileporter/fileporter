@@ -26,7 +26,7 @@ from preview import (
 
 app = fastapi.FastAPI(
     debug=config.development,
-    title="miniserve",
+    title="fileporter",
     description=__doc__,
     version=__version__,
     docs_url=None,

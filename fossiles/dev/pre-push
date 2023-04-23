@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 echo "DON'T USE THIS. NOT WORKING"; exit 1
 echo "pre-push hook..."
-AVI_PATH="src/miniserve/"
+AVI_PATH="src/fileporter/"
 
 python3 -c '
 import datetime;

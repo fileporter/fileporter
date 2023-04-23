@@ -10,7 +10,7 @@ export default defineConfig({
   base: "/",
   build: {
     emptyOutDir: true,
-    outDir: "../miniserve/web-ui/",
+    outDir: "../fileporter/web-ui/",
     assetsInlineLimit: 8192, // 2x the original
     chunkSizeWarningLimit: 1024,
     rollupOptions: {

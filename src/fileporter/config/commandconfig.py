@@ -2,7 +2,7 @@
 # -*- coding=utf-8 -*-
 r"""
 see the documentation for more information.
-docs: https://playerg9.github.io/miniserve/
+docs: https://fileporter.github.io/docs/
 """
 import argparse
 from util.argstuff import ranged, existing_path
@@ -10,7 +10,7 @@ from __version__ import __version__
 
 
 parser = argparse.ArgumentParser(
-    prog="miniserve",
+    prog="fileporter",
     description=__doc__,
     add_help=True,
     allow_abbrev=False,

@@ -1,9 +1,9 @@
-miniserve(1) -- small readonly fileserver
+fileporter(1) -- small readonly fileserver
 =============================================
 
 ## SYNOPSIS
 
-`miniserve [-h] [-v] [--config CONFIG] [--local] [-p PORT] [--pw PASSWORD] [--dotall | --no-dotall] [root]`
+`fileporter [-h] [-v] [--config CONFIG] [--local] [-p PORT] [--pw PASSWORD] [--dotall | --no-dotall] [root]`
 
 ## DESCRIPTION
 
@@ -52,11 +52,11 @@ number of workers
 
 * --root-path:
 is used with a custom base-url
-(see https://playerg9.github.io/miniserve/configuration#root-path-and-uds)
+(see https://fileporter.github.io/docs/configuration#root-path-and-uds)
 
 * --uds:
 UNIX-Domain-Socket
-(see https://playerg9.github.io/miniserve/configuration#root-path-and-uds)
+(see https://fileporter.github.io/docs/configuration#root-path-and-uds)
 
 * --logs, --no-logs:
 give access output into the console
@@ -76,11 +76,11 @@ see the `--root-path` option
 
 ## EXAMPLES
 
-    $ miniserve
+    $ fileporter
 
-    $ miniserve --dotall ~
+    $ fileporter --dotall ~
 
-    $ miniserve --user hello --password world ./prvt
+    $ fileporter --user hello --password world ./prvt
 
 <!--
 ## SYNTAX
@@ -110,8 +110,8 @@ Copyright © 2023 PlayerG9.
 
 ### Repository
 
-https://github.com/PlayerG9/miniserve
+https://github.com/fileporter/fileporter
 
 ### Documentation
 
-https://playerg9.github.io/miniserve/
+https://fileporter.github.io/docs/

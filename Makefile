@@ -2,7 +2,7 @@ usage:
 	echo "usage: make <command>"
 
 BASE ?= /
-OUT ?= src/miniserve/web-ui/
+OUT ?= src/fileporter/web-ui/
 
 new-frontend:
 	./scripts/make-new-frontend $(BASE) $(OUT)

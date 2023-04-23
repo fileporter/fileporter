@@ -12,8 +12,8 @@ def find_config_file():
     if args.config:
         return args.config
     for fp in [
-        '/etc/miniserve/config.ini',
-        p.expanduser('~/.config/miniserve/config.ini'),
+        '/etc/fileporter/config.ini',
+        p.expanduser('~/.config/fileporter/config.ini'),
     ]:
         if p.isfile(fp):
             return fp

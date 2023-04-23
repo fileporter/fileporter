@@ -2,7 +2,7 @@ import "./index.css";
 import { Link, useNavigate } from "react-router-dom";
 import { useRef, useState } from "react";
 import { useMutation } from "react-query";
-import MiniserveIconSrc from "@assets/miniserve.png";
+import fileporterIconSrc from "@assets/fileporter.png";
 import GithubIconSrc from "@assets/icons/github.png";
 import DocsIconSrc from "@assets/icons/documentation.svg";
 import MazeBackgroundSrc from "@assets/maze-background.png";
@@ -33,7 +33,7 @@ export default function LoginPage() {
     return <div className="relative flex flex-col items-center justify-center h-screen pulse-background isolate">
         <img className="absolute inset-0 object-cover -z-10" src={MazeBackgroundSrc} alt="" />
         <div className="grow" />
-        <img className={`w-auto h-1/3 ${login.isLoading ? "animate-pulse" : ""}`} src={MiniserveIconSrc} alt="" draggable={false} />
+        <img className={`w-auto h-1/3 ${login.isLoading ? "animate-pulse" : ""}`} src={fileporterIconSrc} alt="" draggable={false} />
         <form className="flex flex-col w-full max-w-sm gap-1" onSubmit={(event) => {
             event.preventDefault();
             login.mutate();
@@ -60,10 +60,10 @@ export default function LoginPage() {
         </form>
         <div className="grow" />
         <div className="flex gap-2 px-5 py-1 opacity-50 hover:opacity-100">
-            <Link className="group" to="https://github.com/PlayerG9/miniserve#readme" target="_blank">
-                <img className="inline-block h-[1rem]" src={GithubIconSrc} alt="" /> <span className="group-hover:underline">miniserve</span>
+            <Link className="group" to="https://github.com/fileporter/fileporter#readme" target="_blank">
+                <img className="inline-block h-[1rem]" src={GithubIconSrc} alt="" /> <span className="group-hover:underline">fileporter</span>
             </Link>
-            <Link className="group" to="https://playerg9.github.io/miniserve" target="_blank">
+            <Link className="group" to="https://fileporter.github.io/fileporter" target="_blank">
                 <img className="inline-block h-[1rem]" src={DocsIconSrc} alt="" /> <span className="group-hover:underline">docs</span>
             </Link>
         </div>

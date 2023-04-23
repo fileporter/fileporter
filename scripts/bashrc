@@ -13,7 +13,7 @@ export PATH="${PATH}:$(realpath "$(dirname "${BASH_SOURCE[0]}")/path")"
 
 # autocompletion
 
-_miniserve_completions()
+_fileporter_completions()
 {
     local CURRENT_WORD=${COMP_WORDS[$COMP_CWORD]}
     local LAST_WORD=${COMP_WORDS[$(($COMP_CWORD - 1))]}
@@ -21,7 +21,7 @@ _miniserve_completions()
     # echo "'$LAST_WORD' '$CURRENT_WORD'"
 
     if [[ "$LAST_WORD" = "--user" || "$LAST_WORD" = "--username" ]]; then
-        COMPREPLY=($(compgen -W "$USER miniserve guest user" "${CURRENT_WORD}"))
+        COMPREPLY=($(compgen -W "$USER fileporter guest user" "${CURRENT_WORD}"))
     elif [[ "$LAST_WORD" = "--pw" || "$LAST_WORD" = "--password" ]]; then
         COMPREPLY=()
     elif [[ "$LAST_WORD" = "-p" || "$LAST_WORD" = "--port" ]]; then
@@ -36,4 +36,4 @@ _miniserve_completions()
     fi
 }
 
-complete -F _miniserve_completions miniserve
+complete -F _fileporter_completions fileporter

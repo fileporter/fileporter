@@ -1,7 +1,7 @@
 import { useQuery, useQueryClient } from "react-query";
 import { useNavigate } from "react-router-dom";
 import ErrorMessageBox from "~/elements/ErrorMessageBox";
-import MiniserveIconSrc from "@assets/miniserve.png";
+import fileporterIconSrc from "@assets/fileporter.png";
 import api from "~/api";
 
 
@@ -19,7 +19,7 @@ export default function LogoutPage() {
 
     if (query.isLoading) {
         return <div className="flex flex-col items-center justify-center h-screen">
-            <img className="w-auto h-1/3 animate-pulse" src={MiniserveIconSrc} alt="" draggable={false} />
+            <img className="w-auto h-1/3 animate-pulse" src={fileporterIconSrc} alt="" draggable={false} />
             <p>Please wait while you are being logged out</p>
         </div>;
     }

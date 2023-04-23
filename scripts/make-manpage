@@ -3,4 +3,4 @@ set -e
 cd "$(dirname "$0")"
 
 ronn -r manpage.md
-mv manpage.1 path/man/man1/miniserve.1
+mv manpage.1 path/man/man1/fileporter.1
