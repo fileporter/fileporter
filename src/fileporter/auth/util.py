@@ -3,10 +3,12 @@
 r"""
 
 """
-import socket
-import urllib.parse as urlparse
-import typing as t
 import json
+import uuid
+import socket
+import hashlib
+import typing as t
+import urllib.parse as urlparse
 
 import fastapi
 
@@ -22,7 +24,7 @@ def get_network_ip():
         return client.getsockname()[0]
 
 
-def get_origins():
+def get_allowed_origins():
     ips = ["localhost", "0.0.0.0", get_network_ip(), socket.getfqdn()]
     for ip in ips:
         yield f"http://{ip}"
@@ -32,6 +34,18 @@ def get_origins():
         if config.development:
             yield f"http://{ip}:3000"
             yield f"https://{ip}:3000"
+
+
+# important: sync with scripts/make-password-encryption
+def password_hash(password: str | bytes):
+    if isinstance(password, str):
+        password = password.encode()
+    return hashlib.pbkdf2_hmac(
+        hash_name="sha256",
+        password=password,
+        salt=str(uuid.getnode()).encode(),  # device dependent salt (same device == same salt)
+        iterations=50_000,
+    ).hex()
 
 
 @fastapi.Depends

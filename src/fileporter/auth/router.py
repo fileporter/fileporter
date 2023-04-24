@@ -3,11 +3,10 @@
 r"""
 
 """
-import hashlib
 import fastapi
 
 from .util import CookieManager
-from .deps import Credentials, auth_system
+from .deps import Credentials, auth_system, password_hash
 
 
 auth = fastapi.APIRouter(prefix="/auth")
@@ -22,7 +21,7 @@ async def login(
     r"""
     verifies the login credentials and sets corresponding cookies
     """
-    phash = hashlib.sha256(password.encode()).hexdigest()
+    phash = password_hash(password=password)
     auth_system(Credentials(username=username, phash=phash))
     cookies["auth"] = [
         username,

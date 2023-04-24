@@ -3,6 +3,6 @@
 r"""
 
 """
-from .util import get_origins
+from .util import get_allowed_origins
 from .deps import auth_system
 from .router import auth as router

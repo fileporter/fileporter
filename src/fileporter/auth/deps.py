@@ -9,7 +9,7 @@ import typing as t
 from collections import namedtuple
 import fastapi
 from config import config
-from .util import CookieManager
+from .util import CookieManager, password_hash
 
 
 USERNAME = config.username.lower()
@@ -30,7 +30,7 @@ if isinstance(config.password, str):  # --auth [password]
     if config.password.startswith("hash:"):
         PHASH = config.password.removeprefix("hash:")
     else:
-        PHASH = hashlib.sha256(config.password.encode()).hexdigest()
+        PHASH = password_hash(password=config.password)
 
     def auth_system(credentials: Credentials = fastapi.Depends(get_credentials)):
         if credentials.username != USERNAME:

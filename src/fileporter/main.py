@@ -16,7 +16,7 @@ from baize.asgi.staticfiles import (
 from fastapi.staticfiles import StaticFiles as StaticPages
 from config import config
 from __version__ import __version__
-from auth import auth_system as auth_dependency, get_origins as get_allowed_origins, router as auth_router
+from auth import auth_system as auth_dependency, get_allowed_origins, router as auth_router
 from api import api as api_router
 from preview import (
     preview as preview_router,
@@ -60,5 +60,5 @@ app.mount(
         directory=Path(Path(config.web_ui) if config.web_ui else Path(__file__).parent.joinpath("web-ui")).resolve(),
         html=True
     ),
-    "web-ui",
+    name="web-ui",
 )
