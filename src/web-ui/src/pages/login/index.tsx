@@ -63,7 +63,7 @@ export default function LoginPage() {
             <Link className="group" to="https://github.com/fileporter/fileporter#readme" target="_blank">
                 <img className="inline-block h-[1rem]" src={GithubIconSrc} alt="" /> <span className="group-hover:underline">fileporter</span>
             </Link>
-            <Link className="group" to="https://fileporter.github.io/fileporter" target="_blank">
+            <Link className="group" to="https://fileporter.github.io/docs" target="_blank">
                 <img className="inline-block h-[1rem]" src={DocsIconSrc} alt="" /> <span className="group-hover:underline">docs</span>
             </Link>
         </div>
