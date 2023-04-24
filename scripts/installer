@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -e
 
-TARGET=${1:=fileporter}
+TARGET=${1:-fileporter}
 
 git clone https://github.com/fileporter/fileporter.git "${TARGET}"
 
