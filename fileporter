@@ -1,6 +1,7 @@
 #!/usr/bin/bash
 
-THIS=$(dirname "$0")
+# repo-root directory
+THIS="$(dirname "$(realpath "$0")")"
 
 "$THIS/.venv/bin/python3" -B -O "$THIS/src/fileporter/" "$@"
 #"$THIS/.venv/bin/uvicorn" --host 0.0.0.0 main:app -- "$@"
