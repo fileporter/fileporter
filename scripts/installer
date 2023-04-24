@@ -7,10 +7,10 @@ git clone https://github.com/fileporter/fileporter.git "${TARGET}"
 
 cd "${TARGET}"
 
-./scripts/make-install.sh
+./scripts/make-install
 
 echo "
 Please add the following line to your ~/.bashrc
 
-source \"$PWD/$TARGET/scripts/bashrc\"
+source \"$PWD/scripts/bashrc\"
 "
