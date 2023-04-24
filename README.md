@@ -1,7 +1,16 @@
-# <img width=auto height="30" src="https://raw.githubusercontent.com/fileporter/fileporter/master/README.assets/repo-icon.png" alt="" style="display: inline-block; height: 30px;" /> fileporter
+# <img src="https://raw.githubusercontent.com/fileporter/fileporter/master/README.assets/repo-icon.png" alt="" style="display: inline-block; height: 30px;" /> fileporter
 Serve a directory in your local network for view over the browser
 
 See [the documentation](https://fileporter.github.io/docs/) for more information.
+
+After installation you also have access to the `fileporter --help` or `man fileporter` commands.
+
+## More
+
+> fileporter can be used to quickly share a directory for a good read-only browser view on mobile, desktop or other devices.
+> though a [password]([https://](https://fileporter.github.io/docs/configuration/#password)) you are able to ensure that your files don't enter the wrong hands.
+
+> fileporter also supports the deployment on a server
 
 # Example usage
 
