@@ -1,10 +1,18 @@
 .pulse-background {
-	background: linear-gradient(-45deg, rgba(0,0,0,0) 44%, rgba(79,195,247,0.2) 50%, rgba(34,39,46,0) 56%);;
+	background: linear-gradient(-45deg, rgba(0,0,0,0) 48%, rgba(79,195,247,0.3) 50%, rgba(34,39,46,0) 52%);
 	background-size: 650% 650%;
-	animation: gradient 20s ease infinite;
+	animation: gradient 15s ease infinite;
 }
 
 @keyframes gradient {
+	0% {
+		background-position: 100% 50%;
+	}
+	100% {
+		background-position: 0% 50%;
+	}
+}
+/* @keyframes gradient {
 	0% {
 		background-position: 0% 50%;
 	}
@@ -14,4 +22,4 @@
 	100% {
 		background-position: 0% 50%;
 	}
-}
+} */

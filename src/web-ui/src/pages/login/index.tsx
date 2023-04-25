@@ -5,7 +5,7 @@ import { useMutation } from "react-query";
 import fileporterIconSrc from "@assets/fileporter.png";
 import GithubIconSrc from "@assets/icons/github.png";
 import DocsIconSrc from "@assets/icons/documentation.svg";
-import MazeBackgroundSrc from "@assets/maze-background.png";
+import MazeBackgroundSrc from "@assets/abstract-background.png";
 import api from "~/api";
 import { AxiosError, HttpStatusCode } from "axios";
 
@@ -31,7 +31,7 @@ export default function LoginPage() {
     );
 
     return <div className="relative flex flex-col items-center justify-center h-screen pulse-background isolate">
-        <img className="absolute inset-0 object-cover -z-10" src={MazeBackgroundSrc} alt="" />
+        <img className="fixed inset-0 object-cover w-full h-full -z-10" src={MazeBackgroundSrc} alt="" />
         <div className="grow" />
         <img className={`w-auto h-1/3 ${login.isLoading ? "animate-pulse" : ""}`} src={fileporterIconSrc} alt="" draggable={false} />
         <form className="flex flex-col w-full max-w-sm gap-1" onSubmit={(event) => {
