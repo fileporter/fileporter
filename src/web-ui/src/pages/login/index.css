@@ -1,5 +1,5 @@
 .pulse-background {
-	background: linear-gradient(-45deg, rgba(0,0,0,0) 48%, rgba(79,195,247,0.3) 50%, rgba(34,39,46,0) 52%);
+	background: linear-gradient(-45deg, rgba(34,39,46,0) 48%, rgba(79,195,247,0.3) 50%, rgba(34,39,46,0) 52%);
 	background-size: 650% 650%;
 	animation: gradient 15s ease infinite;
 }
