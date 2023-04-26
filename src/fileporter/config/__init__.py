@@ -14,12 +14,12 @@ from .fileconfig import parser as file_config
 
 
 class Configuration(pydantic.BaseModel):
-    host: str = "0.0.0.0"
-    port: t.Optional[int] = 8000
+    host: t.Literal["0.0.0.0", "127.0.0.1", "localhost"] = "0.0.0.0"
+    port: t.Optional[pydantic.conint(gt=0)] = 8000
     root: t.Optional[pydantic.DirectoryPath] = "."
     username: t.Optional[str] = getpass.getuser()
-    password: t.Optional[str]
-    worker: t.Optional[int] = min(8, os.cpu_count())
+    password: t.Optional[pydantic.constr(min_length=1)]
+    worker: t.Optional[pydantic.conint(gt=0, le=16)] = min(8, os.cpu_count())
     root_path: t.Optional[pydantic.constr(regex=r"^/(.+/)*$")] = "/"
     uds: t.Optional[str]
     logs: t.Optional[bool]
