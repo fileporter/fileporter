@@ -21,13 +21,17 @@ export const queryClient = new QueryClient({
             retry: (failureCount, error) => {
                 if (error instanceof AxiosError) {
                     const status = error.response?.status;
-                    return failureCount < 5 || (!!status && [
+                    if (status && [
                         HttpStatusCode.TooEarly,
                         HttpStatusCode.RequestTimeout,
                         HttpStatusCode.TooManyRequests,
                         HttpStatusCode.BadGateway,
                         HttpStatusCode.ServiceUnavailable,
-                    ].includes(status));
+                    ].includes(status)) {
+                        return failureCount < 5;
+                    } else {
+                        return false;
+                    }
                 }
                 if (error instanceof ZodError || (error instanceof Error && error.cause instanceof ZodError)) {
                     return false;
