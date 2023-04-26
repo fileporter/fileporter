@@ -28,15 +28,16 @@ export default function FileIcon({ file, className }: Props) {
     const [imgSrc, setSrc] = useState((previews && file) ? serverUrl(`/preview/${file.path}`) : getIconForFile(file));
     const failed = useRef<boolean>(!previews || !file);
 
-    useEffect(() => {
-        if (previews && file) {
-            setSrc(serverUrl(`/preview/${file.path}`));
-            failed.current = false;
-        } else {
-            setSrc(getIconForFile(file));
-            failed.current = true;
-        }
-    }, [previews]);
+    // xxx: this should not be needed (settings is own tab and un-mounts) (only if it should be cross-tab synced)
+    // useEffect(() => {
+    //     if (previews && file) {
+    //         setSrc(serverUrl(`/preview/${file.path}`));
+    //         failed.current = false;
+    //     } else {
+    //         setSrc(getIconForFile(file));
+    //         failed.current = true;
+    //     }
+    // }, [previews]);
 
     return <div className="relative">
         <img className={className} src={imgSrc} onError={failed.current ? undefined : () => {
