@@ -1,9 +1,9 @@
-import useOpenMode from "~/hooks/useOpenMode";
 import OptionSwitch from "./util/OptionSwitch";
 import { OpenMode } from "~/common";
 import InternModeIcon from "@assets/icons/open-mode/browser-mode.png";
 import DownloadModeIcon from "@assets/icons/open-mode/download-mode.png";
 import Description from "./util/Description";
+import { useSetting } from "~/hooks/useSettings";
 
 
 const descriptions: Record<OpenMode, string> = {
@@ -13,7 +13,7 @@ const descriptions: Record<OpenMode, string> = {
 
 
 export function OpenModePart() {
-    const [openMode, setOpenMode] = useOpenMode();
+    const [openMode, setOpenMode] = useSetting("openMode");
 
     return <>
         <OptionSwitch current={openMode} options={[

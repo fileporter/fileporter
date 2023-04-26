@@ -1,10 +1,9 @@
 import { SortMode, ViewMode, numberBasedSort, textBasedSort } from "~/common";
-import useSortMode from "~/hooks/useSortMode";
-import useViewMode from "~/hooks/useViewMode";
 import type { DirectoryRootTypeResponse } from "~/api/types";
 import IconView from "./Icon";
 import ListView from "./List";
 import GalleryView from "./Gallery";
+import { useSetting } from "~/hooks/useSettings";
 
 
 const viewMap: Record<ViewMode, undefined | ((props: { contents: DirectoryRootTypeResponse["contents"] }) => JSX.Element) > = {
@@ -15,8 +14,8 @@ const viewMap: Record<ViewMode, undefined | ((props: { contents: DirectoryRootTy
 
 
 export default function HandleDirectory(directory: DirectoryRootTypeResponse) {
-    const [viewMode] = useViewMode();
-    const [sortMode] = useSortMode();
+    const [viewMode] = useSetting("viewMode");
+    const [sortMode] = useSetting("sortMode");
 
     const contents = (
         directory.basename === "." ?

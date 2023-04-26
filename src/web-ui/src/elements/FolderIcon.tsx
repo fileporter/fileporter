@@ -2,6 +2,7 @@ import { useRef, useState } from "react";
 import FolderIconSrc from "@assets/icons/files/directory.png";
 import { serverUrl } from "~/config";
 import type { DirectoryTypeResponse } from "~/api/types";
+import { useSetting } from "~/hooks/useSettings";
 
 
 interface Props {
@@ -11,7 +12,8 @@ interface Props {
 
 // not animated (preview on directory pinned)
 export default function FolderIcon({ directory, className }: Props) {
-    const previewSrc = directory ? serverUrl(`/preview/${directory.path}?directories=true`) : undefined;
+    const [preview] = useSetting("preview");
+    const previewSrc = (preview && directory) ? serverUrl(`/preview/${directory.path}?directories=true`) : undefined;
     const [success, setSuccess] = useState(false);
     const imgRef = useRef<HTMLImageElement>(null);
     // aspect > 1 == landscape | aspect < 1 == portrait

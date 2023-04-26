@@ -1,8 +1,8 @@
 import type { LinkProps } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { OpenMode } from "~/common";
-import useOpenMode from "~/hooks/useOpenMode";
 import ApiFileDownloadLink from "./ApiFileDownloadLink";
+import { useSetting } from "~/hooks/useSettings";
 
 
 const componentMap = {
@@ -12,7 +12,7 @@ const componentMap = {
 
 
 export default function OpenModeLink(props: LinkProps) {
-    const [openMode] = useOpenMode();
+    const [openMode] = useSetting("openMode");
     const LinkComp = componentMap[openMode];
     return <LinkComp {...props} />;
 }

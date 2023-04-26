@@ -1,6 +1,6 @@
 import { QueryClientProvider } from "react-query";
 import { HashRouter, Routes, Route } from "react-router-dom";
-import HookProviders from "~/hooks/HookProviders";
+import { Provider as SettingsProvider } from "~/hooks/useSettings";
 import OfflineHeader from "~/components/OfflineHeader";
 import { queryClient } from "./config";
 import AppPage from "~/pages/app";
@@ -13,13 +13,12 @@ import LogoutPage from "./pages/logout";
 
 export default function ProviderCollection() {
     return <QueryClientProvider client={queryClient}>
-        <HookProviders>
-            {/* <HashRouter basename={import.meta.env.BASE_URL}> */}
+        <SettingsProvider>
             <HashRouter>
                 <OfflineHeader />
                 <UIRoutes />
             </HashRouter>
-        </HookProviders>
+        </SettingsProvider>
     </QueryClientProvider>;
 }
 

@@ -14,6 +14,7 @@ import SymlinkIcon from "@assets/icons/files/symlink-file.png?inline";
 import VideoIcon from "@assets/icons/files/video-file.png?inline";
 import EmptyFileIcon from "@assets/icons/files/default-file.png?inline";
 import NoAudioIconSrc from "@assets/icons/no-sound.png?inline";
+import { useSetting } from "~/hooks/useSettings";
 
 
 interface Props {
@@ -23,7 +24,8 @@ interface Props {
 
 
 export default function FileIcon({ file, className }: Props) {
-    const [imgSrc, setSrc] = useState(file ? serverUrl(`/preview/${file.path}`) : getIconForFile(file));
+    const [preview] = useSetting("preview");
+    const [imgSrc, setSrc] = useState((preview && file) ? serverUrl(`/preview/${file.path}`) : getIconForFile(file));
     const failed = useRef<boolean>(!file);
 
     return <div className="relative">

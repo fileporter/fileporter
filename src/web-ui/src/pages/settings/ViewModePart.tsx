@@ -1,10 +1,10 @@
-import useViewMode from "~/hooks/useViewMode";
 import OptionSwitch from "./util/OptionSwitch";
 import { ViewMode } from "~/common";
 import GalleryViewIcon from "@assets/icons/view-mode/gallery-view.png";
 import IconViewIcon from "@assets/icons/view-mode/grid-view.png";
 import ListViewIcon from "@assets/icons/view-mode/list-view.png";
 import Description from "./util/Description";
+import { useSetting } from "~/hooks/useSettings";
 
 
 const descriptions: Record<ViewMode, string> = {
@@ -16,7 +16,7 @@ const descriptions: Record<ViewMode, string> = {
 
 
 export function ViewModePart() {
-    const [viewMode, setViewMode] = useViewMode();
+    const [viewMode, setViewMode] = useSetting("viewMode");
 
     return <>
         <OptionSwitch current={viewMode} options={[

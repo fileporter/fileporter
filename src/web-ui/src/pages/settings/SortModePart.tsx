@@ -1,9 +1,9 @@
-import useSortMode from "~/hooks/useSortMode";
 import OptionSwitch from "./util/OptionSwitch";
 import { SortMode } from "~/common";
 import AlphabeticSortIcon from "@assets/icons/sort-mode/alphabetic-sort.svg";
 import NumericSortIcon from "@assets/icons/sort-mode/numeric-sort.svg";
 import Description from "./util/Description";
+import { useSetting } from "~/hooks/useSettings";
 
 
 const descriptions: Record<SortMode, string> = {
@@ -13,7 +13,7 @@ const descriptions: Record<SortMode, string> = {
 
 
 export function SortModePart() {
-    const [sortMode, setSortMode] = useSortMode();
+    const [sortMode, setSortMode] = useSetting("sortMode");
 
     return <>
         <OptionSwitch current={sortMode} options={[

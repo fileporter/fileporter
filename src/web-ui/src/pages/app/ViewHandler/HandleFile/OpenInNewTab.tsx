@@ -1,3 +1,4 @@
+// ! currently this file is not used. But it's kept in case it will be needed later
 import { useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { serverUrl } from "~/config";
