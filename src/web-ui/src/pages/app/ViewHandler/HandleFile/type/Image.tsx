@@ -3,14 +3,15 @@ import { useQuery } from "react-query";
 import { useNavigate } from "react-router-dom";
 import { SortMode, numberBasedSort, textBasedSort } from "~/common";
 import { serverUrl } from "~/config";
-import useSortMode from "~/hooks/useSortMode";
 import type { FileTypeResponse } from "~/api/types";
 import api from "~/api";
+import { useSetting } from "~/hooks/useSettings";
 
 
 export default function ImageSupport(file: FileTypeResponse) {
     const navigate = useNavigate();
-    const [sortMode] = useSortMode();
+    const [sortMode] = useSetting("sortMode");
+    const [gifLike] = useSetting("gifLike");
     const prog = useRef<null | HTMLProgressElement>();
     const query = useQuery(
         ["meta", file.parent],
@@ -23,7 +24,7 @@ export default function ImageSupport(file: FileTypeResponse) {
             : query.data.contents
                 .filter(el => el.type === "file" && (
                     el.mime?.startsWith("image/")
-                    || (el.has_video && !el.has_audio && el.duration && el.duration <= 60)
+                    || (gifLike && el.has_video && !el.has_audio && el.duration && el.duration <= 60)
                 ))
                 .sort(sortMode === SortMode.alphabetic ? textBasedSort : numberBasedSort)
     ), [query.data]);

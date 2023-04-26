@@ -2,6 +2,7 @@ import React, { Suspense } from "react";
 import type { FileTypeResponse } from "~/api/types";
 import ApiFileDownloadLink from "~/elements/OpenModeLink/ApiFileDownloadLink";
 import Loading from "~/elements/Loading";
+import { useSetting } from "~/hooks/useSettings";
 const AudioSupport = React.lazy(() => import("./type/Audio"));
 const ImageSupport = React.lazy(() => import("./type/Image"));
 const TextSupport = React.lazy(() => import("./type/Text"));
@@ -29,11 +30,12 @@ export const MimeTypeSupportIndex: Index = {
 
 
 export default function HandleFile(file: FileTypeResponse) {
+    const [gifLike] = useSetting("gifLike");
     if (!file.mime) {
         return <UnsupportedMessage {...file} />;
     }
     // this is a special case
-    if (file.has_video && !file.has_audio && file.duration && file.duration <= 60) {
+    if (gifLike && file.has_video && !file.has_audio && file.duration && file.duration <= 60) {
         return <ImageSupport key={file.path} {...file} />; // this video is handled like a gif
     }
     const mimeStart = file.mime.split("/", 1)[0];

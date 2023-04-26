@@ -12,3 +12,11 @@ export enum SortMode {
     alphabetic,
     numeric,
 }
+export enum Previews {
+    disabled,
+    enabled,
+}
+export enum GifLike {
+    disabled,
+    enabled,
+}

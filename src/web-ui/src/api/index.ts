@@ -27,6 +27,18 @@ const api = new Zodios([
         response: z.object({}),
     },
     {
+        method: "get",
+        path: "/auth/has",
+        alias: "authExists",
+        response: z.boolean(),
+    },
+    {
+        method: "get",
+        path: "/auth/is-logged-in",
+        alias: "isLoggedIn",
+        response: z.boolean(),
+    },
+    {
         method: "head",
         path: "/api/",
         alias: "checkAccess",

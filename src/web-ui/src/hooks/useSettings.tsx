@@ -1,21 +1,23 @@
 import useCrossTabState from "./useCrossTabState";
 import type { PropsWithChildren } from "react";
 import { createContext, useContext } from "react";
-import { OpenMode, SortMode, ViewMode } from "~/common";
+import { OpenMode, Previews, SortMode, GifLike, ViewMode } from "~/common";
 
 
 interface Settings {
-    preview: boolean
-    viewMode: ViewMode,
-    sortMode: SortMode,
-    openMode: OpenMode,
+    viewMode: ViewMode
+    sortMode: SortMode
+    openMode: OpenMode
+    previews: Previews
+    gifLike: GifLike
 }
 
 const defaultSettings: Settings = {
-    preview: true,
     viewMode: ViewMode.gallery,
     sortMode: SortMode.alphabetic,
     openMode: OpenMode.intern,
+    previews: Previews.enabled,
+    gifLike: GifLike.enabled,
 };
 
 const SettingsContext = createContext<{
