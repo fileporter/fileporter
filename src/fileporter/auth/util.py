@@ -72,6 +72,9 @@ class CookieManager:
     def _formatKey(key: str) -> str:
         return f"ms-{key}-{urlparse.quote(config.root_path, safe='')}"
 
+    def __contains__(self, key):
+        return self._formatKey(key) in self.request.cookies
+
     def __setitem__(self, key: str, value: t.Any):
         data: CookieManager._DataType = dict(path=config.root_path, value=value)
         dumped = json.dumps(data)

@@ -5,6 +5,7 @@ r"""
 """
 import fastapi
 
+from config import config
 from .util import CookieManager
 from .deps import Credentials, auth_system, password_hash
 
@@ -39,3 +40,15 @@ async def logout(
     """
     del cookies["auth"]
     return {}
+
+
+@auth.get("/has")
+async def has_authentication():
+    return config.password is not None
+
+
+@auth.get("/is-logged-in")
+async def is_logged_in(
+        cookies: CookieManager = CookieManager.dependency,
+):
+    return "auth" in cookies
