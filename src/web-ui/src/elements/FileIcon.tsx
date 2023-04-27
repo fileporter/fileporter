@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import type { FileTypeResponse } from "~/api/types";
 import { serverUrl } from "~/config";
 import { formatDuration } from "~/common";
