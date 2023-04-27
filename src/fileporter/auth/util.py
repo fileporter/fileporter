@@ -109,7 +109,7 @@ def rate_limited(times: int) -> fastapi.Depends:
 
     @fastapi.Depends
     def dependency(request: fastapi.Request, tasks: fastapi.BackgroundTasks):
-        client = request.client.host
+        client = getattr(request.client, 'host', "localhost")  # request.client could be none
         if len(requests[client]) > times:
             raise fastapi.HTTPException(fastapi.status.HTTP_429_TOO_MANY_REQUESTS)
         requests[client].append(time.time())
