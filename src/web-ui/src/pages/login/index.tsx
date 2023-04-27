@@ -2,12 +2,13 @@ import "./index.css";
 import { Link, useNavigate } from "react-router-dom";
 import { useRef, useState } from "react";
 import { useMutation } from "react-query";
+import api from "~/api";
+import { AxiosError, HttpStatusCode } from "axios";
 import fileporterIconSrc from "@assets/fileporter.png";
 import GithubIconSrc from "@assets/icons/github.png";
 import DocsIconSrc from "@assets/icons/documentation.svg";
 import MazeBackgroundSrc from "@assets/abstract-background.png";
-import api from "~/api";
-import { AxiosError, HttpStatusCode } from "axios";
+import ShowPWIconSrc from "@assets/icons/show-password.png";
 
 
 const errorMessageIndex: Record<number, undefined | JSX.Element> = {
@@ -32,6 +33,12 @@ export default function LoginPage() {
         }, retry: false },
     );
 
+    function setPWType(type: "password" | "text") {
+        if (pwInput.current) {
+            pwInput.current.type = type;
+        }
+    }
+
     return <div className="relative flex flex-col items-center justify-center h-screen pulse-background isolate">
         <img className="fixed inset-0 object-cover w-full h-full -z-10" src={MazeBackgroundSrc} alt="" />
         <div className="grow" />
@@ -52,11 +59,20 @@ export default function LoginPage() {
                 required autoFocus placeholder="Username"
                 onChange={(event) => setUsername(event.target.value)}
             />
-            <input
-                className="px-2 py-px bg-black rounded-md bg-opacity-60" type="password" ref={el => (pwInput.current = el)}
-                required placeholder="Password"
-                onChange={(event) => setPassword(event.target.value)}
-            />
+            <div className="relative w-full">
+                <input
+                    className="w-full px-2 py-px bg-black rounded-md bg-opacity-60" type="password" ref={el => (pwInput.current = el)}
+                    required placeholder="Password"
+                    onChange={(event) => setPassword(event.target.value)}
+                />
+                <button className="absolute inset-y-0 right-1"
+                    onMouseDown={() => setPWType("text")} onMouseUp={() => setPWType("password")} // desktop
+                    onTouchStart={() => setPWType("text")} onTouchEnd={() => setPWType("password")} // mobile
+                    onClick={(e) => e.preventDefault()} // don't ask why. but otherwise this button would submit
+                >
+                    <img className="h-4 pointer-events-none invert" src={ShowPWIconSrc} alt="👁" />
+                </button>
+            </div>
             <img />
             <input className="px-5 py-px mx-auto bg-black rounded-md cursor-pointer bg-opacity-60 w-fit" type="submit" value="Login" />
         </form>
