@@ -6,7 +6,7 @@ r"""
 import fastapi
 
 from config import config
-from .util import CookieManager
+from .util import CookieManager, rate_limited
 from .deps import Credentials, auth_system, password_hash
 
 
@@ -17,7 +17,8 @@ auth = fastapi.APIRouter(prefix="/auth")
 async def login(
         cookies: CookieManager = CookieManager.dependency,
         username: str = fastapi.Body(),
-        password: str = fastapi.Body()
+        password: str = fastapi.Body(),
+        _=rate_limited(5),
 ):
     r"""
     verifies the login credentials and sets corresponding cookies

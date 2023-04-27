@@ -3,11 +3,14 @@
 r"""
 
 """
+import asyncio
 import json
+import time
 import uuid
 import socket
 import hashlib
 import typing as t
+from collections import defaultdict
 import urllib.parse as urlparse
 
 import fastapi
@@ -95,3 +98,21 @@ class CookieManager:
         key = self._formatKey(key)
         if key in self.request.cookies:
             self.response.delete_cookie(key, path=config.root_path, httponly=True, samesite="strict")
+
+
+def rate_limited(times: int) -> fastapi.Depends:
+    requests = defaultdict(list)
+
+    async def cleanup(client: str):
+        await asyncio.sleep(60)
+        requests[client].pop(0)
+
+    @fastapi.Depends
+    def dependency(request: fastapi.Request, tasks: fastapi.BackgroundTasks):
+        client = request.client.host
+        if len(requests[client]) > times:
+            raise fastapi.HTTPException(fastapi.status.HTTP_429_TOO_MANY_REQUESTS)
+        requests[client].append(time.time())
+        tasks.add_task(cleanup, client)
+
+    return dependency

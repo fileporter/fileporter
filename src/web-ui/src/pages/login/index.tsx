@@ -10,8 +10,10 @@ import api from "~/api";
 import { AxiosError, HttpStatusCode } from "axios";
 
 
-const errorMessageIndex: Record<number, undefined | string> = {
-    [HttpStatusCode.Unauthorized]: "Invalid username or password",
+const errorMessageIndex: Record<number, undefined | JSX.Element> = {
+    [HttpStatusCode.Unauthorized]: <>Invalid username or password</>,
+    [HttpStatusCode.TooManyRequests]: <>Too many attempts. Please wait a while.</>,
+    // [HttpStatusCode.TooManyRequests]: <>You have entered the wrong credentials too many times. Please wait a little.</>,
 };
 
 
@@ -27,7 +29,7 @@ export default function LoginPage() {
             navigate("/", { replace: true });
         }, onError: () => {
             pwInput.current?.focus();
-        } },
+        }, retry: false },
     );
 
     return <div className="relative flex flex-col items-center justify-center h-screen pulse-background isolate">

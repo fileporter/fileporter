@@ -16,6 +16,6 @@ if __name__ == '__main__':
 
     import uvicorn
     uvicorn.run("main:app", host=config.host, port=config.port, app_dir=os.path.dirname(__file__),
-                root_path=config.root_path, uds=config.uds, reload=config.development,
+                root_path=config.root_path, uds=config.uds, reload=config.development, proxy_headers=True,
                 workers=None if config.development else config.worker,
                 **({} if config.logs else {'log_config': None}))  # preserve default value
