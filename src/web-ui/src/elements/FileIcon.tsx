@@ -45,7 +45,7 @@ export default function FileIcon({ file, forceIcon, className }: Props) {
     const [previews] = useSetting("previews");
     const allowPreview = !forceIcon && !!previews && !!file;
     const [imgSrc, setSrc] = useState(allowPreview ? serverUrl(`/preview/${file.path}`) : getIconForFile(file));
-    const failed = useRef<boolean>(allowPreview);
+    const failed = useRef<boolean>(!allowPreview);
 
     // xxx: this should not be needed (settings is own tab and un-mounts) (only if it should be cross-tab synced)
     // useEffect(() => {
