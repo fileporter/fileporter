@@ -16,12 +16,12 @@ import ContextMenuProvider from "./components/ContextMenu";
 export default function ProviderCollection() {
     return <QueryClientProvider client={queryClient}>
         <SettingsProvider>
-            <ContextMenuProvider>
-                <HashRouter>
+            <HashRouter>
+                <ContextMenuProvider>
                     <OfflineHeader />
                     <UIRoutes />
-                </HashRouter>
-            </ContextMenuProvider>
+                </ContextMenuProvider>
+            </HashRouter>
         </SettingsProvider>
     </QueryClientProvider>;
 }

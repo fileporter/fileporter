@@ -17,11 +17,16 @@ import VideoIcon from "@assets/icons/files/video-file.png?inline";
 import EmptyFileIcon from "@assets/icons/files/default-file.png?inline";
 import NoAudioIconSrc from "@assets/icons/no-sound.png?inline";
 import NoVideoIconSrc from "@assets/icons/no-video.png?inline";
+import DownloadIconSrc from "@assets/icons/open-mode/download-mode.png";
+import OpenNewTabIconSrc from "@assets/icons/open-mode/open-in-new-tab.png";
 import { formatFileSize } from "~/common";
+import ApiFileDownloadLink from "./OpenModeLink/ApiFileDownloadLink";
+import InternLink from "./OpenModeLink/InternLink";
 
 
 interface Props {
     file?: FileTypeResponse
+    forceIcon?: boolean
     className?: string
 }
 
@@ -35,11 +40,12 @@ function Icon(props: { src: string, title?: string }) {
 }
 
 
-export default function FileIcon({ file, className }: Props) {
+export default function FileIcon({ file, forceIcon, className }: Props) {
     const setContextMenu = useContextMenu();
     const [previews] = useSetting("previews");
-    const [imgSrc, setSrc] = useState((previews && file) ? serverUrl(`/preview/${file.path}`) : getIconForFile(file));
-    const failed = useRef<boolean>(!previews || !file);
+    const allowPreview = !forceIcon && !!previews && !!file;
+    const [imgSrc, setSrc] = useState(allowPreview ? serverUrl(`/preview/${file.path}`) : getIconForFile(file));
+    const failed = useRef<boolean>(allowPreview);
 
     // xxx: this should not be needed (settings is own tab and un-mounts) (only if it should be cross-tab synced)
     // useEffect(() => {
@@ -61,18 +67,22 @@ export default function FileIcon({ file, className }: Props) {
             setSrc(getIconForFile(file));
             failed.current = true;
         }} alt="" loading="lazy" />
-        {(!!file?.has_video && !file.has_audio) &&
-            <span className="absolute top-0 left-0 px-1 bg-black bg-opacity-40 rounded-br-md">
-                <img className="h-4 pointer-events-none invert" src={NoAudioIconSrc} alt="🔇" />
-            </span>
-        }
-        {!!file?.dimensions &&
-            <span className="absolute top-0 right-0 px-1 text-xs bg-black bg-opacity-40 rounded-bl-md">{file.dimensions.width}x{file.dimensions.height}</span>
-        }
-        {/* TODO: file size */}
-        {!!file?.duration &&
-            <span className="absolute bottom-0 right-0 px-1 text-xs bg-black bg-opacity-40 rounded-tl-md">{formatDuration(file.duration)}</span>
-        }
+        {!!allowPreview && <>
+            {(!!file.has_video && !file.has_audio) &&
+                <span className="absolute top-0 left-0 px-1 bg-black bg-opacity-40 rounded-br-md">
+                    <img className="h-4 pointer-events-none invert" src={NoAudioIconSrc} alt="🔇" />
+                </span>
+            }
+            {!!file.dimensions &&
+                <span className="absolute top-0 right-0 px-1 text-xs bg-black bg-opacity-40 rounded-bl-md">{file.dimensions.width}x{file.dimensions.height}</span>
+            }
+            {!!file.size &&
+                <span className="absolute bottom-0 left-0 px-1 text-xs bg-black bg-opacity-40 rounded-tr-md">{formatFileSize(file.size)}</span>
+            }
+            {!!file.duration &&
+                <span className="absolute bottom-0 right-0 px-1 text-xs bg-black bg-opacity-40 rounded-tl-md">{formatDuration(file.duration)}</span>
+            }
+        </>}
     </div>;
 }
 
@@ -97,6 +107,14 @@ function FileContextMenu(file: FileTypeResponse) {
                 {!file.has_video && <Icon src={NoVideoIconSrc} title="No Video" />}
                 {!file.has_audio && <Icon src={NoAudioIconSrc} title="No Audio" />}
             </span>
+        </div>
+        <div className="flex justify-evenly">
+            <InternLink to={file.path} target="_blank" rel="noopener noreferrer">
+                <img className="h-6" src={OpenNewTabIconSrc} alt="new-tab" />
+            </InternLink>
+            <ApiFileDownloadLink to={file.path}>
+                <img className="h-6" src={DownloadIconSrc} alt="download" />
+            </ApiFileDownloadLink>
         </div>
     </>;
 }

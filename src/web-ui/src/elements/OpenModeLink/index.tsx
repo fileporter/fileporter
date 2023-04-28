@@ -1,12 +1,12 @@
 import type { LinkProps } from "react-router-dom";
-import { Link } from "react-router-dom";
 import { OpenMode } from "~/common";
 import ApiFileDownloadLink from "./ApiFileDownloadLink";
 import { useSetting } from "~/hooks/useSettings";
+import InternLink from "./InternLink";
 
 
 const componentMap = {
-    [OpenMode.intern]: Link,
+    [OpenMode.intern]: InternLink,
     [OpenMode.download]: ApiFileDownloadLink,
 };
 
