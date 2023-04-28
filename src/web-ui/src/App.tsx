@@ -10,15 +10,18 @@ import URLIndexPage from "~/pages/slash";
 import Page404NotFound from "~/pages/Page404NotFound";
 import LogoutPage from "./pages/logout";
 import ErrorBoundary from "./components/ErrorBoundary";
+import ContextMenuProvider from "./components/ContextMenu";
 
 
 export default function ProviderCollection() {
     return <QueryClientProvider client={queryClient}>
         <SettingsProvider>
-            <HashRouter>
-                <OfflineHeader />
-                <UIRoutes />
-            </HashRouter>
+            <ContextMenuProvider>
+                <HashRouter>
+                    <OfflineHeader />
+                    <UIRoutes />
+                </HashRouter>
+            </ContextMenuProvider>
         </SettingsProvider>
     </QueryClientProvider>;
 }

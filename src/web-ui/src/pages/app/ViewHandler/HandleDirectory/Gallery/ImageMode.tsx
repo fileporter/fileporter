@@ -27,7 +27,7 @@ export default function ImageModeRenderItem(item: FileOrDirectory) {
             currentTarget.src = DownloadFailedIcon;
         };
 
-        return <img width={item.size?.width ?? 500} height={item.size?.height ?? 375} className={`w-full mx-auto ${isFullScreen ? "" : "max-w-5xl"}`}
+        return <img width={item.dimensions?.width ?? 500} height={item.dimensions?.height ?? 375} className={`w-full mx-auto ${isFullScreen ? "" : "max-w-5xl"}`}
             src={imgSrc} onError={onError} onClick={({ currentTarget }) => {
                 if (currentTarget.onerror === null) {
                     const url = new URL(imgSrc);

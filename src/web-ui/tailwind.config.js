@@ -1,3 +1,5 @@
+import plugin from "tailwindcss/plugin";
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
@@ -24,5 +26,15 @@ module.exports = {
       blue: "rgb(255 0 0 / <alpha-value>)",
     }
   },
-  plugins: [],
+  plugins: [
+    plugin(function ({ addUtilities }) {
+      addUtilities({
+        '.centered': {
+          top: "50%",
+          left: "50%",
+          transform: "translate(-50%, -50%)",
+        }
+      })
+    })
+  ],
 }
