@@ -22,8 +22,9 @@ module.exports = {
       link: "rgb(0 0 200 / <alpha-value>)",
       accent: "rgb(79 195 247 / <alpha-value>)",
       red: "rgb(255 0 0 / <alpha-value>)",
-      green: "rgb(255 0 0 / <alpha-value>)",
-      blue: "rgb(255 0 0 / <alpha-value>)",
+      green: "rgb(0 255 0 / <alpha-value>)",
+      blue: "rgb(0 0 255 / <alpha-value>)",
+      link: "rgb(40 40 255 / <alpha-value>)",
     }
   },
   plugins: [

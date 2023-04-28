@@ -48,6 +48,6 @@ export default function HandleFile(file: FileTypeResponse) {
 function UnsupportedMessage(file: FileTypeResponse) {
     return <div className="fixed inset-0 grid h-screen gap-1 text-center place-content-center">
         <p className="text-xl">Files of type &apos;{file.extension}&apos; are not supported</p>
-        <p>You may <ApiFileDownloadLink className="text-blue-500 hover:underline" to={file.path}>download the file</ApiFileDownloadLink> if this helps</p>
+        <p>You may <ApiFileDownloadLink className="text-link hover:underline" to={file.path}>download the file</ApiFileDownloadLink> if this helps</p>
     </div>;
 }
