@@ -36,6 +36,7 @@ def get_fp_meta(fp: str) -> dict:
             basename=basename,
             path=path,
             parent=parent,
+            size=os.path.getsize(fp),
             mime=mime,
             extension=extension,
             **(get_media_info(fp) if pmi else {})
@@ -55,13 +56,13 @@ def get_media_info(fp: str):
     media_info = pmi.MediaInfo.parse(fp, parse_speed=0.25)
 
     if media_info.image_tracks:
-        size = dict(width=media_info.image_tracks[0].width, height=media_info.image_tracks[0].height)
+        dimensions = dict(width=media_info.image_tracks[0].width, height=media_info.image_tracks[0].height)
     elif media_info.video_tracks:
-        size = dict(width=media_info.video_tracks[0].width, height=media_info.video_tracks[0].height)
+        dimensions = dict(width=media_info.video_tracks[0].width, height=media_info.video_tracks[0].height)
     else:
-        size = None
-    if size is not None and (size["width"] is None or size["height"] is None):
-        size = None
+        dimensions = None
+    if dimensions is not None and (dimensions["width"] is None or dimensions["height"] is None):
+        dimensions = None
 
     if media_info.video_tracks:
         duration = media_info.video_tracks[0].duration
@@ -71,7 +72,7 @@ def get_media_info(fp: str):
         duration = None
 
     return dict(
-        size=size,
+        dimensions=dimensions,
         duration=float(duration) / 1000 if duration else None,  # msecs to secs
         has_video=len(media_info.video_tracks) > 0,
         has_audio=len(media_info.audio_tracks) > 0,

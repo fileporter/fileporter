@@ -92,7 +92,7 @@ export default function ImageSupport(file: FileTypeResponse) {
             </>
             :
             <img className="object-contain w-full h-full"
-                width={file.size?.width} height={file.size?.height}
+                width={file.dimensions?.width} height={file.dimensions?.height}
                 src={srcUrl} alt={file.basename}
             />
         }

@@ -24,9 +24,10 @@ class DirectoryResponse(BaseResponse):
 
 class FileResponse(BaseResponse):
     type: t.Literal["file"]
+    size: int
     extension: t.Optional[str]
     mime: t.Optional[str]
-    size: t.Optional[ImageSize]
+    dimensions: t.Optional[ImageSize]
     duration: t.Optional[float]
     has_audio: bool
     has_video: bool
