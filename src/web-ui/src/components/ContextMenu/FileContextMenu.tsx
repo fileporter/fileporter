@@ -1,51 +1,44 @@
 import type { FileTypeResponse } from "~/api/types";
+import * as CM from "./ContextElements";
+import { formatDuration, formatFileSize, getIconForFile } from "~/common";
+import ApiFileDownloadLink from "~/elements/OpenModeLink/ApiFileDownloadLink";
+import InternLink from "~/elements/OpenModeLink/InternLink";
 import NoAudioIconSrc from "@assets/icons/no-sound.png?inline";
 import NoVideoIconSrc from "@assets/icons/no-video.png?inline";
 import DownloadIconSrc from "@assets/icons/open-mode/download-mode.png";
 import OpenNewTabIconSrc from "@assets/icons/open-mode/open-in-new-tab.png";
-import ApiFileDownloadLink from "~/elements/OpenModeLink/ApiFileDownloadLink";
-import InternLink from "~/elements/OpenModeLink/InternLink";
-import { formatDuration, formatFileSize, getIconForFile } from "~/common";
-
-
-function NA() {
-    return <span className="opacity-50 select-none">N/A</span>;
-}
-
-function Icon(props: { src: string, title?: string }) {
-    return <img className="h-4 invert" src={props.src} title={props.title} />;
-}
 
 
 export default function FileContextMenu(file: FileTypeResponse) {
     return <>
-        <img className="mx-auto h-14" src={getIconForFile(file)} />
-        <div className="grid grid-cols-[auto,1fr] gap-x-3">
-            <b>Name</b>
-            <span>{file.basename}</span>
-            <b>Path</b>
-            <span>{file.parent}</span>
-            <b>Mime</b>
-            {file.mime ? <span>{file.mime}</span> : <NA/>}
-            <b>File-size</b>
-            <span>{formatFileSize(file.size)}</span>
-            <b>Dimensions</b>
-            {file.dimensions ? <span>{file.dimensions.width}x{file.dimensions.height}</span> : <NA/>}
-            <b>Duration</b>
-            <span>{file.duration ? formatDuration(file.duration) : <NA/>}</span>
-            <b>Other</b>
-            <span className="flex gap-1">
-                {!file.has_video && <Icon src={NoVideoIconSrc} title="No Video" />}
-                {!file.has_audio && <Icon src={NoAudioIconSrc} title="No Audio" />}
-            </span>
-        </div>
-        <div className="flex justify-evenly">
-            <InternLink to={file.path} target="_blank" rel="noopener noreferrer">
+        <CM.HeaderIcon src={getIconForFile(file)} />
+        <CM.Grid>
+            <CM.Label>Name</CM.Label>
+            <CM.Value>{file.basename}</CM.Value>
+            <CM.Label>Path</CM.Label>
+            <CM.Value>{file.parent}</CM.Value>
+            <CM.Label>Mime</CM.Label>
+            {file.mime ? <CM.Value>{file.mime}</CM.Value> : <CM.NA/>}
+            <CM.Label>File-size</CM.Label>
+            <CM.Value>{formatFileSize(file.size)}</CM.Value>
+            <CM.Label>Dimensions</CM.Label>
+            {file.dimensions ? <CM.Value>{file.dimensions.width}x{file.dimensions.height}</CM.Value> : <CM.NA/>}
+            <CM.Label>Duration</CM.Label>
+            <CM.Value>{file.duration ? formatDuration(file.duration) : <CM.NA/>}</CM.Value>
+            <CM.Label>Other</CM.Label>
+            <CM.Multiple>
+                {!file.has_video && <CM.TinyIcon src={NoVideoIconSrc} title="No Video" />}
+                {!file.has_audio && <CM.TinyIcon src={NoAudioIconSrc} title="No Audio" />}
+            </CM.Multiple>
+        </CM.Grid>
+        <CM.Space />
+        <CM.Options>
+            <InternLink to={file.path} target="_blank" title="Open in a new Tab">
                 <img className="h-6" src={OpenNewTabIconSrc} alt="new-tab" />
             </InternLink>
-            <ApiFileDownloadLink to={file.path}>
+            <ApiFileDownloadLink to={file.path} title="Download the File">
                 <img className="h-6" src={DownloadIconSrc} alt="download" />
             </ApiFileDownloadLink>
-        </div>
+        </CM.Options>
     </>;
 }

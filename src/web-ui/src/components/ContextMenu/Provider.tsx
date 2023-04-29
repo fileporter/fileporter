@@ -36,7 +36,7 @@ export default function ContextMenuProvider(props: PropsWithChildren) {
             <div className="fixed inset-0 z-50 bg-black bg-opacity-50 backdrop-blur-sm" onDoubleClick={() => setMenu(undefined)} />
             {/* actual popup */}
             <div className="fixed z-50 bg-black border rounded-lg bg-opacity-70 centered border-accent">
-                <div className="relative p-2 max-w-[min(500px,90vw)] min-h-[30vh] max-h-[80vh] w-screen">
+                <div className="relative p-2 max-w-[min(500px,90vw)] min-h-[30vh] max-h-[80vh] w-screen flex flex-col gap-1">
                     <button className="absolute top-0 right-0 p-1 translate-x-1/2 -translate-y-1/2 bg-black border rounded-xl border-accent" onClick={() => setMenu(undefined)}>
                         <img className="h-4 invert" src={CloseIconSrc} alt="X" />
                     </button>
