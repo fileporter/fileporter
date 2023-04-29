@@ -1,16 +1,16 @@
 import { QueryClientProvider } from "react-query";
 import { HashRouter, Routes, Route, useLocation } from "react-router-dom";
-import { Provider as SettingsProvider } from "~/hooks/useSettings";
+import { SettingsProvider } from "~/hooks/useSettings";
+import ContextMenuProvider from "~/components/ContextMenu/Provider";
 import OfflineHeader from "~/components/OfflineHeader";
-import { queryClient } from "./config";
-import AppPage from "~/pages/app";
-import LoginPage from "~/pages/login";
-import SettingsPage from "~/pages/settings";
+import { queryClient } from "~/config";
 import URLIndexPage from "~/pages/slash";
+import LoginPage from "~/pages/login";
+import LogoutPage from "~/pages/logout";
+import SettingsPage from "~/pages/settings";
+import AppPage from "~/pages/app";
 import Page404NotFound from "~/pages/Page404NotFound";
-import LogoutPage from "./pages/logout";
-import ErrorBoundary from "./components/ErrorBoundary";
-import ContextMenuProvider from "./components/ContextMenu";
+import ErrorBoundary from "~/components/ErrorBoundary";
 
 
 export default function ProviderCollection() {

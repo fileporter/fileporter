@@ -1,9 +1,10 @@
 import { useRef, useState } from "react";
-import FolderIconSrc from "@assets/icons/files/directory.png";
 import { serverUrl } from "~/config";
 import type { DirectoryTypeResponse } from "~/api/types";
 import { useSetting } from "~/hooks/useSettings";
 import useContextMenu from "~/hooks/useContextMenu";
+import FolderIconSrc from "@assets/icons/files/directory.png";
+import DirectoryContextMenu from "~/components/ContextMenu/DirectoryContextMenu";
 
 
 interface Props {
@@ -35,16 +36,4 @@ export default function FolderIcon({ directory, className }: Props) {
             }
         </div>
     </div>;
-}
-
-function DirectoryContextMenu(directory: DirectoryTypeResponse) {
-    return <>
-        <img className="h-10 mx-auto" src={FolderIconSrc} />
-        <div className="grid grid-cols-[auto,1fr] gap-x-3">
-            <span>Name</span>
-            <span>{directory.basename}</span>
-            <span>Path</span>
-            <span>{directory.parent}</span>
-        </div>
-    </>;
 }

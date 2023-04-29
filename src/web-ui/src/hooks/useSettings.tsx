@@ -29,7 +29,7 @@ const SettingsContext = createContext<{
         });
 
 
-export function Provider(props: PropsWithChildren) {
+export function SettingsProvider(props: PropsWithChildren) {
     const [settings, setSettings] = useCrossTabState("settings", defaultSettings);
 
     return <SettingsContext.Provider value={{settings, setSettings}}>
