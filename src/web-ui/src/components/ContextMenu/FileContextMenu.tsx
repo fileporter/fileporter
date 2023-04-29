@@ -19,7 +19,7 @@ function Icon(props: { src: string, title?: string }) {
 
 export default function FileContextMenu(file: FileTypeResponse) {
     return <>
-        <img className="h-10 mx-auto" src={getIconForFile(file)} />
+        <img className="mx-auto h-14" src={getIconForFile(file)} />
         <div className="grid grid-cols-[auto,1fr] gap-x-3">
             <b>Name</b>
             <span>{file.basename}</span>
