@@ -4,7 +4,7 @@ import ViewHandler from "./ViewHandler";
 
 
 export default function AppPage() {
-    return <div className="flex flex-col h-screen">
+    return <div className="flex flex-col min-h-screen">
         <ScrollProgressFix />
         <Header />
         <main className="grow">

@@ -22,7 +22,7 @@ export default function AppHeader() {
         return () => controller.abort();
     });
 
-    return <nav className="sticky inset-x-0 z-10 flex gap-3 px-2 py-px transition-[top] duration-300 bg-black bg-opacity-80" style={{top: (isTopMost || isVisible) ? "0px" : "-100%"}}>
+    return <nav className="sticky z-10 flex gap-3 px-2 py-px transition-[top] duration-300 bg-black bg-opacity-80" style={{top: (isTopMost || isVisible) ? "0px" : "-100%"}}>
         <PathBar />
         <ToggleFullScreen />
         <ShowSettings />
