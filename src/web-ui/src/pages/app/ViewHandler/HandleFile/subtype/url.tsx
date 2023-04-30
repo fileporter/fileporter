@@ -3,14 +3,16 @@ import { Link } from "react-router-dom";
 import api from "~/api";
 import ErrorMessageBox from "~/elements/ErrorMessageBox";
 import Loading from "~/elements/Loading";
+import useContextMenu from "~/hooks/useContextMenu";
 import usePath from "~/hooks/usePath";
 
 
 export default function DotUrlSupport() {
+    const setMenu = useContextMenu();
     const path = usePath();
     const query = useQuery<string>(
         ["file", path],
-        ({ signal }) => api.rawFile({ params: { path }, signal }),
+        ({ signal }) => api.rawFile({ params: { path }, signal, responseType: "text" }),
     );
     if (query.isError) {
         return <ErrorMessageBox error={query.error} />;
@@ -23,7 +25,15 @@ export default function DotUrlSupport() {
 
     if (url === null) {
         return <pre className="relative px-2 overflow-x-scroll leading-5">
-            <p className="absolute inset-x-0 top-0 text-xs text-center opacity-50 pointer-events-none">Warning: Bad .url File</p>
+            <p className="absolute inset-x-0 top-0 text-xs text-center opacity-50 pointer-events-none select-none">Warning: Bad .url File <button className="pointer-events-auto" onClick={() => {
+                setMenu(<>
+                    <p className="text-center select-none">Example File</p>
+                    <p className="p-1 border rounded-md border-darker grid grid-cols-[auto,1fr] gap-x-1">
+                        <b className="opacity-50 select-none">1</b><span>[InternetShortcut]</span>
+                        <b className="opacity-50 select-none">2</b><span>URL=<Link className="hover:underline" target="_blank" to="https://www.lyberty.com/encyc/articles/tech/dot_url_format_-_an_unofficial_guide.html">https://www.lyberty.com/encyc/articles/tech/dot_url_format_-_an_unofficial_guide.html</Link></span>
+                    </p>
+                </>);
+            }}>ⓘ</button></p>
             {query.data}
         </pre>;
     } else {

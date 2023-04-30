@@ -17,7 +17,7 @@ export default function DotMarkdownSupport(file: FileTypeResponse) {
     const path = usePath();
     const query = useQuery<string>(
         ["file", path],
-        ({ signal }) => api.rawFile({ params: { path }, signal }),
+        ({ signal }) => api.rawFile({ params: { path }, signal, responseType: "text" }),
     );
 
     const rendered = useMemo(() => renderMarkdown(query.data, serverUrl(`/files/${file.parent}/`)), [query.data]);

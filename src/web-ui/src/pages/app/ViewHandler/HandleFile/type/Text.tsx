@@ -13,7 +13,7 @@ export default function TextSupport(file: FileTypeResponse) {
     const path = usePath();
     const query = useQuery<string>(
         ["file", path],
-        ({ signal }) => api.rawFile({ params: { path }, signal }),
+        ({ signal }) => api.rawFile({ params: { path }, signal, responseType: "text" }),
     );
     if (query.isError) {
         return <ErrorMessageBox error={query.error} />;
