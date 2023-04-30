@@ -30,16 +30,15 @@ export default function PdfSupport(file: FileTypeResponse) {
             className="max-w-[100vw] overflow-x-hidden"
             file={serverUrl(`/files/${file.path}`)}
             externalLinkRel="_blank"
+            // https://mozilla.github.io/pdf.js/api/draft/module-pdfjsLib.html#~DocumentInitParameters
             options={{
                 withCredentials: true,
+                length: file.size,
             }}
             loading={Loading}
-            onLoadProgress={({ loaded, total }) => {
+            onLoadProgress={({ loaded }) => {
                 if (loadingBar.current) {
                     loadingBar.current.value = loaded;
-                    if (total) {
-                        loadingBar.current.max = total;
-                    }
                 }
             }}
             onLoadSuccess={(pdf) => {
