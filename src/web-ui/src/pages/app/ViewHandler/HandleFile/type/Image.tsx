@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef } from "react";
+import { createRef, useEffect, useMemo, useRef } from "react";
 import { useQuery } from "react-query";
 import { useNavigate } from "react-router-dom";
 import { SortMode, numberBasedSort, textBasedSort } from "~/common";
@@ -12,7 +12,7 @@ export default function ImageSupport(file: FileTypeResponse) {
     const navigate = useNavigate();
     const [sortMode] = useSetting("sortMode");
     const [gifLike] = useSetting("gifLike");
-    const prog = useRef<null | HTMLProgressElement>();
+    const progress = createRef<HTMLProgressElement>();
     const query = useQuery(
         ["meta", file.parent],
         ({ signal }) => api.getFileMeta({ params: { path: file.parent }, signal }),
@@ -76,9 +76,9 @@ export default function ImageSupport(file: FileTypeResponse) {
                     autoPlay loop
                     onTimeUpdate={(event) => {
                         const vid = event.currentTarget;
-                        if (prog.current) {
-                            prog.current.max = vid.duration;
-                            prog.current.value = vid.currentTime;
+                        if (progress.current) {
+                            progress.current.max = vid.duration;
+                            progress.current.value = vid.currentTime;
                         }
                     }}
                     onDoubleClick={(event) => {
@@ -88,7 +88,7 @@ export default function ImageSupport(file: FileTypeResponse) {
                 >
                     <source src={srcUrl} type={file.mime} />
                 </video>
-                <progress className="fixed inset-x-0 bottom-0 w-full h-1 transition-[width]" ref={el => prog.current = el} />
+                <progress className="fixed inset-x-0 bottom-0 w-full h-1 transition-[width]" ref={progress} />
             </>
             :
             <img className="object-contain w-full h-full"

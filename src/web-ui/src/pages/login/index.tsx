@@ -1,6 +1,6 @@
 import "./index.css";
 import { Link, useNavigate } from "react-router-dom";
-import { useRef, useState } from "react";
+import { createRef, useState } from "react";
 import { useMutation } from "react-query";
 import api from "~/api";
 import { AxiosError, HttpStatusCode } from "axios";
@@ -20,7 +20,7 @@ const errorMessageIndex: Record<number, undefined | JSX.Element> = {
 
 export default function LoginPage() {
     const navigate = useNavigate();
-    const pwInput = useRef<HTMLInputElement | null>();
+    const pwInput = createRef<HTMLInputElement>();
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
 
@@ -61,7 +61,7 @@ export default function LoginPage() {
             />
             <div className="relative w-full">
                 <input
-                    className="w-full px-2 py-px bg-black rounded-md bg-opacity-60" type="password" ref={el => (pwInput.current = el)}
+                    className="w-full px-2 py-px bg-black rounded-md bg-opacity-60" type="password" ref={pwInput}
                     required placeholder="Password"
                     onChange={(event) => setPassword(event.target.value)}
                 />

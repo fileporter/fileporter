@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { createRef, useState } from "react";
 import { serverUrl } from "~/config";
 import type { DirectoryTypeResponse } from "~/api/types";
 import { useSetting } from "~/hooks/useSettings";
@@ -18,7 +18,7 @@ export default function FolderIcon({ directory, className }: Props) {
     const [previews] = useSetting("previews");
     const previewSrc = (previews && directory) ? serverUrl(`/preview/${directory.path}?directories=true`) : undefined;
     const [success, setSuccess] = useState(false);
-    const imgRef = useRef<HTMLImageElement>(null);
+    const imgRef = createRef<HTMLImageElement>();
     // aspect > 1 == landscape | aspect < 1 == portrait
     const aspect = imgRef.current ? imgRef.current.naturalWidth / imgRef.current.naturalHeight : 1;
 
