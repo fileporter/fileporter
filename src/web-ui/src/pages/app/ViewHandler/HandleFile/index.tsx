@@ -3,6 +3,7 @@ import type { FileTypeResponse } from "~/api/types";
 import ApiFileDownloadLink from "~/elements/OpenModeLink/ApiFileDownloadLink";
 import Loading from "~/elements/Loading";
 import { useSetting } from "~/hooks/useSettings";
+const PdfSupport = React.lazy(() => import("./subtype/pdf"));
 const AudioSupport = React.lazy(() => import("./type/Audio"));
 const ImageSupport = React.lazy(() => import("./type/Image"));
 const TextSupport = React.lazy(() => import("./type/Text"));
@@ -17,6 +18,7 @@ type Index = Record<string, undefined | React.LazyExoticComponent<((p: FileTypeR
 export const MimeSubtypeSupportIndex: Index = {
     "application/json": DotJsonSupport,
     "application/xml": TextSupport,
+    "application/pdf": PdfSupport,
     "text/xml": TextSupport, // still used sometimes but deprecated
     "text/markdown": DotMarkdownSupport,
     "text/uri": DotUrlSupport,
