@@ -4,6 +4,7 @@ import { z } from "zod";
 const ResponseBase = z.object({
     basename: z.string(),
     path: z.string(),
+    realpath: z.string(),
     parent: z.string(),
 });
 export type ResponseBase = z.infer<typeof ResponseBase>
