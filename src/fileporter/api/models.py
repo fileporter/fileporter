@@ -29,8 +29,8 @@ class FileResponse(BaseResponse):
     mime: t.Optional[str]
     dimensions: t.Optional[ImageSize]
     duration: t.Optional[float]
-    has_audio: bool
-    has_video: bool
+    has_audio: t.Optional[bool]
+    has_video: t.Optional[bool]
 
 
 class DirectoryRootTypeResponse(DirectoryResponse):

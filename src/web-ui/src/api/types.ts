@@ -19,8 +19,8 @@ export const FileTypeResponse = ResponseBase.extend({
         height: z.number().min(1),
     }).optional(),
     duration: z.number().min(0).optional(),
-    has_video: z.boolean(),
-    has_audio: z.boolean(),
+    has_video: z.boolean().optional(),
+    has_audio: z.boolean().optional(),
 });
 export type FileTypeResponse = z.infer<typeof FileTypeResponse>;
 

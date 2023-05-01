@@ -23,7 +23,7 @@ from config import config
 from . import models as m
 
 
-def get_fp_meta(fp: str) -> dict:
+def get_fp_meta(fp: str, shallow: bool = False) -> dict:
     path = os.path.relpath(fp, config.root)
     parent, basename = os.path.split(path)
     if os.path.isfile(fp):
@@ -39,7 +39,7 @@ def get_fp_meta(fp: str) -> dict:
             size=os.path.getsize(fp),
             mime=mime,
             extension=extension,
-            **(get_media_info(fp) if pmi else {})
+            **(get_media_info(fp) if pmi and not shallow else {})
         ).dict()
     elif os.path.isdir(fp):
         return m.DirectoryResponse(
