@@ -35,6 +35,8 @@ async def get_meta(fp: str = fastapi.Path()):
     return the meta information about the given path
     """
     fp = p.join(config.root, fp.removeprefix("/"))
+    if p.commonpath([config.root, fp]) != config.root:
+        raise fastapi.HTTPException(fastapi.status.HTTP_403_FORBIDDEN)
     response = get_fp_meta(fp)
     if p.isdir(fp):
         response['contents'] = [get_fp_meta(p.join(fp, _)) for _ in os.listdir(fp)

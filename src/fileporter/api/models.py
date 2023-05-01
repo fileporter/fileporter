@@ -15,6 +15,7 @@ class ImageSize(p.BaseModel):
 class BaseResponse(p.BaseModel):
     basename: str
     path: str
+    realpath: str
     parent: str
 
 

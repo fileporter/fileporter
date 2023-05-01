@@ -4,6 +4,7 @@ r"""
 
 """
 import os
+import os.path as p
 import logging
 import mimetypes
 try:
@@ -24,28 +25,31 @@ from . import models as m
 
 
 def get_fp_meta(fp: str, shallow: bool = False) -> dict:
-    path = os.path.relpath(fp, config.root)
-    parent, basename = os.path.split(path)
-    if os.path.isfile(fp):
+    path = p.relpath(fp, config.root)
+    realpath = p.relpath(p.realpath(fp, strict=False), config.root)
+    parent, basename = p.split(path)
+    if p.isfile(fp):
         mime = mimetypes.guess_type(fp)[0]
         if mime is None:
             mime = magic.from_file(fp, mime=True)
-        extension = os.path.splitext(fp)[1] or None
+        extension = p.splitext(fp)[1] or None
         return m.FileResponse(
             type="file",
             basename=basename,
             path=path,
+            realpath=realpath,
             parent=parent,
-            size=os.path.getsize(fp),
+            size=p.getsize(fp),
             mime=mime,
             extension=extension,
             **(get_media_info(fp) if pmi and not shallow else {})
         ).dict()
-    elif os.path.isdir(fp):
+    elif p.isdir(fp):
         return m.DirectoryResponse(
             type="directory",
             basename=basename,
             path=path,
+            realpath=realpath,
             parent=parent,
         ).dict()
     else:
