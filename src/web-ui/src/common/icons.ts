@@ -31,6 +31,7 @@ const MimeMap = {
     "text/html": CodeIcon,
     "text/css": CodeLikeIcon,
     "text/": DocumentIcon,
+    "inode/": SymlinkIcon,
 };
 
 
