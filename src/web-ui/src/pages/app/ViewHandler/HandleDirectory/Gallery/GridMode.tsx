@@ -14,7 +14,7 @@ export default function GridModeRenderItem(item: FileOrDirectory) {
             </span>
         </Link>;
     } else {
-        return <OpenModeLink to={item.path} className="flex flex-col gap-1 group">
+        return <OpenModeLink to={item.realpath} className="flex flex-col gap-1 group">
             <FileIcon className="object-cover w-full h-auto mx-auto rounded-lg aspect-square" file={item} />
             <span className="w-full text-center break-words group-hover:underline">
                 {item.basename}

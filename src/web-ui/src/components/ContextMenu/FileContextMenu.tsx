@@ -33,7 +33,7 @@ export default function FileContextMenu(file: FileTypeResponse) {
         </CM.Grid>
         <CM.Space />
         <CM.Options>
-            <InternLink to={file.path} target="_blank" title="Open in a new Tab">
+            <InternLink to={file.realpath} target="_blank" title="Open in a new Tab">
                 <img className="h-6" src={OpenNewTabIconSrc} alt="new-tab" />
             </InternLink>
             <ApiFileDownloadLink to={file.path} title="Download the File">

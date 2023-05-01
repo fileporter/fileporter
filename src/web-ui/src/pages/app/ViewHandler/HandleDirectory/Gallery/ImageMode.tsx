@@ -42,7 +42,7 @@ export default function ImageModeRenderItem(item: FileOrDirectory) {
             }} alt="" loading="lazy"
         />;
     } else {
-        return <OpenModeLink to={item.path} className="flex gap-1 px-2 group">
+        return <OpenModeLink to={item.realpath} className="flex gap-1 px-2 group">
             <FileIcon className="w-auto h-6 my-auto aspect-square" file={item} />
             <span className="break-words group-hover:underline">
                 {item.basename}
