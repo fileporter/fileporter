@@ -12,7 +12,7 @@ const descriptions: Record<SortMode, string> = {
 };
 
 
-export function SortModePart() {
+export default function SortModePart() {
     const [sortMode, setSortMode] = useSetting("sortMode");
 
     return <>

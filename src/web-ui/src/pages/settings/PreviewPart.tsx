@@ -12,7 +12,7 @@ const descriptions: Record<Previews, string> = {
 };
 
 
-export function PreviewPart() {
+export default function PreviewPart() {
     const [previews, setPreviews] = useSetting("previews");
 
     return <>

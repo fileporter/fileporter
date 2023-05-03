@@ -15,14 +15,14 @@ export default function ListView({ contents }: DirectoryHandlerProps) {
 
 function RenderItem(item: FileOrDirectory) {
     if (item.type === "directory") {
-        return <Link to={item.path} className="flex gap-1 group">
+        return <Link to={`/~/${item.path}`} className="flex gap-1 group">
             <FolderIcon className="grid w-auto h-6 aspect-square place-content-center" />
             <span className="break-words group-hover:underline">
                 {item.basename}
             </span>
         </Link>;
     } else {
-        return <OpenModeLink to={item.realpath} className="flex gap-1 group">
+        return <OpenModeLink to={`/~/${item.realpath}`} className="flex gap-1 group">
             <FileIcon className="w-auto h-6 my-auto aspect-square" file={item} forceIcon />
             <span className="flex break-words group-hover:underline grow">
                 {item.basename}

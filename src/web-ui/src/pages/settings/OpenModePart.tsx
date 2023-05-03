@@ -12,7 +12,7 @@ const descriptions: Record<OpenMode, string> = {
 };
 
 
-export function OpenModePart() {
+export default function OpenModePart() {
     const [openMode, setOpenMode] = useSetting("openMode");
 
     return <>

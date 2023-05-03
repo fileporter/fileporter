@@ -35,7 +35,7 @@ async def get_meta(fp: str = fastapi.Path()):
     return the meta information about the given path
     """
     fp = p.join(config.root, fp.removeprefix("/"))
-    if p.commonpath([config.root, fp]) != config.root:
+    if p.commonpath([config.root, fp]) != str(config.root):
         raise fastapi.HTTPException(fastapi.status.HTTP_403_FORBIDDEN)
     response = get_fp_meta(fp)
     if p.isdir(fp):
@@ -62,11 +62,13 @@ async def search(
 
     more on [regex](https://docs.python.org/3/library/re.html)
     """
+    if not files and not directories:
+        return []
     source = os.path.join(config.root, source.removeprefix("/"))
     results = []
     pattern = query if mode == "regex" else fnmatch.translate(query)
     try:
-        regex = re.compile(pattern, re.NOFLAG if sensitive else re.IGNORECASE)
+        regex = re.compile(pattern, 0 if sensitive else re.IGNORECASE)
     except (TypeError, ValueError):
         raise fastapi.HTTPException(fastapi.status.HTTP_400_BAD_REQUEST)
     for dirpath, dirnames, filenames in os.walk(source, followlinks=False):

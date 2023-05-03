@@ -1,6 +1,6 @@
 import { Zodios } from "@zodios/core";
 import { z } from "zod";
-import { FileMeta } from "./types";
+import { FileMeta, FileOrDirectory } from "./types";
 import { HttpStatusCode } from "axios";
 import { serverUrl } from "~/config";
 
@@ -8,8 +8,8 @@ import { serverUrl } from "~/config";
 const api = new Zodios([
     {
         method: "post",
-        path: "/auth/login",
         alias: "login",
+        path: "/auth/login",
         parameters: [{
             name: "body",
             type: "Body",
@@ -22,32 +22,32 @@ const api = new Zodios([
     },
     {
         method: "post",
-        path: "/auth/logout",
         alias: "logout",
+        path: "/auth/logout",
         response: z.object({}),
     },
     {
         method: "get",
-        path: "/auth/has",
         alias: "authExists",
+        path: "/auth/has",
         response: z.boolean(),
     },
     {
         method: "get",
-        path: "/auth/is-logged-in",
         alias: "isLoggedIn",
+        path: "/auth/is-logged-in",
         response: z.boolean(),
     },
     {
         method: "head",
-        path: "/api/",
         alias: "checkAccess",
+        path: "/api/",
         response: z.unknown(),
     },
     {
         method: "get",
-        path: "/api/meta/:path",
         alias: "getFileMeta",
+        path: "/api/meta/:path",
         parameters: [{
             name: "path",
             type: "Path",
@@ -57,8 +57,39 @@ const api = new Zodios([
     },
     {
         method: "get",
-        path: "/files/:path",
+        alias: "search",
+        path: "/api/search/:source",
+        parameters: [{
+            name: "source",
+            type: "Path",
+            schema: z.string(),
+        }, {
+            name: "query",
+            type: "Query",
+            schema: z.string(),
+        }, {
+            name: "mode",
+            type: "Query",
+            schema: z.literal("fnmatch").or(z.literal("regex")).optional(),
+        }, {
+            name: "sensitive",
+            type: "Query",
+            schema: z.boolean().optional(),
+        }, {
+            name: "files",
+            type: "Query",
+            schema: z.boolean().optional(),
+        }, {
+            name: "directories",
+            type: "Query",
+            schema: z.boolean().optional(),
+        }],
+        response: FileOrDirectory.array(),
+    },
+    {
+        method: "get",
         alias: "rawFile",
+        path: "/files/:path",
         parameters: [{
             name: "path",
             type: "Path",

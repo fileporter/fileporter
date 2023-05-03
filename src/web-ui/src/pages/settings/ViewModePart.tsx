@@ -15,7 +15,7 @@ const descriptions: Record<ViewMode, string> = {
 
 
 
-export function ViewModePart() {
+export default function ViewModePart() {
     const [viewMode, setViewMode] = useSetting("viewMode");
 
     return <>

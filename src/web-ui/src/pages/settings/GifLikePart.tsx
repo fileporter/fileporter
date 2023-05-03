@@ -12,7 +12,7 @@ const descriptions: Record<GifLike, string> = {
 };
 
 
-export function GifLikePart() {
+export default function GifLikePart() {
     const [gifLike, setGifLike] = useSetting("gifLike");
 
     return <>

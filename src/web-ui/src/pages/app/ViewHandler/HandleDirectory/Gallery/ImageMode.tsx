@@ -13,7 +13,7 @@ export default function ImageModeRenderItem(item: FileOrDirectory) {
     const navigate = useNavigate();
 
     if (item.type === "directory") {
-        return <Link to={item.path} className="flex gap-1 px-2 group">
+        return <Link to={`/~/${item.path}`} className="flex gap-1 px-2 group">
             <FolderIcon className="w-auto h-6 aspect-square" />
             <span className="break-words group-hover:underline">
                 {item.basename}
@@ -38,11 +38,11 @@ export default function ImageModeRenderItem(item: FileOrDirectory) {
             }} onDoubleClick={() => {
                 // const url = openMode === OpenMode.intern ? href : serverUrl(`/files/${item.path}`);
                 // window.open(url, "_blank")?.focus();
-                navigate(`/~/${item.path}`);
+                navigate(`/~/${item.realpath}`);
             }} alt="" loading="lazy"
         />;
     } else {
-        return <OpenModeLink to={item.realpath} className="flex gap-1 px-2 group">
+        return <OpenModeLink to={`/~/${item.realpath}`} className="flex gap-1 px-2 group">
             <FileIcon className="w-auto h-6 my-auto aspect-square" file={item} />
             <span className="break-words group-hover:underline">
                 {item.basename}
