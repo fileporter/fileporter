@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import PathBar from "./PathBar";
 import ShowSettings from "./ShowSettings";
 import ToggleFullScreen from "./ToggleFullScreen";
+import ShowSearch from "./ShowSearch";
 
 
 export default function AppHeader() {
@@ -25,6 +26,7 @@ export default function AppHeader() {
     return <nav className="sticky z-10 flex gap-3 px-2 py-px transition-[top] duration-300 bg-black bg-opacity-80" style={{top: (isTopMost || isVisible) ? "0px" : "-100%"}}>
         <PathBar />
         <ToggleFullScreen />
+        <ShowSearch />
         <ShowSettings />
     </nav>;
 }

@@ -11,6 +11,7 @@ import SettingsPage from "~/pages/settings";
 import AppPage from "~/pages/app";
 import Page404NotFound from "~/pages/Page404NotFound";
 import ErrorBoundary from "~/components/ErrorBoundary";
+import SearchPage from "./pages/search";
 
 
 export default function ProviderCollection() {
@@ -36,6 +37,7 @@ export function UIRoutes() {
                     <Route index element={<URLIndexPage />} />
                     <Route path="login" element={<LoginPage />} />
                     <Route path="logout" element={<LogoutPage />} />
+                    <Route path="search" element={<SearchPage />} />
                     <Route path="settings" element={<SettingsPage />} />
                     <Route path="~/*" element={<AppPage />} />
                     <Route path="*" element={<Page404NotFound />} />
