@@ -27,8 +27,8 @@ export default class ErrorBoundary extends React.Component<Props, State> {
             return <div className="grid h-screen place-content-center">
                 <ErrorMessageBox error={this.state.error}>
                     <details className="text-left">
-                        <summary>See More</summary>
-                        <pre>
+                        <summary className="cursor-pointer">See More</summary>
+                        <pre className="break-words whitespace-break-spaces">
                             {this.state.errorInfo?.componentStack}
                         </pre>
                     </details>
