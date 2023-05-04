@@ -1,6 +1,6 @@
 import type { FileTypeResponse } from "~/api/types";
 import { serverUrl } from "~/config";
-import VideoPlayer from "~/elements/Video";
+import VideoPlayer from "~/elements/VideoPlayer";
 
 
 export default function VideoSupport(file: FileTypeResponse) {
