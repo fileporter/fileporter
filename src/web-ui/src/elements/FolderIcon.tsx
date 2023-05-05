@@ -3,8 +3,8 @@ import { serverUrl } from "~/config";
 import type { DirectoryTypeResponse } from "~/api/types";
 import { useSetting } from "~/hooks/useSettings";
 import useContextMenu from "~/hooks/useContextMenu";
-import FolderIconSrc from "@assets/icons/files/directory.png";
 import DirectoryContextMenu from "~/components/ContextMenu/DirectoryContextMenu";
+import { getIconForFolder } from "~/common";
 
 
 interface Props {
@@ -29,7 +29,7 @@ export default function FolderIcon({ directory, className }: Props) {
         setContextMenu(<DirectoryContextMenu {...directory} />);
     }}>
         <div className="relative group">
-            <img className="w-full" src={FolderIconSrc} alt="<folder>" />
+            <img className="w-full" src={success ? getIconForFolder() : getIconForFolder(directory)} alt="<folder>" />
             {previewSrc ? <img ref={imgRef} className="absolute object-cover h-3/5 border border-black rounded-md bottom-[10%] right-[10%] aspect-square rotate-6" src={previewSrc} alt="<preview>"
                 style={{display: success ? "block" : "none", aspectRatio: aspect <= 1 ? "1 / 1" : "5 / 4"}}
                 onLoad={() => setSuccess(true)} loading="lazy" /> : null
