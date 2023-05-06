@@ -7,8 +7,8 @@ import { useSetting } from "~/hooks/useSettings";
 
 
 const descriptions: Record<OpenMode, string> = {
-    [OpenMode.intern]: "Use builtin tools to display the file in a correct format.",
-    [OpenMode.download]: "Always download a file.",
+    [OpenMode.intern]: "Use builtin tools to display the file in a correct format",
+    [OpenMode.download]: "Always download a file",
 };
 
 
