@@ -69,7 +69,7 @@ const api = new Zodios([
 ], { axiosConfig: {
     baseURL: serverUrl("/"),
     withCredentials: true,
-    timeout: 10_000,
+    timeout: 20_000,
 } });
 api.axios.interceptors.response.use(null, (error) => {
     if (error.response?.status === HttpStatusCode.Unauthorized) {
