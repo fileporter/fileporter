@@ -1,7 +1,7 @@
 import useCrossTabState from "./useCrossTabState";
 import type { PropsWithChildren } from "react";
 import { createContext, useContext } from "react";
-import { OpenMode, Previews, SortMode, GifLike, ViewMode } from "~/common";
+import { OpenMode, Previews, SortMode, GifLike, ViewMode, GalleryMode } from "~/common";
 
 
 interface Settings {
@@ -10,6 +10,7 @@ interface Settings {
     openMode: OpenMode
     previews: Previews
     gifLike: GifLike
+    galleryMode: GalleryMode,
 }
 
 const defaultSettings: Settings = {
@@ -18,6 +19,7 @@ const defaultSettings: Settings = {
     openMode: OpenMode.intern,
     previews: Previews.enabled,
     gifLike: GifLike.enabled,
+    galleryMode: GalleryMode.book,
 };
 
 const SettingsContext = createContext<{
@@ -45,7 +47,8 @@ export default function useSettings(): [Settings, (s: Settings) => void] {
 export function useSetting<K extends keyof Settings>(key: K): [Settings[K], (n: Settings[K]) => void] {
     const { settings, setSettings } = useContext(SettingsContext);
 
-    const value = settings[key];
+    let value: Settings[K] | undefined = settings[key];
+    value ??= defaultSettings[key];
 
     function setValue(nextValue: Settings[K]) {
         setSettings({...settings, [key]: nextValue});
