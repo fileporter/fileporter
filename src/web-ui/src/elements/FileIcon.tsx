@@ -45,16 +45,16 @@ export default function FileIcon({ file, forceIcon, className }: Props) {
         }} alt="" loading="lazy" />
         {!!allowPreview && <>
             {(!!file.has_video && !file.has_audio) &&
-                <span className="absolute top-0 left-0 px-1 bg-black bg-opacity-40 rounded-br-md"><img className="h-4 pointer-events-none invert" src={NoAudioIconSrc} alt="🔇" /></span>
-            }
-            {!!file.dimensions &&
-                <span className="absolute top-0 right-0 px-1 text-xs bg-black bg-opacity-40 rounded-bl-md">{file.dimensions.width}x{file.dimensions.height}</span>
-            }
-            {!!file.size &&
-                <span className="absolute bottom-0 left-0 px-1 text-xs bg-black bg-opacity-40 rounded-tr-md">{formatFileSize(file.size)}</span>
+                <span className="absolute top-0 left-0 px-1 bg-black bg-opacity-50 rounded-br-md"><img className="h-4 pointer-events-none invert" src={NoAudioIconSrc} alt="🔇" /></span>
             }
             {!!file.duration &&
-                <span className="absolute bottom-0 right-0 px-1 text-xs bg-black bg-opacity-40 rounded-tl-md">{formatDuration(file.duration)}</span>
+                <span className="absolute top-0 right-0 px-1 text-xs bg-black bg-opacity-50 rounded-bl-md">{formatDuration(file.duration)}</span>
+            }
+            {!!file.size &&
+                <span className="absolute bottom-0 left-0 px-1 text-xs bg-black bg-opacity-50 rounded-tr-md">{formatFileSize(file.size)}</span>
+            }
+            {!!file.dimensions &&
+                <span className="absolute bottom-0 right-0 px-1 text-xs bg-black bg-opacity-50 rounded-tl-md">{file.dimensions.width}x{file.dimensions.height}</span>
             }
         </>}
     </div>;

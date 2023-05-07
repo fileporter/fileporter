@@ -34,6 +34,6 @@ export function formatFileSize(bytes: number, si=true, dp=1) {
         ++u;
     } while (Math.round(Math.abs(bytes) * r) / r >= thresh && u < units.length - 1);
 
-
-    return bytes.toFixed(dp) + " " + units[u];
+    // cuts the .xxx part of the number after 2 digits
+    return bytes.toFixed(bytes >= 10 ? 0 : dp) + " " + units[u];
 }
