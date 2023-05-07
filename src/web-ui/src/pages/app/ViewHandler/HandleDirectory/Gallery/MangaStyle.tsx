@@ -6,9 +6,17 @@ import type { FileOrDirectory } from "~/api/types";
 import OpenModeLink from "~/elements/OpenModeLink";
 import FileIcon from "~/elements/FileIcon";
 import DownloadFailedIcon from "@assets/icons/download-fail.png";
+import type { DirectoryHandlerProps } from "../types";
 
 
-export default function ImageModeRenderItem(item: FileOrDirectory) {
+export default function MangaModeView({ contents }: DirectoryHandlerProps) {
+    return <div className="flex flex-col py-1">
+        {contents.map(item => <MangaModeRenderItem key={item.path} {...item} />)}
+    </div>;
+}
+
+
+export function MangaModeRenderItem(item: FileOrDirectory) {
     const isFullScreen = useIsFullScreen();
     const navigate = useNavigate();
 
