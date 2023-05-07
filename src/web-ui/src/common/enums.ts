@@ -20,3 +20,7 @@ export enum GifLike {
     disabled,
     enabled,
 }
+export enum GalleryMode {
+    book,
+    manga,
+}

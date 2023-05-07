@@ -8,9 +8,9 @@ import { useSetting } from "~/hooks/useSettings";
 
 
 const descriptions: Record<ViewMode, string> = {
-    [ViewMode.gallery]: "Displaying the files and directories in an Image-Gallery.",
-    [ViewMode.icon]: "Displaying the files and directories in a Icon-Grid.",
-    [ViewMode.list]: "Displaying the files and directories in a list.",
+    [ViewMode.gallery]: "Displaying the files and directories in an Image-Gallery",
+    [ViewMode.icon]: "Displaying the files and directories in a Icon-Grid",
+    [ViewMode.list]: "Displaying the files and directories in a list",
 };
 
 

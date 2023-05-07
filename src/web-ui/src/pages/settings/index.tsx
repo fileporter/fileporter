@@ -1,4 +1,5 @@
 import FooterPart from "./FooterPart";
+import { GalleryModePart } from "./GalleryModePart";
 import { GifLikePart } from "./GifLikePart";
 import { HeadPart } from "./HeadPart";
 import LogoutPart from "./LogoutPart";
@@ -13,6 +14,7 @@ export default function SettingsPage() {
         <HeadPart />
         <main className="flex flex-col items-center w-full max-w-xl gap-2 px-2 grow">
             <ViewModePart />
+            <GalleryModePart />
             <OpenModePart />
             <SortModePart />
             <PreviewPart />
