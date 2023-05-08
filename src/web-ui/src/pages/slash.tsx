@@ -12,7 +12,7 @@ export default function URLIndexPage() {
         ({ signal }) => api.checkAccess({ signal }),
     );
 
-    if (query.isLoading) {
+    if (query.isLoading || query.isRefetching) {
         return <Loading />;
     }
     if (query.isError) {

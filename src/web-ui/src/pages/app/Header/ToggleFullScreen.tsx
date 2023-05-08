@@ -6,7 +6,7 @@ import MinimizeIcon from "@assets/icons/header/minimize.png";
 export default function ToggleFullScreen() {
     const isFullScreen = useIsFullScreen();
 
-    return <button className="my-auto h-fit" onClick={() => {
+    return <button className="flex-shrink-0 my-auto h-fit" onClick={() => {
         if (isFullScreen) {
             document.exitFullscreen();
         } else {
