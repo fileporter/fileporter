@@ -13,7 +13,7 @@ interface Settings {
 }
 
 const defaultSettings: Settings = {
-    viewMode: ViewMode.gallery,
+    viewMode: ViewMode.icon,
     sortMode: SortMode.alphabetic,
     openMode: OpenMode.intern,
     previews: Previews.enabled,
