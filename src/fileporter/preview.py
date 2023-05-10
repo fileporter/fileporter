@@ -11,7 +11,6 @@ import tempfile
 import zlib
 import logging
 import fastapi
-import anyio
 from preview_generator.manager import PreviewManager
 from preview_generator.utils import LOGGER_NAME as PREVIEW_LOGGER_NAME
 from preview_generator.exception import UnsupportedMimeType
@@ -22,7 +21,6 @@ from config import config
 
 if not config.dependencies:
     logging.getLogger(PREVIEW_LOGGER_NAME).setLevel(logging.CRITICAL)
-
 
 # DELETION of the Previews is done at the end of the execution
 CACHE = tempfile.TemporaryDirectory()
@@ -40,10 +38,12 @@ manager = PreviewManager(CACHE.name)
     },
     response_class=fastapi.responses.FileResponse,
 )
-async def get_preview(request: fastapi.Request,
-                      tasks: fastapi.BackgroundTasks,
-                      fp: str = fastapi.Path(),
-                      directories: bool = fastapi.Query(False)):
+def get_preview(
+        request: fastapi.Request,
+        tasks: fastapi.BackgroundTasks,
+        fp: str = fastapi.Path(),
+        directories: bool = fastapi.Query(False)
+):
     r"""
     generates a small preview image of the given file
     directories are by default disabled. but can be enabled with the '?directories' flag.
@@ -74,7 +74,7 @@ async def get_preview(request: fastapi.Request,
         raise fastapi.HTTPException(fastapi.status.HTTP_422_UNPROCESSABLE_ENTITY)
 
     try:
-        preview_fp = await anyio.to_thread.run_sync(manager.get_jpeg_preview, fp)
+        preview_fp = manager.get_jpeg_preview(fp)
     except MissingDelegateError:
         raise fastapi.HTTPException(fastapi.status.HTTP_422_UNPROCESSABLE_ENTITY)
 
@@ -96,7 +96,8 @@ lowRes = fastapi.APIRouter()
     },
     response_class=fastapi.responses.FileResponse,
 )
-async def low_resolution(
+def low_resolution(
+        tasks: fastapi.BackgroundTasks,
         request: fastapi.Request,
         fp: str = fastapi.Path()
 ):
@@ -116,20 +117,20 @@ async def low_resolution(
         return fastapi.responses.FileResponse(cache_name, filename=filename)
 
     try:
-        image = await anyio.to_thread.run_sync(Image.open, fp)
+        image = Image.open(fp)
     except UnidentifiedImageError:
         mime = mimetypes.guess_type(raw_fp)[0]
         if mime and mime.startswith("image/"):  # should be something like svg
             return fastapi.responses.RedirectResponse(
-                request.url_for("files", path=raw_fp),
-                fastapi.status.HTTP_303_SEE_OTHER,
+                url=request.url_for("files", path=raw_fp),
+                status_code=fastapi.status.HTTP_303_SEE_OTHER,
             )
         raise fastapi.HTTPException(fastapi.status.HTTP_415_UNSUPPORTED_MEDIA_TYPE)
 
     if getattr(image, 'is_animated', False):
         return fastapi.responses.RedirectResponse(
-            request.url_for("files", path=raw_fp),
-            fastapi.status.HTTP_303_SEE_OTHER,
+            url=request.url_for("files", path=raw_fp),
+            status_code=fastapi.status.HTTP_303_SEE_OTHER,
         )
 
     # note: not threaded. should be fast enough!?
@@ -143,10 +144,12 @@ async def low_resolution(
 
     content = optimized.read()
 
-    # note: maybe move to background-task
+    def save_preview():
+        with open(cache_name, "wb") as file:
+            file.write(content)
+
     if config.cache:
-        async with await anyio.open_file(cache_name, "wb") as file:
-            await file.write(content)
+        tasks.add_task(save_preview)
 
     # faster than to send now a FileResponse
     return fastapi.Response(content, media_type="image/jpeg")

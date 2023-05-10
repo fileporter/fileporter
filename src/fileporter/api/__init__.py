@@ -30,7 +30,7 @@ async def check_access():
     response_model=t.Union[FileResponse, DirectoryRootTypeResponse],
     response_model_exclude_none=True,
 )
-async def get_meta(fp: str = fastapi.Path()):
+def get_meta(fp: str = fastapi.Path()):
     r"""
     return the meta information about the given path
     """
@@ -47,7 +47,7 @@ async def get_meta(fp: str = fastapi.Path()):
     response_model=t.List[t.Union[FileResponse, DirectoryResponse]],
     response_model_exclude_none=True,
 )
-async def search(
+def search(
         source: str = fastapi.Path(description="source directory from which should be searched from"),
         query: str = fastapi.Query(min_length=1, description="the actual query-string"),
         mode: t.Literal["regex", "fnmatch"] = fastapi.Query("fnmatch", description="how to handle 'query'"),

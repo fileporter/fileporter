@@ -25,10 +25,7 @@ async def login(
     """
     phash = password_hash(password=password)
     auth_system(Credentials(username=username, phash=phash))
-    cookies["auth"] = [
-        username,
-        phash,
-    ]
+    cookies["auth"] = [username, phash]
     return {}
 
 
