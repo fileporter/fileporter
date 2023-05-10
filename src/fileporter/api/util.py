@@ -53,7 +53,7 @@ def get_fp_meta(fp: str, shallow: bool = False) -> dict:
 
 
 def get_media_info(fp: str):
-    media_info = pmi.MediaInfo.parse(fp, parse_speed=0.01)
+    media_info = pmi.MediaInfo.parse(fp, parse_speed=0.1)
 
     if media_info.image_tracks:
         dimensions = dict(width=media_info.image_tracks[0].width, height=media_info.image_tracks[0].height)
