@@ -4,9 +4,10 @@ import IconView from "./Icon";
 import ListView from "./List";
 import GalleryView from "./Gallery";
 import { useSetting } from "~/hooks/useSettings";
+import type { DirectoryHandlerProps } from "./types";
 
 
-const viewMap: Record<ViewMode, undefined | ((props: { contents: DirectoryRootTypeResponse["contents"] }) => JSX.Element) > = {
+const viewMap: Record<ViewMode, undefined | ((props: DirectoryHandlerProps) => JSX.Element) > = {
     [ViewMode.icon]: IconView,
     [ViewMode.list]: ListView,
     [ViewMode.gallery]: GalleryView,
