@@ -12,6 +12,7 @@ import fastapi
 from config import config
 from .models import DirectoryRootTypeResponse, DirectoryResponse, FileResponse
 from .util import get_fp_meta
+from util.redos import is_redos
 
 
 api = fastapi.APIRouter(prefix="/api")
@@ -62,6 +63,9 @@ async def search(
 
     more on [regex](https://docs.python.org/3/library/re.html)
     """
+    # regex denial of service (eg: `(a+)+b`)
+    if mode == "regex" and is_redos(query):
+        raise fastapi.HTTPException(fastapi.status.HTTP_422_UNPROCESSABLE_ENTITY, "")
     if not files and not directories:
         return []
     source = os.path.join(config.root, source.removeprefix("/"))
