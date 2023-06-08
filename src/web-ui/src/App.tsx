@@ -11,6 +11,7 @@ import SettingsPage from "~/pages/settings";
 import AppPage from "~/pages/app";
 import Page404NotFound from "~/pages/Page404NotFound";
 import ErrorBoundary from "~/components/ErrorBoundary";
+import { useEffect } from "react";
 import SearchPage from "./pages/search";
 
 
@@ -30,6 +31,17 @@ export default function ProviderCollection() {
 
 export function UIRoutes() {
     const { pathname } = useLocation();
+
+    useEffect(() => {
+        const paths = pathname.slice(1).split("/");
+        if (paths[0] === "~") {
+            document.title = `fileporter - ${paths[paths.length - 1] || "~"}`;
+        } else {
+            const page = paths[0];
+            document.title = `fileporter ~ ${page.charAt(0).toUpperCase()}${page.substring(1).toLowerCase()}`;
+        }
+    }, [pathname]);
+
     return <>
         <ErrorBoundary key={pathname}>
             <Routes>

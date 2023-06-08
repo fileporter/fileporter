@@ -13,7 +13,7 @@ interface Settings {
 }
 
 const defaultSettings: Settings = {
-    viewMode: ViewMode.gallery,
+    viewMode: ViewMode.icon,
     sortMode: SortMode.alphabetic,
     openMode: OpenMode.intern,
     previews: Previews.enabled,
@@ -45,7 +45,8 @@ export default function useSettings(): [Settings, (s: Settings) => void] {
 export function useSetting<K extends keyof Settings>(key: K): [Settings[K], (n: Settings[K]) => void] {
     const { settings, setSettings } = useContext(SettingsContext);
 
-    const value = settings[key];
+    let value: Settings[K] | undefined = settings[key];
+    value ??= defaultSettings[key];
 
     function setValue(nextValue: Settings[K]) {
         setSettings({...settings, [key]: nextValue});

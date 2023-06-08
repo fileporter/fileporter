@@ -16,7 +16,7 @@ export default function AppHeader() {
         document.addEventListener("scroll", () => {
             const scrolled = window.scrollY;
             setVisible(scrolled < lastScrolled.current);
-            setTopMost(window.scrollY <= 25);
+            setTopMost(window.scrollY <= 40);
             lastScrolled.current = scrolled;
         }, { passive: true, signal: controller.signal });
 

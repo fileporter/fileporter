@@ -22,6 +22,7 @@ except (ModuleNotFoundError, ImportError) as exc:
 from fastapi import HTTPException, status
 from config import config
 from . import models as m
+from .get_image_size import get_image_size, UnknownImageFormat
 
 
 def get_fp_meta(fp: str, shallow: bool = False) -> dict:
@@ -57,6 +58,21 @@ def get_fp_meta(fp: str, shallow: bool = False) -> dict:
 
 
 def get_media_info(fp: str):
+    mime = mimetypes.guess_type(fp)[0]
+    # get_image_size is waaaaay faster than pmi
+    if mime and mime.startswith("image/"):
+        try:
+            width, height = get_image_size(fp)
+        except UnknownImageFormat:
+            pass
+        else:
+            return dict(
+                dimensions=dict(width=width, height=height),
+                duration=None,
+                has_video=False,
+                has_audio=False,
+            )
+
     media_info = pmi.MediaInfo.parse(fp, parse_speed=0.25)
 
     if media_info.image_tracks:

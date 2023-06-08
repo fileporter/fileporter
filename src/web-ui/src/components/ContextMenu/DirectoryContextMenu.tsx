@@ -1,13 +1,13 @@
 import type { DirectoryTypeResponse } from "~/api/types";
 import * as CM from "./ContextElements";
 import InternLink from "~/elements/OpenModeLink/InternLink";
-import FolderIconSrc from "@assets/icons/files/directory.png";
 import OpenNewTabIconSrc from "@assets/icons/open-mode/open-in-new-tab.png";
+import { getIconForFolder } from "~/common";
 
 
 export default function DirectoryContextMenu(directory: DirectoryTypeResponse) {
     return <>
-        <CM.HeaderIcon src={FolderIconSrc} />
+        <CM.HeaderIcon src={getIconForFolder(directory)} />
         <CM.Grid>
             <CM.Label>Name</CM.Label>
             <CM.Value>{directory.basename}</CM.Value>

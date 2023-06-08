@@ -38,8 +38,7 @@ export function numberBasedSort(a: FileOrDirectory, b: FileOrDirectory) {
     const as = a.basename.toLowerCase();
     const bs = b.basename.toLowerCase();
 
-    // means both are directories (second comparison is unnecessary and thus commented)
-    if (a.type === "directory" /* && b.type === "directory" */) {
+    if (a.type === "directory" && b.type === "directory") {
         if (as < bs) {
             return -1;
         }

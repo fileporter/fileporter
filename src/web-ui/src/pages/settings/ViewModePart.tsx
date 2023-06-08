@@ -8,9 +8,9 @@ import { useSetting } from "~/hooks/useSettings";
 
 
 const descriptions: Record<ViewMode, string> = {
-    [ViewMode.gallery]: "Displaying the files and directories in an Image-Gallery.",
     [ViewMode.icon]: "Displaying the files and directories in a Icon-Grid.",
     [ViewMode.list]: "Displaying the files and directories in a list.",
+    [ViewMode.gallery]: "Displaying the files and directories in an Image-Gallery.",
 };
 
 
@@ -20,9 +20,9 @@ export default function ViewModePart() {
 
     return <>
         <OptionSwitch current={viewMode} options={[
-            {key: ViewMode.gallery, imgSrc: GalleryViewIcon, text: "Gallery"},
             {key: ViewMode.icon, imgSrc: IconViewIcon, text: "Icon"},
             {key: ViewMode.list, imgSrc: ListViewIcon, text: "List"},
+            {key: ViewMode.gallery, imgSrc: GalleryViewIcon, text: "Gallery"},
         ]} onSwitch={setViewMode} />
         <Description>{descriptions[viewMode]}</Description>
     </>;
