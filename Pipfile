@@ -13,6 +13,7 @@ baize = "*"
 qrcode = "*"
 anyio = "*"
 pymediainfo = "*"
+regexploit = "*"
 
 [dev-packages]
 

@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "92b9701f288befa17bf78e98dcec2a22fc0b4974f759ff7ed3abdac3de8aa6aa"
+            "sha256": "79ef43075664c5f842caa78ee1f331bcff49a11df0bec1667e18358dc47c8dfe"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -49,10 +49,11 @@
         },
         "cairocffi": {
             "hashes": [
-                "sha256:071ab7b72e3533300b0bfd55a52056b4ffdc1ed6e656779e2aced9b709b8a295"
+                "sha256:e7f21ea1546a5d490ceba77b6216c1393d7e0a7856e292864a88a7506092bf4d",
+                "sha256:fec979f3e904c1a38350b06dcc91d3c15f9a4954e618a068761622e3a0d5058c"
             ],
             "markers": "python_version >= '3.7'",
-            "version": "==1.5.1"
+            "version": "==1.6.0"
         },
         "cairosvg": {
             "hashes": [
@@ -164,11 +165,11 @@
         },
         "fastapi": {
             "hashes": [
-                "sha256:71232d47c2787446991c81c41c249f8a16238d52d779c0e6b43927d3773dbe3c",
-                "sha256:b8e11fe81e81eab4e1504209917338e0b80f783878a42c2b99467e5e1019a1e9"
+                "sha256:95d757511c596409930bd20673358d4a4d709004edb85c5d24d6ffc48fabcbf2",
+                "sha256:b53248ee45f64f19bb7600953696e3edf94b0f7de94df1e5433fc5c6136fa986"
             ],
             "index": "pypi",
-            "version": "==0.96.0"
+            "version": "==0.97.0"
         },
         "ffmpeg-python": {
             "hashes": [
@@ -179,11 +180,11 @@
         },
         "filelock": {
             "hashes": [
-                "sha256:ad98852315c2ab702aeb628412cbf7e95b7ce8c3bf9565670b4eaecf1db370a9",
-                "sha256:fc03ae43288c013d2ea83c8597001b1129db351aad9c57fe2409327916b8e718"
+                "sha256:002740518d8aa59a26b0c76e10fb8c6e15eae825d34b6fdf670333fd7b938d81",
+                "sha256:cbb791cdea2a72f23da6ac5b5269ab0a0d161e9ef0100e653b69049a7706d1ec"
             ],
             "markers": "python_version >= '3.7'",
-            "version": "==3.12.0"
+            "version": "==3.12.2"
         },
         "future": {
             "hashes": [
@@ -475,6 +476,14 @@
             ],
             "index": "pypi",
             "version": "==7.4.2"
+        },
+        "regexploit": {
+            "hashes": [
+                "sha256:1abd5f6a92fd0959ddf13c5e84246935d21c5cd173e8d38bcf58c24eb24cd36f",
+                "sha256:71918acbd0134989cf3928577f3e5a6e0ab1a57891293dc83bfef198fc9949c2"
+            ],
+            "index": "pypi",
+            "version": "==1.0.0"
         },
         "sniffio": {
             "hashes": [
