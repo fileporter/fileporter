@@ -29,7 +29,7 @@ def get_fp_meta(fp: str, shallow: bool = False) -> dict:
     parent, basename = os.path.split(path)
     if os.path.isfile(fp):
         mime = mimetypes.guess_type(fp)[0]
-        if mime is None:
+        if magic and not mime:
             mime = magic.from_file(fp, mime=True)
         extension = os.path.splitext(fp)[1] or None
         return m.FileResponse(
@@ -68,6 +68,14 @@ def get_media_info(fp: str):
                 has_video=False,
                 has_audio=False,
             )
+
+    if not mime or mime.startswith("text/"):
+        return dict(
+            dimensions=None,
+            duration=None,
+            has_video=False,
+            has_audio=False,
+        )
 
     media_info = pmi.MediaInfo.parse(fp, parse_speed=0.25)
 
