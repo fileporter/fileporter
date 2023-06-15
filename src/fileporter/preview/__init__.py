@@ -175,13 +175,13 @@ def low_resolution(
     optimized.name = filename
     image.thumbnail((2000, 2000))  # limit size (but keep aspect)
     jpg = image.convert('RGB')  # needed to save as jpg
+    image.close()
     jpg.save(optimized, format='JPEG')
-    del image, jpg
+    jpg.close()
     # image.save(optimized, format='JPEG', optimize=90)
     optimized.seek(0)  # seek to start for read
 
     content = optimized.read()
-    del optimized
 
     if config.cache:
         with open(cache_name, "wb") as file:
