@@ -40,8 +40,8 @@ def get_meta(fp: str = fastapi.Path()):
         raise fastapi.HTTPException(fastapi.status.HTTP_403_FORBIDDEN, detail="Outside root-directory")
     response = get_fp_meta(fp)
     if p.isdir(fp):
-        response['contents'] = [get_fp_meta(p.join(fp, _)) for _ in os.listdir(fp)
-                                if config.dotall or not _.startswith(".")]
+        response['contents'] = [get_fp_meta(p.join(fp, name)) for name in os.listdir(fp)
+                                if config.dotall or not name.startswith(".")]
     return response
 
 
@@ -86,4 +86,4 @@ def search(
                 if (config.dotall or not dname.startswith("."))
                 and regex.search(dname) is not None
             )
-    return [get_fp_meta(_, shallow=True) for _ in results]
+    return [get_fp_meta(result, shallow=True) for result in results]

@@ -60,6 +60,11 @@ def checkCache():
                     continue
 
 
+async def os_remove(path: str):
+    # async is probably better than normal os.remove
+    os.remove(path)
+
+
 @preview.get(
     "/preview/{fp:path}",
     responses={
@@ -111,7 +116,7 @@ def get_preview(
         raise fastapi.HTTPException(fastapi.status.HTTP_422_UNPROCESSABLE_ENTITY)
 
     if not config.cache:
-        tasks.add_task(os.remove, preview_fp)
+        tasks.add_task(os_remove, preview_fp)
 
     return fastapi.responses.FileResponse(preview_fp, filename=p.split(fp)[1])
 
@@ -169,12 +174,14 @@ def low_resolution(
     optimized = io.BytesIO()
     optimized.name = filename
     image.thumbnail((2000, 2000))  # limit size (but keep aspect)
-    image = image.convert('RGB')  # needed to save as jpg
-    image.save(optimized, format='JPEG')
+    jpg = image.convert('RGB')  # needed to save as jpg
+    jpg.save(optimized, format='JPEG')
+    del image, jpg
     # image.save(optimized, format='JPEG', optimize=90)
     optimized.seek(0)  # seek to start for read
 
     content = optimized.read()
+    del optimized
 
     if config.cache:
         with open(cache_name, "wb") as file:
