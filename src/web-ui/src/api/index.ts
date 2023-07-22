@@ -68,10 +68,6 @@ const api = new Zodios([
             type: "Query",
             schema: z.string(),
         }, {
-            name: "mode",
-            type: "Query",
-            schema: z.literal("fnmatch").or(z.literal("regex")).optional(),
-        }, {
             name: "sensitive",
             type: "Query",
             schema: z.boolean().optional(),
@@ -83,6 +79,10 @@ const api = new Zodios([
             name: "directories",
             type: "Query",
             schema: z.boolean().optional(),
+        }, {
+            name: "limit",
+            type: "Query",
+            schema: z.number().optional(),
         }],
         response: FileOrDirectory.array(),
     },

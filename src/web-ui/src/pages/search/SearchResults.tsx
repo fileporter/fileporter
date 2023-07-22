@@ -8,7 +8,7 @@ import FileIcon from "~/elements/FileIcon";
 import FolderIcon from "~/elements/FolderIcon";
 import Loading from "~/elements/Loading";
 
-const resultLimit = 200;
+const resultLimit = 250;
 
 export default function SearchResults() {
     const [searchParams] = useSearchParams();
@@ -21,25 +21,24 @@ export default function SearchResults() {
     }, [searchParams.get("query")]);
 
     const source = searchParams.get("origin") ?? "/";
-    const isRegex = searchParams.get("regex") === "true";
-    const isSensitive = searchParams.get("sensitive") === "true";
-    const allowFiles = searchParams.get("files") ? searchParams.get("files") === "true" : true;
-    const allowDirectories = searchParams.get("directories") ? searchParams.get("directories") === "true" : true;
+    const isSensitive = searchParams.has("sensitive") ? searchParams.get("sensitive") === "true" : false;
+    const allowFiles = searchParams.has("files") ? searchParams.get("files") === "true" : true;
+    const allowDirectories = searchParams.has("directories") ? searchParams.get("directories") === "true" : true;
 
     const results = useQuery(
-        ["search", source, query, isRegex, isSensitive, allowFiles, allowDirectories],
+        ["search", source, query, isSensitive, allowFiles, allowDirectories],
         ({ signal }) => api.search({
             params: { source },
             queries: {
                 query: query!,
-                mode: isRegex ? "regex" : "fnmatch",
                 sensitive: isSensitive,
                 files: allowFiles,
                 directories: allowDirectories,
+                limit: resultLimit,
             },
             signal,
         }),
-        { enabled: !!query?.length },
+        { enabled: !!query?.length, refetchInterval: -1 },
     );
 
     return <div className="px-1">
@@ -50,8 +49,8 @@ export default function SearchResults() {
             ?.slice(0, resultLimit)
             .map(result => <RenderItem key={result.path} {...result} />)
         }
-        {!!results.isSuccess && (results.data.length - resultLimit) >= 0 &&
-            <p className="text-center opacity-50">{results.data.length - resultLimit} more</p>
+        {!!results.isSuccess && results.data.length >= resultLimit &&
+            <p className="text-center opacity-50">stopped because of too many results</p>
         }
         {!!results.isSuccess && results.data.length === 0 &&
             <p className="text-center opacity-50">No Results</p>
