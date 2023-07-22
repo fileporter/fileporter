@@ -10,14 +10,9 @@ export function textBasedSort(a: FileOrDirectory, b: FileOrDirectory) {
             return 1;
         }
     } else {
-        const as = a.basename.toLowerCase();
-        const bs = b.basename.toLowerCase();
-        if (as < bs) {
-            return -1;
-        }
-        if (as > bs) {
-            return 1;
-        }
+        const as = a.basename.toLowerCase().trim();
+        const bs = b.basename.toLowerCase().trim();
+        return as.localeCompare(bs);
     }
     return 0;
 }
@@ -35,8 +30,8 @@ export function numberBasedSort(a: FileOrDirectory, b: FileOrDirectory) {
         return 0;
     }
 
-    const as = a.basename.toLowerCase();
-    const bs = b.basename.toLowerCase();
+    const as = a.basename.toLowerCase().trim();
+    const bs = b.basename.toLowerCase().trim();
 
     if (a.type === "directory" && b.type === "directory") {
         if (as < bs) {

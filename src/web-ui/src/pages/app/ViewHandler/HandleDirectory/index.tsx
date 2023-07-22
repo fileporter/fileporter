@@ -18,7 +18,7 @@ export default function HandleDirectory(directory: DirectoryRootTypeResponse) {
     const [viewMode] = useSetting("viewMode");
     const [sortMode] = useSetting("sortMode");
 
-    const contents = (
+    const contents = Array.from(
         directory.basename === "." ?
             directory.contents
             :
@@ -28,7 +28,7 @@ export default function HandleDirectory(directory: DirectoryRootTypeResponse) {
                 path: directory.parent,
                 realpath: directory.parent,
                 parent: `${directory.parent}/../`,
-            })
+            }),
     ).sort(sortMode === SortMode.alphabetic ? textBasedSort : numberBasedSort);
 
     const View = viewMap[viewMode] ?? GalleryView;
