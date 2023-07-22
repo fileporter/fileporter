@@ -15,6 +15,7 @@ from .util import get_fp_meta
 
 
 api = fastapi.APIRouter(prefix="/api")
+ROOT = p.abspath(str(config.root))
 
 
 @api.head("/")
@@ -34,13 +35,13 @@ def get_meta(fp: str = fastapi.Path()):
     r"""
     return the meta information about the given path
     """
-    fp = p.join(config.root, fp.removeprefix("/"))
-    if p.commonpath([config.root, fp]) != str(config.root):
-        raise fastapi.HTTPException(fastapi.status.HTTP_403_FORBIDDEN)
+    fp = p.join(ROOT, fp.removeprefix("/"))
+    if p.commonpath([ROOT, fp]) != ROOT:
+        raise fastapi.HTTPException(fastapi.status.HTTP_403_FORBIDDEN, detail="Outside root-directory")
     response = get_fp_meta(fp)
     if p.isdir(fp):
-        response['contents'] = [get_fp_meta(p.join(fp, _)) for _ in os.listdir(fp)
-                                if config.dotall or not _.startswith(".")]
+        response['contents'] = [get_fp_meta(p.join(fp, name)) for name in os.listdir(fp)
+                                if config.dotall or not name.startswith(".")]
     return response
 
 
