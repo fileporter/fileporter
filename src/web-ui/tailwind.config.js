@@ -11,6 +11,16 @@ module.exports = {
       hueRotate: {
         color: "var(--color-rotation)",
       },
+      animation: {
+        "shake": "shake 0.2s ease-in-out 0s 2",
+      },
+      keyframes: {
+        shake: {
+          "0%, 100%": { marginLeft: "0rem" },
+          "25%": { marginLeft: "0.5rem" },
+          "75%": { marginLeft: "-0.5rem" },
+        }
+      },
     },
     colors: {
       transparent: 'transparent',
@@ -30,12 +40,17 @@ module.exports = {
   plugins: [
     plugin(function ({ addUtilities }) {
       addUtilities({
-        '.centered': {
+        ".centered": {
           top: "50%",
           left: "50%",
           transform: "translate(-50%, -50%)",
         }
-      })
+      });
+      addUtilities({
+        ".error-shadow": {
+          "box-shadow": "0 0 0.6rem #ff0000",
+        },
+      });
     })
   ],
 }
