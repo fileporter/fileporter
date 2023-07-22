@@ -26,6 +26,7 @@ export default function HandleDirectory(directory: DirectoryRootTypeResponse) {
                 type: "directory",
                 basename: "..",
                 path: directory.parent,
+                realpath: directory.parent,
                 parent: `${directory.parent}/../`,
             })
     ).sort(sortMode === SortMode.alphabetic ? textBasedSort : numberBasedSort);
