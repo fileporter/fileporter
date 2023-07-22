@@ -12,7 +12,6 @@ import fastapi
 from config import config
 from .models import DirectoryRootTypeResponse, DirectoryResponse, FileResponse
 from .util import get_fp_meta
-from util.redos import is_redos
 
 
 api = fastapi.APIRouter(prefix="/api")
@@ -53,25 +52,22 @@ def get_meta(fp: str = fastapi.Path()):
 def search(
         source: str = fastapi.Path(description="source directory from which should be searched from"),
         query: str = fastapi.Query(min_length=1, description="the actual query-string"),
-        mode: t.Literal["regex", "fnmatch"] = fastapi.Query("fnmatch", description="how to handle 'query'"),
         sensitive: bool = fastapi.Query(False, description="case-sensitive search"),
         files: bool = fastapi.Query(True, description="whether or not to include files in the search"),
         directories: bool = fastapi.Query(True, description="whether or not to include directories in the search"),
+        limit: int = fastapi.Query(100, gt=0, le=500, description="Soft limit of how many results to return"),
 ):
     r"""
     more on [fnmatch](https://docs.python.org/3/library/fnmatch.html)
 
     more on [regex](https://docs.python.org/3/library/re.html)
     """
-    # regex denial of service (eg: `(a+)+b`)
-    if mode == "regex" and is_redos(query):
-        raise fastapi.HTTPException(fastapi.status.HTTP_422_UNPROCESSABLE_ENTITY, "")
     if not files and not directories:
         return []
     source = os.path.join(config.root, source.removeprefix("/"))
     results = []
-    pattern = query if mode == "regex" else fnmatch.translate(query)
     try:
+        pattern = fnmatch.translate(query).removesuffix(r"\Z")
         regex = re.compile(pattern, 0 if sensitive else re.IGNORECASE)
     except (TypeError, ValueError):
         raise fastapi.HTTPException(fastapi.status.HTTP_400_BAD_REQUEST)
@@ -81,14 +77,15 @@ def search(
                 dirnames.remove(dname)
         if files:
             results.extend(
-                p.join(dirpath, fname) for fname in filenames
-                if (config.dotall or not fname.startswith("."))
-                and regex.search(fname) is not None
+                p.join(dirpath, fname)
+                for fname in filenames
+                if (config.dotall or not fname.startswith(".")) and regex.search(fname) is not None
             )
         if directories:
             results.extend(
                 p.join(dirpath, dname) for dname in dirnames
-                if (config.dotall or not dname.startswith("."))
-                and regex.search(dname) is not None
+                if (config.dotall or not dname.startswith(".")) and regex.search(dname) is not None
             )
+        if len(results) >= limit:
+            break
     return [get_fp_meta(_, shallow=True) for _ in results]

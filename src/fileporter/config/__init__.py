@@ -18,17 +18,17 @@ class Configuration(pydantic.BaseModel):
     port: t.Optional[pydantic.conint(gt=0)] = 8000
     root: t.Optional[pydantic.DirectoryPath] = "."
     username: t.Optional[str] = getpass.getuser()
-    password: t.Optional[pydantic.constr(min_length=1)]
+    password: t.Optional[pydantic.constr(min_length=1)] = None
     worker: t.Optional[pydantic.conint(gt=0, le=16)] = min(8, os.cpu_count())
-    root_path: t.Optional[pydantic.constr(regex=r"^/(.+/)*$")] = "/"
-    uds: t.Optional[str]
-    logs: t.Optional[bool]
+    root_path: t.Optional[pydantic.constr(pattern=r"^/(.+/)*$")] = "/"
+    uds: t.Optional[str] = None
+    logs: t.Optional[bool] = None
     dotall: t.Optional[bool] = False
     dependencies: t.Optional[bool] = False
     cache: t.Optional[bool] = True
-    web_ui: t.Optional[pydantic.DirectoryPath]
+    web_ui: t.Optional[pydantic.DirectoryPath] = None
     development: t.Optional[bool] = False
-    config: t.Optional[pydantic.FilePath]
+    config: t.Optional[pydantic.FilePath] = None
 
     def __str__(self):
         return f"<args {self.__dict__}>"
