@@ -30,7 +30,7 @@ from PIL import Image, UnidentifiedImageError
 from config import config
 
 
-if not config.dependencies:
+if previews_supported and not config.dependencies:
     logging.getLogger(PREVIEW_LOGGER_NAME).setLevel(logging.CRITICAL)
 
 # CACHE = TempManager(f"fileporter-{zlib.adler32(config.root_path.encode())}")
