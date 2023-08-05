@@ -3,7 +3,6 @@
 r"""
 
 """
-import os
 import os.path as p
 import logging
 import mimetypes
@@ -11,12 +10,12 @@ try:
     import pymediainfo as pmi
     if not pmi.MediaInfo.can_parse():
         raise ImportError("libmediainfo.so.0 not found. please run 'sudo apt install -y libmediainfo-dev'")
-except (ModuleNotFoundError, ImportError) as exc:
+except (ModuleNotFoundError, ImportError, OSError) as exc:
     logging.error("pymediainfo could not be imported", exc_info=exc)
     pmi = None
 try:  # system-installed package for support
     import magic
-except (ModuleNotFoundError, ImportError) as exc:
+except (ModuleNotFoundError, ImportError, OSError) as exc:
     logging.error("magic could not be imported", exc_info=exc)
     magic = None
 from fastapi import HTTPException, status

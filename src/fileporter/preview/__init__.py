@@ -15,10 +15,16 @@ import time
 import zlib
 import logging
 import fastapi
-from preview_generator.manager import PreviewManager
-from preview_generator.utils import LOGGER_NAME as PREVIEW_LOGGER_NAME
-from preview_generator.exception import UnsupportedMimeType
-from wand.exceptions import MissingDelegateError
+try:
+    from preview_generator.manager import PreviewManager
+    from preview_generator.utils import LOGGER_NAME as PREVIEW_LOGGER_NAME
+    from preview_generator.exception import UnsupportedMimeType
+    from wand.exceptions import MissingDelegateError
+except (ModuleNotFoundError, ImportError, OSError) as exc:
+    logging.error("preview-utils could not be imported", exc_info=exc)
+    previews_supported = False
+else:
+    previews_supported = True
 from PIL import Image, UnidentifiedImageError
 # from util.temp_manager import TempManager
 from config import config
@@ -35,7 +41,7 @@ _interval = 60*5
 _lock = threading.Lock()
 
 preview = fastapi.APIRouter()
-manager = PreviewManager(CACHE)
+manager = PreviewManager(CACHE) if previews_supported else None
 
 
 @atexit.register
@@ -85,6 +91,8 @@ def get_preview(
     directories are by default disabled. but can be enabled with the '?directories' flag.
     This returns the preview of one file in the directory
     """
+    if not previews_supported:
+        raise fastapi.HTTPException(fastapi.status.HTTP_424_FAILED_DEPENDENCY)
     checkCache()
     fp = p.join(config.root, fp.removeprefix("/"))
     if not p.exists(fp):
