@@ -28,6 +28,11 @@ _fileporter_completions()
         COMPREPLY=($(compgen -W ". .. --help --version --config --port --username --password --dotall --no-dotall --local" -- "${CURRENT_WORD}"))
         if [[ $(($COMP_CWORD + 1)) = ${#COMP_WORDS[@]} ]]; then
             COMPREPLY+=($(compgen -d -- "${CURRENT_WORD}"))
+            # see: https://salsa.debian.org/debian/bash-completion/blob/master/bash_completion
+            # as to why _filedir -d is better than compgen -d
+#             COMPREPLY+=($(compgen -d -- "${CURRENT_WORD}"))
+            cur="$CURRENT_WORD"
+            _filedir -d
         fi
     fi
 }
