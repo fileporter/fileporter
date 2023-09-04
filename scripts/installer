@@ -3,6 +3,16 @@ set -e
 
 TARGET=${1:-fileporter}
 
+if (! which git > /dev/null 2>&1); then
+  echo "git is not installed"
+  exit 1
+fi
+if (! python3 -c "import virtualenv" > /dev/null 2>&1) | (! python3 -c "import venv" > /dev/null 2>&1); then
+  echo "virtualenv or venv not found"
+  echo "  install with 'sudo apt install python3-venv' or 'pip3 install virtualenv'"
+  exit 1
+fi
+
 git clone https://github.com/fileporter/fileporter.git "${TARGET}"
 
 cd "${TARGET}"
