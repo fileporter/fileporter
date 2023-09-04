@@ -41,7 +41,6 @@ _interval = 60*5
 _lock = threading.Lock()
 
 preview = fastapi.APIRouter()
-manager = PreviewManager(CACHE) if previews_supported else None
 
 
 @atexit.register
@@ -111,6 +110,8 @@ def get_preview(
                 url=request.url_for("get_preview", fp=p.relpath(p.join(fp, files[0]), config.root)),
                 status_code=fastapi.status.HTTP_302_FOUND,
             )
+
+    manager = PreviewManager(CACHE)
 
     try:
         if not manager.has_jpeg_preview(fp):
