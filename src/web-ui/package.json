@@ -12,7 +12,7 @@
   "dependencies": {
     "@types/react-pdf": "^6.2.0",
     "@zodios/core": "^10.9.1",
-    "axios": "^1.4.0",
+    "axios": "^1.6.0",
     "dompurify": "^3.0.3",
     "highlight.js": "^11.8.0",
     "marked": "^4.3.0",
